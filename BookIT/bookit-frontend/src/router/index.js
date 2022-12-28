@@ -1,14 +1,35 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MiawComponent from "@/components/MiawComponent";
-import HelloWorld from "@/components/HelloWorld";
+import AuthComponent from "@/components/auth/AuthComponent";
+import LogIn from "@/components/auth/LogIn";
+import RegisterComponent from "@/components/auth/RegisterComponent";
+import ForgotPasswordComponent from "@/components/auth/ForgotPasswordComponent";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        component: HelloWorld
+        component: AuthComponent,
+        redirect: { name: 'Login' },
+        children: [
+            {
+                path: '/login',
+                name: 'Login',
+                component: LogIn
+            },
+            {
+                path: '/register',
+                name: 'Register',
+                component: RegisterComponent
+            },
+            {
+                path: '/forgot-password',
+                name: 'ForgotPassword',
+                component: ForgotPasswordComponent
+            },
+        ]
     },
     {
         path: '/miaw',
