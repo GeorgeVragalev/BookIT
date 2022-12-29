@@ -1,32 +1,36 @@
-﻿using Backend.Data;
+﻿using System.Data.Entity;
+using Backend.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Backend;
 
 public class Startup
 {
-    private IConfiguration ConfigRoot { get; }
+    private readonly ConfigurationManager _configurationManager;
 
-    public Startup(IConfiguration configuration)
+    public Startup(ConfigurationManager configurationManager)
     {
-        ConfigRoot = configuration;
+        _configurationManager = configurationManager;
     }
 
-    public static void ConfigureServices(WebApplicationBuilder builder)
+    public void ConfigureServices(IServiceCollection serviceCollection)
     {
         // Add services to the container.
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(connectionString));
-        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        var connectionString = _configurationManager.GetConnectionString("DefaultConnection");
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        serviceCollection.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(connectionString));
+        serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
+        Console.WriteLine(Database.Exists(connectionString));
+
+        serviceCollection.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<ApplicationDbContext>();
-        builder.Services.AddControllersWithViews();
+        serviceCollection.AddControllersWithViews();
     }
 
-    public static void Configure(WebApplication app)
+    public void Configure(WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {
@@ -54,5 +58,4 @@ public class Startup
 
         app.Run();
     }
-    
 }
