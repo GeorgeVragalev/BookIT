@@ -23,11 +23,17 @@ public class Startup
         serviceCollection.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
         serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
-        Console.WriteLine(Database.Exists(connectionString));
 
         serviceCollection.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<ApplicationDbContext>();
         serviceCollection.AddControllersWithViews();
+        
+        serviceCollection.AddAuthorization(options =>
+        {
+            options.AddPolicy("SuperAdmin",
+                policy => policy.RequireRole("SuperAdmin"));
+        });
+
     }
 
     public void Configure(WebApplication app)

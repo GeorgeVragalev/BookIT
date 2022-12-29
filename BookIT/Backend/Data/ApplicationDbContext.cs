@@ -19,7 +19,6 @@ public sealed class ApplicationDbContext : IdentityDbContext
     
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         optionsBuilder.UseSqlServer(connectionString);
-        Console.WriteLine(Database.CanConnect());
 
         base.OnConfiguring(optionsBuilder);
     }
