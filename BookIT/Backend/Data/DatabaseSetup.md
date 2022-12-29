@@ -1,4 +1,5 @@
-﻿In order to set up the database connection you need to have Microsoft SQL Server
+﻿### SQL Setup
+In order to set up the database connection you need to have Microsoft SQL Server
 
 Configure the database to accept SQL authetication:
 * Go to Server properties
@@ -24,8 +25,9 @@ For further references you can visit this link to configure the database on your
 https://docs.driveworkspro.com/topic/HowToConfigureWindowsFirewallForSQLServer
 
 
-migrations commands:
+###Migrations commands:
 * **dotnet tool install --global dotnet-ef**                   : install migration tool
+* **dotnet ef database update**                                : run migrations and update the database
 * **dotnet ef database update 0**                              : sets the dat of migration to 0
 * **dotnet ef migrations add [name]**                          : add a new migration
 * **dotnet ef migrations remove**                              : remove previous migration
