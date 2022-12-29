@@ -1,7 +1,8 @@
 using Backend;
 
 var builder = WebApplication.CreateBuilder(args);
-Startup.ConfigureServices(builder);
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
-Startup.Configure(app);
+startup.Configure(app);
