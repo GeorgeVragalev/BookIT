@@ -1,4 +1,6 @@
 ﻿
+using Backend.Services.RoleService;
+
 namespace Backend.BackgroundTask;
 
 public class BackgroundTask : BackgroundService
@@ -14,10 +16,10 @@ public class BackgroundTask : BackgroundService
     {
         try
         {
-            // await Task.Delay(5000, stoppingToken);
-            // using var scope = _serviceScopeFactory.CreateScope();
-            // var clientService = scope.ServiceProvider.GetRequiredService<IRoleService>();
-            // await clientService.CreateRoles();
+            await Task.Delay(5000, stoppingToken);
+            using var scope = _serviceScopeFactory.CreateScope();
+            var clientService = scope.ServiceProvider.GetRequiredService<IRoleService>();
+            await clientService.CreateRoles();
         }
         catch (Exception)
         {

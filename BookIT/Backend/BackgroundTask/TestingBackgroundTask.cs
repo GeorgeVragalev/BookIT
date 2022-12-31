@@ -1,4 +1,6 @@
 ﻿
+using Backend.Services.UserRoleService;
+
 namespace Backend.BackgroundTask;
 
 public class TestingBackgroundTask : BackgroundService
@@ -14,10 +16,10 @@ public class TestingBackgroundTask : BackgroundService
     {
         try
         {
-            // await Task.Delay(5000, stoppingToken);
-            // using var scope = _serviceScopeFactory.CreateScope();
-            // var clientService = scope.ServiceProvider.GetRequiredService<IUserRoleService>();
-            // clientService.Test();
+            await Task.Delay(5000, stoppingToken);
+            using var scope = _serviceScopeFactory.CreateScope();
+            var clientService = scope.ServiceProvider.GetRequiredService<IUserRoleService>();
+            clientService.Test();
         }
         catch (Exception)
         {
