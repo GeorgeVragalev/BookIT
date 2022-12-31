@@ -1,6 +1,9 @@
-﻿namespace Backend.Models.Roles;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Backend.Models.Roles;
 
 public class Role
 {
-    public const string SuperAdmin = "SuperAdmin";
+    [Required]
+    public string Name { get; set; }
 }

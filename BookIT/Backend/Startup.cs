@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Backend.Data;
+using Backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,7 @@ public class Startup
         serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
         serviceCollection.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         serviceCollection.AddControllersWithViews();
         
@@ -34,6 +36,17 @@ public class Startup
                 policy => policy.RequireRole("SuperAdmin"));
         });
 
+        RegisterDependencies(serviceCollection);
+
+    }
+
+    private void RegisterDependencies(IServiceCollection serviceCollection)
+    {
+        //Services
+        serviceCollection.AddScoped<IRoleService, RoleService>();
+        
+        //BackgroundTask
+        serviceCollection.AddHostedService<BackgroundTask.BackgroundTask>();
     }
 
     public void Configure(WebApplication app)
