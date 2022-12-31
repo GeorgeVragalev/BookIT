@@ -1,7 +1,7 @@
 ﻿using Backend.Models.Roles;
 using Microsoft.AspNetCore.Identity;
 
-namespace Backend.Services;
+namespace Backend.Services.Role;
 
 public class RoleService : IRoleService
 {

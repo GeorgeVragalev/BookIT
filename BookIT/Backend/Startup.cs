@@ -1,6 +1,8 @@
 ﻿using System.Data.Entity;
 using Backend.Data;
+using Backend.DependencyRegister;
 using Backend.Services;
+using Backend.Services.Role;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,18 +38,10 @@ public class Startup
                 policy => policy.RequireRole("SuperAdmin"));
         });
 
-        RegisterDependencies(serviceCollection);
-
+        RegisterDependencies.Register(serviceCollection);
     }
 
-    private void RegisterDependencies(IServiceCollection serviceCollection)
-    {
-        //Services
-        serviceCollection.AddScoped<IRoleService, RoleService>();
-        
-        //BackgroundTask
-        serviceCollection.AddHostedService<BackgroundTask.BackgroundTask>();
-    }
+   
 
     public void Configure(WebApplication app)
     {
