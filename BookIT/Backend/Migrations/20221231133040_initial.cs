@@ -10,7 +10,7 @@ namespace Backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql("IF DB_ID('BookIT') IS NULL CREATE DATABASE BookIT;");
-            
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
