@@ -6,8 +6,6 @@ namespace Backend.Entities.Users;
 
 public class User : IdentityUser<int>, IBaseEntity
 {
-    [AllowNull]
-    public string FirstName { get; set; }
-    [AllowNull]
-    public string LastName { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
 }

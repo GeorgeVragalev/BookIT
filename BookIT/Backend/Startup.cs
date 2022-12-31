@@ -31,7 +31,8 @@ public class Startup
         serviceCollection.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true )
             // .AddRoles<Role>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
         
         serviceCollection.AddControllersWithViews();
         
@@ -45,8 +46,6 @@ public class Startup
 
         RegisterDependencies.Register(serviceCollection);
     }
-
-   
 
     public void Configure(WebApplication app)
     {
