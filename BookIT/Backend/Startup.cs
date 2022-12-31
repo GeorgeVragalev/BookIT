@@ -1,8 +1,9 @@
 ﻿using System.Data.Entity;
 using Backend.Data;
 using Backend.DependencyRegister;
-using Backend.Services;
-using Backend.Services.Role;
+using Backend.Entities;
+using Backend.Entities.Roles;
+using Backend.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,10 +28,14 @@ public class Startup
             options.UseSqlServer(connectionString));
         serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
-        serviceCollection.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+        serviceCollection.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true )
+            // .AddRoles<Role>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+        
         serviceCollection.AddControllersWithViews();
+        
+        serviceCollection.AddRazorPages();
         
         serviceCollection.AddAuthorization(options =>
         {

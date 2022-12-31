@@ -1,4 +1,4 @@
-﻿using Backend.Models.Roles;
+﻿using Backend.Entities.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Backend.Configurations;
+using Backend.Entities;
+using Backend.Entities.Roles;
+using Backend.Entities.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data;
 
-public sealed class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<User, Role, int>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -21,5 +25,12 @@ public sealed class ApplicationDbContext : IdentityDbContext
         optionsBuilder.UseSqlServer(connectionString);
 
         base.OnConfiguring(optionsBuilder);
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfiguration).Assembly);
+        
+        base.OnModelCreating(modelBuilder);
     }
 }
