@@ -16,10 +16,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Password" prop="password">
-        <el-input type="password" v-model="user.password"/>
+        <el-input type="text" v-model="user.password"/>
       </el-form-item>
       <el-form-item label="Confirm password" prop="passwordConfirm">
-        <el-input type="password" v-model="user.confirmPassword"/>
+        <el-input type="text" v-model="user.confirmPassword"/>
       </el-form-item>
     </el-form>
     <router-link :to="{name: 'Login'}">Login</router-link>
@@ -32,11 +32,13 @@ export default {
   name: "RegisterComponent",
   data() {
     const confirmPasswordValidator = (rule, value, callback) => {
-      if(value !== this.user.password) {
+      if(value === ""){
+        callback(new Error("Please confirm password"));
+      } else if(value !== this.user.password) {
         callback(new Error("Confirm password does not match"));
+      } else {
+        callback();
       }
-
-      callback();
     }
     return {
       user: {
@@ -62,7 +64,7 @@ export default {
           {
             required: true,
             message: "Academic group is required",
-            trigger: ["change", "blur"],
+            trigger: ["blur"],
           }
         ],
         password: [
@@ -74,14 +76,18 @@ export default {
           {
             min: 8,
             message: "Password is too short",
-            trigger: ["change", "blur"],
+            trigger: ["blur"],
           }
         ],
         passwordConfirm: [
-
+          {
+            required: true,
+            message: "Please confirm password",
+            trigger: ["blur"],
+          },
           {
             validator: confirmPasswordValidator,
-            trigger: ["change", "blur"],
+            trigger: ["blur"],
           }
         ],
       }
