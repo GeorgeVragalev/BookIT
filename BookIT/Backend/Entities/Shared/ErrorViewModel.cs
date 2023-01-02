@@ -1,4 +1,4 @@
-namespace Backend.Models;
+namespace Backend.Entities.Shared;
 
 public class ErrorViewModel
 {
