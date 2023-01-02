@@ -2,16 +2,16 @@
   <div class="auth-container">
     <div class="auth-container__welcome-msg">Forgot password?</div>
     <div class="auth-container__welcome-msg--tiny">No worries, just enter your email!</div>
-    <el-form class="auth-container__form">
-      <el-form-item>
-        <el-input type="text" v-model="email" placeholder="Email"/>
+    <el-form class="auth-container__form" :rules="rules" :model="user">
+      <el-form-item prop="email">
+        <el-input type="email" v-model="user.email" placeholder="Email"/>
       </el-form-item>
     </el-form>
     <el-button class="button--submit-auth-form"><i class="el-icon-right"/></el-button>
     <div class="auth-container__redirect">
-        <router-link class="link" :to="{name: 'Login'}">Login</router-link>
-        <router-link class="link" :to="{name: 'Register'}">Create an account</router-link>
-      </div>
+      <router-link class="link" :to="{name: 'Login'}">Login</router-link>
+      <router-link class="link" :to="{name: 'Register'}">Create an account</router-link>
+    </div>
   </div>
 </template>
 
@@ -20,7 +20,24 @@ export default {
   name: "ForgotPasswordComponent",
   data() {
     return {
-      email: "",
+      user: {
+        email: "",
+      },
+      rules: {
+        email: [
+          {
+            required: true,
+            message: "Email is required",
+            trigger: ["change", "blur"],
+          },
+          {
+            type: 'email',
+            message: "Invalid email type",
+            trigger: ["change", "blur"],
+          }
+
+        ],
+      }
     };
   }
 }

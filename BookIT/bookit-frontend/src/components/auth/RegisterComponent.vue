@@ -17,10 +17,10 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input type="text" v-model="user.password" placeholder="Password"/>
+        <el-input type="password" v-model="user.password" placeholder="Password"/>
       </el-form-item>
       <el-form-item prop="passwordConfirm">
-        <el-input type="text" v-model="user.confirmPassword" placeholder="Confirm password"/>
+        <el-input type="password" v-model="user.confirmPassword" placeholder="Confirm password"/>
       </el-form-item>
     </el-form>
     <el-button class="button--submit-auth-form"><i class="el-icon-right"/></el-button>
@@ -36,9 +36,9 @@ export default {
   name: "RegisterComponent",
   data() {
     const confirmPasswordValidator = (rule, value, callback) => {
-      if (value === "") {
+      if (!this.user.confirmPassword) {
         callback(new Error("Please confirm password"));
-      } else if (value !== this.user.password) {
+      } else if (this.user.confirmPassword !== this.user.password) {
         callback(new Error("Confirm password does not match"));
       } else {
         callback();
@@ -85,13 +85,8 @@ export default {
         ],
         passwordConfirm: [
           {
-            required: true,
-            message: "Please confirm password",
-            trigger: ["blur"],
-          },
-          {
             validator: confirmPasswordValidator,
-            trigger: ["blur"],
+            trigger: ["change", "blur"],
           }
         ],
       }

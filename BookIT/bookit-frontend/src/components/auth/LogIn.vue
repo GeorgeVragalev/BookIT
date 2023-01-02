@@ -40,7 +40,6 @@ export default {
             message: "Invalid email type",
             trigger: ["change", "blur"],
           }
-
         ],
         password: [
           {
