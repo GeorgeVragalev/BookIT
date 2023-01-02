@@ -5,6 +5,7 @@ import AuthComponent from "@/components/auth/AuthComponent";
 import LogIn from "@/components/auth/LogIn";
 import RegisterComponent from "@/components/auth/RegisterComponent";
 import ForgotPasswordComponent from "@/components/auth/ForgotPasswordComponent";
+import ResetPasswordComponent from "@/components/auth/ResetPasswordComponent";
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
                 path: '/forgot-password',
                 name: 'ForgotPassword',
                 component: ForgotPasswordComponent
+            },
+            {
+                path: '/reset-password',
+                name: 'ResetPassword',
+                component: ResetPasswordComponent
             },
         ]
     },
