@@ -7,7 +7,7 @@
         <el-input type="text" v-model="user.email" placeholder="Email"/>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input type="password" v-model="user.password" placeholder="Password"/>
+        <el-input type="password" :showPassword="true" v-model="user.password" placeholder="Password"/>
       </el-form-item>
     </el-form>
     <el-button class="button--submit-auth-form"><i class="el-icon-right"/></el-button>

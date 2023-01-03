@@ -17,10 +17,10 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input type="password" v-model="user.password" placeholder="Password"/>
+        <el-input type="password" :showPassword="true" v-model="user.password" placeholder="Password"/>
       </el-form-item>
       <el-form-item prop="passwordConfirm">
-        <el-input type="password" v-model="user.confirmPassword" placeholder="Confirm password"/>
+        <el-input type="password" :showPassword="true" v-model="user.confirmPassword" placeholder="Confirm password"/>
       </el-form-item>
     </el-form>
     <el-button class="button--submit-auth-form"><i class="el-icon-right"/></el-button>
