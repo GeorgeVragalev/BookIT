@@ -1,15 +1,19 @@
 ﻿using Backend.Entities.Users;
 using Backend.Repositories.GenericRepository;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Repositories.UserRepository;
 
 public class UserRepository : IUserRepository
 {
     private readonly IGenericRepository<User> _repository;
-
-    public UserRepository(IGenericRepository<User> repository)
+    private readonly UserManager<User> _userManager;
+    private readonly IUserStore<User> _userStore;
+    public UserRepository(IGenericRepository<User> repository, UserManager<User> userManager, IUserStore<User> userStore)
     {
         _repository = repository;
+        _userManager = userManager;
+        _userStore = userStore;
     }
 
     public Task<List<User>> GetAll()
@@ -22,9 +26,12 @@ public class UserRepository : IUserRepository
         return _repository.GetById(id);
     }
 
-    public Task Save(User item)
-    {
-        return _repository.Save(item);
+    public Task Save(User user)
+    { 
+        _userStore.SetUserNameAsync(user, user.Email, CancellationToken.None); 
+        user.EmailConfirmed = true;
+        user.PhoneNumberConfirmed = true; 
+        return _userManager.CreateAsync(user, user.PasswordHash);
     }
 
     public Task Update(User item)

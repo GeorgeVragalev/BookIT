@@ -2,6 +2,7 @@
 using Backend.Repositories.UserRepository;
 using Backend.Services.RoleService;
 using Backend.Services.UserRoleService;
+using Backend.Services.UserService;
 
 namespace Backend.DependencyRegister;
 
@@ -17,6 +18,7 @@ public static class RegisterDependencies
         //Services
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserRoleService, UserRoleService>();
+        services.AddScoped<IUserService, UserService>();
 
         //BackgroundTask
         services.AddHostedService<BackgroundTask.BackgroundTask>();
