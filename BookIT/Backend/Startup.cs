@@ -1,11 +1,10 @@
-﻿using System.Data.Entity;
-using Backend.Data;
+﻿using Backend.Data;
 using Backend.DependencyRegister;
-using Backend.Entities;
 using Backend.Entities.Roles;
 using Backend.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RouteBuilder = Backend.DependencyRegister.RouteBuilder;
 
 
 namespace Backend;
@@ -28,23 +27,23 @@ public class Startup
             options.UseSqlServer(connectionString));
         serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
-        serviceCollection.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true )
+        serviceCollection.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
             // .AddRoles<Role>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
-        
+
         serviceCollection.AddControllersWithViews();
-        
+
         serviceCollection.AddRazorPages();
-        
+
         serviceCollection.AddAuthorization(options =>
         {
             options.AddPolicy("SuperAdmin",
                 policy => policy.RequireRole("SuperAdmin"));
         });
-
-        RegisterDependencies.Register(serviceCollection);
+        
+        RegisterDependencies.Register(serviceCollection, _configurationManager);
     }
 
     public void Configure(WebApplication app)
@@ -68,9 +67,7 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+        RouteBuilder.Route(app);
         app.MapRazorPages();
 
         app.Run();

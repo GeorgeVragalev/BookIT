@@ -32,8 +32,10 @@ public class AdminController : Controller
     [HttpGet]
     public IActionResult CreateUser()
     {
-        var userModel = new UserModel();
-        userModel.Role = RoleEnum.Administrator;
+        var userModel = new UserModel
+        {
+            Role = RoleEnum.Administrator
+        };
         return View(userModel);
     }
 
@@ -45,14 +47,15 @@ public class AdminController : Controller
             var user = new User()
             {
                 Email = model.Email,
-                PasswordHash = new Guid().ToString()
+                PasswordHash = Guid.NewGuid().ToString(),
+                SecurityStamp =  Guid.NewGuid().ToString()
             };
 
             await _userService.Save(user);
-            
+
             //assign role
             await _userManager.AddToRoleAsync(user, model.Role.ToString());
-            
+
             var userId = user.Id;
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -68,7 +71,8 @@ public class AdminController : Controller
 
             if (_userManager.Options.SignIn.RequireConfirmedAccount)
             {
-                return RedirectToPage("/Account/RegisterConfirmation", new {area = "Identity", email = user.Email, returnUrl = Url.Content("~/")});
+                return RedirectToPage("/Account/RegisterConfirmation",
+                    new {area = "Identity", email = user.Email, returnUrl = Url.Content("~/")});
             }
             else
             {

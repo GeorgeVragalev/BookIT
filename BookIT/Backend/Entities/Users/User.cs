@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Backend.Entities.Shared;
+﻿using Backend.Entities.Shared;
 using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Entities.Users;
