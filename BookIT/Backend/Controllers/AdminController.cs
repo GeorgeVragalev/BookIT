@@ -45,12 +45,13 @@ public class AdminController : Controller
             var user = new User()
             {
                 Email = model.Email,
-                PasswordHash = model.Password
+                PasswordHash = new Guid().ToString()
             };
 
             await _userService.Save(user);
             
             //assign role
+            await _userManager.AddToRoleAsync(user, model.Role.ToString());
             
             var userId = user.Id;
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
