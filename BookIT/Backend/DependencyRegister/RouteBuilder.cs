@@ -19,6 +19,16 @@ public static class RouteBuilder
                 "reset-password",
                 "reset-password",
                 defaults: new {controller = "ForgotPassword", action = "ForgotPassword"});
+            
+            endpoints.MapControllerRoute(
+                "register",
+                "register",
+                defaults: new {controller = "Register", action = "Register"});
+            
+            endpoints.MapControllerRoute(
+                "login",
+                "login",
+                defaults: new {controller = "Login", action = "Login"});
         });
     }
 }
