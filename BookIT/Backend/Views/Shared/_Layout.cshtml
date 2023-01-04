@@ -30,7 +30,7 @@
                     @if (User.IsInRole(RoleEnum.Administrator.ToString()))
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Testing" asp-action="Restricted">Restricted zone</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateUser">Create User</a>
                         </li>
                     }
                 </ul>
