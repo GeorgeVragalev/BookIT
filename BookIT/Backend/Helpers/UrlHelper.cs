@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Policy;
+using System.Text;
 using Backend.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,15 +9,13 @@ namespace Backend.Helpers;
 
 public static class UrlHelper
 {
-    public static async Task<string> PrepareCallbackUrl(User user, UserManager<User> userManager, IUrlHelper urlHelper,
-        HttpRequest httpRequest)
+    public static string PrepareCallbackUrl(IUrlHelper urlHelper, HttpRequest httpRequest, string code, string pageName, int userId)
     {
-        var code = await userManager.GeneratePasswordResetTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         var callbackUrl = urlHelper.Page(
-            "/Account/ResetPassword",
+            pageName,
             pageHandler: null,
-            values: new {area = "Identity", code},
+            values: new {area = "Identity", userId = userId, code = code, returnUrl = urlHelper.Content("~/")},
             protocol: httpRequest.Scheme);
 
         return callbackUrl ?? "";

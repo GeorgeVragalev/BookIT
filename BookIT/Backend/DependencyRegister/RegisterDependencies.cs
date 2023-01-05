@@ -4,6 +4,7 @@ using Backend.Repositories.UserRepository;
 using Backend.Services.EmailService;
 using Backend.Services.RoleService;
 using Backend.Services.UserService;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
 
 namespace Backend.DependencyRegister;
@@ -20,7 +21,7 @@ public static class RegisterDependencies
         //Services
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IEmailSender, EmailService>();
 
         //BackgroundTask
         services.AddHostedService<BackgroundTask.BackgroundTask>();

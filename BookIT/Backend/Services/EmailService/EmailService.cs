@@ -1,10 +1,12 @@
-﻿using Backend.Models;
+﻿using Backend.Helpers;
+using Backend.Models;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using MimeKit;
 
 namespace Backend.Services.EmailService;
 
-public class EmailService : IEmailService
+public class EmailService : IEmailSender
 {
     private readonly EmailConfiguration _emailConfig;
 
@@ -13,23 +15,20 @@ public class EmailService : IEmailService
         _emailConfig = emailConfig;
     }
 
-    public void SendEmail(Message message)
+    public void SendEmail(string email, string subject, string htmlMessage)
     {
-        var emailMessage = CreateEmailMessage(message);
-        Send(emailMessage);
+        var emailMessage = MessageHelper.PrepareEmailMessage(email, _emailConfig.From, subject, htmlMessage);
+        Execute(emailMessage);
     }
 
-    private MimeMessage CreateEmailMessage(Message message)
+    public Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
-        var emailMessage = new MimeMessage();
-        emailMessage.From.Add(new MailboxAddress("email", _emailConfig.From));
-        emailMessage.To.AddRange(new[] {message.Receiver});
-        emailMessage.Subject = message.Subject;
-        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) {Text = message.Content};
-        return emailMessage;
+        var emailMessage = MessageHelper.PrepareEmailMessage(email, _emailConfig.From, subject, htmlMessage);
+        Execute(emailMessage);
+        return Task.CompletedTask;
     }
 
-    private void Send(MimeMessage mailMessage)
+    private void Execute(MimeMessage mailMessage)
     {
         using var client = new SmtpClient();
         try

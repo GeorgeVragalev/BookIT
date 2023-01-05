@@ -1,8 +1,9 @@
-﻿using Backend.Entities.Users;
+﻿using System.Text.Encodings.Web;
+using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
-using Backend.Services.EmailService;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -10,13 +11,12 @@ namespace Backend.Controllers;
 public class ForgotPasswordController : Controller
 {
     private readonly UserManager<User> _userManager;
-    private readonly IEmailService _emailService;
-    private const string EmailSubject = "Reset password";
+    private readonly IEmailSender _emailSender;
 
-    public ForgotPasswordController(UserManager<User> userManager, IEmailService emailService)
+    public ForgotPasswordController(UserManager<User> userManager, IEmailSender emailSender)
     {
         _userManager = userManager;
-        _emailService = emailService;
+        _emailSender = emailSender;
     }
 
     [HttpGet]
@@ -33,7 +33,8 @@ public class ForgotPasswordController : Controller
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.IsEmailConfirmedAsync(user))
             {
-                var callbackUrl = await UrlHelper.PrepareCallbackUrl(user, _userManager, Url, Request);
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = UrlHelper.PrepareCallbackUrl(Url, Request, code,"/Account/ResetPassword", user.Id);
 
                 SendResetPasswordEmail(model.Email, callbackUrl);
                 return View("ForgotPasswordConfirmation");
@@ -47,8 +48,12 @@ public class ForgotPasswordController : Controller
 
     private void SendResetPasswordEmail(string receiver, string callbackUrl)
     {
-        var bodyMessage = MessageHelper.PrepareMessage(callbackUrl);
-        var message = new Message(receiver, EmailSubject, bodyMessage);
-        _emailService.SendEmail(message);
+        var bodyMessage = PrepareMessage(callbackUrl);
+        _emailSender.SendEmailAsync(receiver, "Reset password", bodyMessage);
+    }
+
+    private static string PrepareMessage(string callbackUrl)
+    {
+        return $"Please reset your password by <a href=\"{HtmlEncoder.Default.Encode(callbackUrl)}\">clicking here</a>.";
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Backend.Entities.Users;
+using Backend.Helpers;
 using Backend.Models.Register;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -40,14 +41,8 @@ public class RegisterConfirmationController : Controller
         model.DisplayConfirmAccountLink = true;
         if (model.DisplayConfirmAccountLink)
         {
-            var userId = await _userManager.GetUserIdAsync(user);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            model.EmailConfirmationUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new {area = "Identity", userId = userId, code = code, returnUrl = returnUrl},
-                protocol: Request.Scheme);
+            var callbackUrl = UrlHelper.PrepareCallbackUrl(Url, Request, code,"/Account/ConfirmEmail", user.Id);
         }
 
         return View(model);
