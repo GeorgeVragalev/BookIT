@@ -15,7 +15,7 @@ public class LoginController : Controller
         _signInManager = signInManager;
     }
 
-    [HttpGet]
+    [HttpGet("/login")]
     public async Task<ViewResult> Login(string returnUrl = null)
     {
         var model = new LoginModel();
@@ -36,7 +36,7 @@ public class LoginController : Controller
         return View(model);
     }
 
-    [HttpPost]
+    [HttpPost("/login")]
     public async Task<IActionResult> Login(string email, string password, bool rememberMe, string returnUrl = null)
     {
         var model = new LoginModel();
@@ -54,7 +54,7 @@ public class LoginController : Controller
 
             if (result.RequiresTwoFactor)
             {
-                return RedirectToPage("./LoginWith2fa", new {ReturnUrl = returnUrl, RememberMe = rememberMe});
+                return RedirectToAction("LoginWith2Fa", "LoginWith2Fa", new {ReturnUrl = returnUrl, RememberMe = rememberMe});
             }
 
             if (result.IsLockedOut)

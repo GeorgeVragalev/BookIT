@@ -23,7 +23,7 @@ public class RegisterController : Controller
         _emailStore = GetEmailStore();
     }
 
-    [HttpGet]
+    [HttpGet("/register")]
     public async Task<ViewResult> Register(string returnUrl = null)
     {
         var registerModel = new RegisterModel()
@@ -35,7 +35,7 @@ public class RegisterController : Controller
         return View(registerModel);
     }
 
-    [HttpPost]
+    [HttpPost("/register")]
     public async Task<IActionResult> Register(string email, string password, string returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");
