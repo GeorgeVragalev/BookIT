@@ -16,7 +16,7 @@ public class LoginController : Controller
     }
 
     [HttpGet("/login")]
-    public async Task<ViewResult> Login(string returnUrl = null)
+    public async Task<ViewResult> Login(string? returnUrl = null)
     {
         var model = new LoginModel();
         if (!string.IsNullOrEmpty(model.ErrorMessage))
@@ -37,7 +37,7 @@ public class LoginController : Controller
     }
 
     [HttpPost("/login")]
-    public async Task<IActionResult> Login(string email, string password, bool rememberMe, string returnUrl = null)
+    public async Task<IActionResult> Login(string email, string password, bool rememberMe, string? returnUrl = null)
     {
         var model = new LoginModel();
         returnUrl ??= Url.Content("~/");

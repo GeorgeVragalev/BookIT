@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Users;
+﻿using Backend.Entities.Login;
+using Backend.Entities.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ public class LoginModel
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public string ReturnUrl { get; set; }
+    public string? ReturnUrl { get; set; }
 
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

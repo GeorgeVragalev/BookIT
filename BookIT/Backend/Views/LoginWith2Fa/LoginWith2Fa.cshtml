@@ -32,9 +32,8 @@
     </div>
 </div>
 <p>
-    @*TODO: Add the LoginWithRecoveryCode controller and page*@ 
     Don't have access to your authenticator device? You can
-    @* <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>. *@
+    <a id="recovery-code-login" asp-controller="LoginWithRecoveryCode" asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>.
 </p>
 
 @section Scripts {
