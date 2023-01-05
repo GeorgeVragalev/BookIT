@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using PasswordGenerator;
 
 namespace Backend.Controllers;
 
@@ -47,7 +48,7 @@ public class AdminController : Controller
             var user = new User()
             {
                 Email = model.Email,
-                PasswordHash = Guid.NewGuid().ToString(),
+                PasswordHash = new Password(16).Next(),
                 SecurityStamp =  Guid.NewGuid().ToString()
             };
 
