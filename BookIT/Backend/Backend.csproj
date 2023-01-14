@@ -38,6 +38,11 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Testing\Restricted.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Login\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\LoginWith2Fa\LoginWith2Fa.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\RegisterConfirmation\RegisterConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Register\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\LoginWithRecoveryCode\LoginWithRecoveryCode.cshtml" />
     </ItemGroup>
 
 </Project>

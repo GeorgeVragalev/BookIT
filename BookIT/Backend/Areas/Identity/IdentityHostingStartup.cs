@@ -5,7 +5,9 @@ namespace Backend.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
+                builder.UseKestrel(c => c.AddServerHeader = false);
             });
         }
     }

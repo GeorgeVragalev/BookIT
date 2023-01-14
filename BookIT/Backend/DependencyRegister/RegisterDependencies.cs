@@ -30,7 +30,5 @@ public static class RegisterDependencies
             .GetSection("EmailConfiguration")
             .Get<EmailConfiguration>();
         services.AddSingleton(emailConfig);
-        
-        services.AddSingleton(emailConfig);
     }
 }
