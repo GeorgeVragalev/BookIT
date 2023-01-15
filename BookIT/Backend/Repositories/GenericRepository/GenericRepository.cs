@@ -1,5 +1,6 @@
 ﻿using Backend.Data;
 using Backend.Entities.Shared;
+using Backend.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories.GenericRepository;
@@ -16,9 +17,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, IBase
         _dbSet = context.Set<T>();
     }
 
-    public Task<List<T>> GetAll()
+    public IQueryable<User> GetAll()
     {
-        return Table.ToListAsync();
+        return null;
     }
 
     public async Task<T?> GetById(int id)

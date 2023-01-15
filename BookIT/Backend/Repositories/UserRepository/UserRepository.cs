@@ -16,9 +16,9 @@ public class UserRepository : IUserRepository
         _userStore = userStore;
     }
 
-    public Task<List<User>> GetAll()
+    public IQueryable<User> GetAll()
     {
-        return _repository.GetAll();
+        return _userManager.Users;
     }
 
     public Task<User?> GetById(int id)

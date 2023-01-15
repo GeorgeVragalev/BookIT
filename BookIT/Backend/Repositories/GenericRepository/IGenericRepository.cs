@@ -1,8 +1,10 @@
-﻿namespace Backend.Repositories.GenericRepository;
+﻿using Backend.Entities.Users;
+
+namespace Backend.Repositories.GenericRepository;
 
 public interface IGenericRepository<T>
 {
-    public Task<List<T>> GetAll();
+    public IQueryable<User> GetAll();
     public Task<T?> GetById(int id);
     public Task Save(T item);
     public Task Update(T item);
