@@ -21,4 +21,9 @@ public class UserService : IUserService
     {
         return _userRepository.GetById(id);
     }
+
+    public IQueryable<User> GetAll()
+    {
+        return _userRepository.GetAll();
+    }
 }

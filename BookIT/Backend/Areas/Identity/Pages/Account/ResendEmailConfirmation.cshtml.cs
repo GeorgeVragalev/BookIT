@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,9 @@ using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authorization;
 using Backend.Entities.Users;
+using Backend.Helpers;
+using Backend.Models;
+using Backend.Services.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +37,8 @@ namespace Backend.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
+
+        public bool SuccessRequest { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -63,7 +69,9 @@ namespace Backend.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                ModelState.AddModelError(string.Empty,
+                    "We could not find any user with such an email. Please make sure you use the email your registered with.");
+                SuccessRequest = false;
                 return Page();
             }
 
@@ -73,14 +81,11 @@ namespace Backend.Areas.Identity.Pages.Account
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { userId = userId, code = code },
+                values: new {userId = userId, code = code},
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                Input.Email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            SuccessRequest = true;
             return Page();
         }
     }

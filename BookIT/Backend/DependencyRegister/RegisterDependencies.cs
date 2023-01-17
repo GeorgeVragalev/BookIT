@@ -23,7 +23,7 @@ public static class RegisterDependencies
         //Services
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IEmailSender, EmailService>();
+        services.AddScoped<IEmailSender, EmailSender>();
         
         services.AddScoped<IStrategy, UserImportStrategy>();
         services.AddScoped(typeof(ICsvImport), typeof(CsvImport));
@@ -35,8 +35,6 @@ public static class RegisterDependencies
         var emailConfig = configurationManager
             .GetSection("EmailConfiguration")
             .Get<EmailConfiguration>();
-        services.AddSingleton(emailConfig);
-        
         services.AddSingleton(emailConfig);
     }
 }

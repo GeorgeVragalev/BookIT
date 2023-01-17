@@ -14,6 +14,8 @@
     <ItemGroup>
         <PackageReference Include="CsvHelper" Version="30.0.1" />
         <PackageReference Include="EntityFramework" Version="6.4.4" />
+        <PackageReference Include="jQuery" Version="3.6.3" />
+        <PackageReference Include="jQuery.UI.Combined" Version="1.13.2" />
         <PackageReference Include="MailKit" Version="3.4.3" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
@@ -31,6 +33,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
         <PackageReference Include="MimeKit" Version="3.4.3" />
         <PackageReference Include="PasswordGenerator" Version="2.1.0" />
@@ -39,6 +42,11 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Testing\Restricted.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Login\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\LoginWith2Fa\LoginWith2Fa.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\RegisterConfirmation\RegisterConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Register\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\LoginWithRecoveryCode\LoginWithRecoveryCode.cshtml" />
     </ItemGroup>
 
 </Project>

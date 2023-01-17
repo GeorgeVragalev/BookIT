@@ -5,7 +5,14 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<h2>Enter your email.</h2>
+@if (Model.SuccessRequest)
+{
+    <h4>We have sent you and email for confirming your email. Please check your inbox, as well as span.</h4>
+}
+else
+{
+    <h2>Enter your email.</h2>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">

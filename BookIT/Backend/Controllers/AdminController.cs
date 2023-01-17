@@ -17,6 +17,7 @@ using PasswordGenerator;
 namespace Backend.Controllers;
 
 [Authorize(Roles = "Administrator")]
+[AutoValidateAntiforgeryToken]
 public class AdminController : Controller
 {
     private readonly RoleManager<Role> _roleManager;
@@ -45,6 +46,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateUser(UserModel model)
     {
         if (ModelState.IsValid)

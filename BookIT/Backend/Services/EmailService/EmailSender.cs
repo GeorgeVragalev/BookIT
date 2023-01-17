@@ -6,11 +6,11 @@ using MimeKit;
 
 namespace Backend.Services.EmailService;
 
-public class EmailService : IEmailSender
+public class EmailSender : IEmailSender
 {
     private readonly EmailConfiguration _emailConfig;
 
-    public EmailService(EmailConfiguration emailConfig)
+    public EmailSender(EmailConfiguration emailConfig)
     {
         _emailConfig = emailConfig;
     }

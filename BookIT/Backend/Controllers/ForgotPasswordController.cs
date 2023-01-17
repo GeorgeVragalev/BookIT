@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
+[AutoValidateAntiforgeryToken]
 public class ForgotPasswordController : Controller
 {
     private readonly UserManager<User> _userManager;

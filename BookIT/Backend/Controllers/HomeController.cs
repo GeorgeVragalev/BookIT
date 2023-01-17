@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
+[AutoValidateAntiforgeryToken]
 public class HomeController : Controller
 {
     public IActionResult Index()
