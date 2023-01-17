@@ -38,6 +38,10 @@ public class EmailService : IEmailSender
             client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
             client.Send(mailMessage);
         }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to send email! Exception: {e}");
+        }
         finally
         {
             client.Disconnect(true);

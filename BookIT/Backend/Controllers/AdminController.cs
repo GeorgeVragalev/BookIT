@@ -4,6 +4,8 @@ using Backend.Entities.Roles;
 using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
+using Backend.Services.DataImport;
+using Backend.Services.DataImport.Stategy;
 using Backend.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +23,7 @@ public class AdminController : Controller
     private readonly UserManager<User> _userManager;
     private readonly IUserService _userService;
     private readonly IEmailSender _emailSender;
-
+    private readonly ICsvImport _csvImport;
     public AdminController(RoleManager<Role> roleManager, IUserService userService, UserManager<User> userManager,
         IEmailSender emailSender)
     {
@@ -29,6 +31,7 @@ public class AdminController : Controller
         _userService = userService;
         _userManager = userManager;
         _emailSender = emailSender;
+        _csvImport = new CsvImport(new UserImportStrategy(userService));
     }
 
     [HttpGet]
@@ -45,12 +48,15 @@ public class AdminController : Controller
     public async Task<IActionResult> CreateUser(UserModel model)
     {
         if (ModelState.IsValid)
-        {
+        {      
+            _csvImport.ImportData("C:\\Users\\vraga\\Downloads\\users.csv");
+
             var user = new User()
             {
                 Email = model.Email,
                 PasswordHash = new Password(16).Next(),
-                SecurityStamp =  Guid.NewGuid().ToString()
+                SecurityStamp =  Guid.NewGuid().ToString(),
+                EmailConfirmed = true
             };
 
             await _userService.Save(user);
@@ -77,5 +83,11 @@ public class AdminController : Controller
         }
 
         return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult ImportUsers(IFormFile formFile)
+    {
+        return LocalRedirect(Url.Content("~/"));
     }
 }

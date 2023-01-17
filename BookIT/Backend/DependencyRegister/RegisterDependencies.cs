@@ -1,6 +1,8 @@
 ﻿using Backend.Models;
 using Backend.Repositories.GenericRepository;
 using Backend.Repositories.UserRepository;
+using Backend.Services.DataImport;
+using Backend.Services.DataImport.Stategy;
 using Backend.Services.EmailService;
 using Backend.Services.RoleService;
 using Backend.Services.UserService;
@@ -22,6 +24,9 @@ public static class RegisterDependencies
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IEmailSender, EmailService>();
+        
+        services.AddScoped<IStrategy, UserImportStrategy>();
+        services.AddScoped(typeof(ICsvImport), typeof(CsvImport));
 
         //BackgroundTask
         services.AddHostedService<BackgroundTask.BackgroundTask>();
