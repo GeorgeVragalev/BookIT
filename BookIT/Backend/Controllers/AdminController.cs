@@ -24,7 +24,7 @@ public class AdminController : Controller
     private readonly UserManager<User> _userManager;
     private readonly IUserService _userService;
     private readonly IEmailSender _emailSender;
-    private readonly ICsvImport _csvImport;
+
     public AdminController(RoleManager<Role> roleManager, IUserService userService, UserManager<User> userManager,
         IEmailSender emailSender)
     {
@@ -32,7 +32,6 @@ public class AdminController : Controller
         _userService = userService;
         _userManager = userManager;
         _emailSender = emailSender;
-        _csvImport = new CsvImport(new UserImportStrategy(userService));
     }
 
     [HttpGet]
@@ -50,17 +49,18 @@ public class AdminController : Controller
     public async Task<IActionResult> CreateUser(UserModel model)
     {
         if (ModelState.IsValid)
-        {      
-            _csvImport.ImportData("C:\\Users\\vraga\\Downloads\\users.csv");
-
+        {
             var user = new User()
             {
                 Email = model.Email,
+                NormalizedEmail = model.Email.ToUpper(),
+                UserName = model.Email.Substring(0, model.Email.IndexOf("@")),
+                NormalizedUserName = model.Email.Substring(0, model.Email.IndexOf("@")).ToUpper(),
                 PasswordHash = new Password(16).Next(),
                 SecurityStamp =  Guid.NewGuid().ToString(),
+                PhoneNumberConfirmed = true,
                 EmailConfirmed = true
             };
-
             await _userService.Save(user);
 
             //assign role
@@ -85,11 +85,5 @@ public class AdminController : Controller
         }
 
         return View(model);
-    }
-
-    [HttpPost]
-    public IActionResult ImportUsers(IFormFile formFile)
-    {
-        return LocalRedirect(Url.Content("~/"));
     }
 }

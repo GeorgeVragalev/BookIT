@@ -10,6 +10,7 @@ public class User : IdentityUser<int>, IBaseEntity
     [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", 
         ErrorMessage = "Characters are not allowed.")]
     public string? FirstName { get; set; }
+    
     [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", 
         ErrorMessage = "Characters are not allowed.")]
     public string? LastName { get; set; }

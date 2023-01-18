@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Backend.Entities.Users;
 using Backend.Services.DataImport.Stategy;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -8,25 +7,29 @@ namespace Backend.Services.DataImport;
 
 public class CsvImport : ICsvImport
 {
-    private readonly IStrategy _strategy;
+    private IStrategy _strategy;
 
     public CsvImport(IStrategy strategy)
     {
         _strategy = strategy;
     }
 
-    public bool ImportData(string csvFileName)
+    public bool ImportData(IFormFile csvFileName)
     {
-        using var streamReader = File.OpenText(csvFileName);
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        using (var reader = new StreamReader(csvFileName.OpenReadStream()))
+        using (var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+               {
+                   PrepareHeaderForMatch = args => args.Header.ToLower(),
+                   MissingFieldFound = null,
+                   HeaderValidated = null
+               }))
         {
-            PrepareHeaderForMatch = args => args.Header.ToLower(),
-            MissingFieldFound = null,
-            HeaderValidated = null
-        };
-        
-        using var csvReader = new CsvReader(streamReader, config);
-        
-        return _strategy.Import(csvReader);
+            return _strategy.Import(csvReader);
+        }
+    }
+
+    public void SetStrategy(IStrategy strategy)
+    {
+        _strategy = strategy;
     }
 }

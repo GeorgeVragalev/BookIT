@@ -20,12 +20,14 @@ public class UserImportStrategy : IStrategy
     {
         try
         {
-            if (!IsCsvValid(csvReader))
+            var userModels = csvReader.GetRecords<UserModel>().ToList();
+
+            /*if (!IsCsvValid(csvReader))
             {
                 return false;
-            }
+            }*/
 
-            var userModels = csvReader.GetRecords<UserModel>();
+            
             foreach (var model in userModels)
             {
                 var user = model.ToEntity();
@@ -46,7 +48,7 @@ public class UserImportStrategy : IStrategy
     {
         try
         {
-            var userModels = csvReader.GetRecords<UserModel>();
+            var userModels = csvReader.GetRecords<UserModel>().ToList();
             return true;
         }
         catch (Exception e)
