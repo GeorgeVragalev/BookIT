@@ -4,6 +4,7 @@ using Backend.Repositories.UserRepository;
 using Backend.Services.DataImport;
 using Backend.Services.DataImport.Strategy;
 using Backend.Services.EmailService;
+using Backend.Services.ReCaptcha;
 using Backend.Services.RoleService;
 using Backend.Services.UserService;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -28,6 +29,9 @@ public static class RegisterDependencies
         services.AddScoped<IStrategy, UserImportStrategy>();
         services.AddScoped(typeof(ICsvImport), typeof(CsvImport));
 
+        services.AddScoped<IReCaptchaService, ReCaptchaService>();
+        // services.AddTransient<ReCaptchaService>();
+        
         //BackgroundTask
         services.AddHostedService<BackgroundTask.BackgroundTask>();
         
