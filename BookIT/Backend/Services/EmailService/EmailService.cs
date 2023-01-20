@@ -1,12 +1,10 @@
-﻿using Backend.Helpers;
-using Backend.Models;
+﻿using Backend.Models;
 using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using MimeKit;
 
 namespace Backend.Services.EmailService;
 
-public class EmailService : IEmailSender
+public class EmailService : IEmailService
 {
     private readonly EmailConfiguration _emailConfig;
 
@@ -15,20 +13,23 @@ public class EmailService : IEmailSender
         _emailConfig = emailConfig;
     }
 
-    public void SendEmail(string email, string subject, string htmlMessage)
+    public void SendEmail(Message message)
     {
-        var emailMessage = MessageHelper.PrepareEmailMessage(email, _emailConfig.From, subject, htmlMessage);
-        Execute(emailMessage);
+        var emailMessage = CreateEmailMessage(message);
+        Send(emailMessage);
     }
 
-    public Task SendEmailAsync(string email, string subject, string htmlMessage)
+    private MimeMessage CreateEmailMessage(Message message)
     {
-        var emailMessage = MessageHelper.PrepareEmailMessage(email, _emailConfig.From, subject, htmlMessage);
-        Execute(emailMessage);
-        return Task.CompletedTask;
+        var emailMessage = new MimeMessage();
+        emailMessage.From.Add(new MailboxAddress("email", _emailConfig.From));
+        emailMessage.To.AddRange(new[] {message.Receiver});
+        emailMessage.Subject = message.Subject;
+        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) {Text = message.Content};
+        return emailMessage;
     }
 
-    private void Execute(MimeMessage mailMessage)
+    private void Send(MimeMessage mailMessage)
     {
         using var client = new SmtpClient();
         try
@@ -37,10 +38,6 @@ public class EmailService : IEmailSender
             client.AuthenticationMechanisms.Remove("XOAUTH2");
             client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
             client.Send(mailMessage);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Failed to send email! Exception: {e}");
         }
         finally
         {
