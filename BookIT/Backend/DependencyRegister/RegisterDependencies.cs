@@ -22,6 +22,7 @@ public static class RegisterDependencies
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IReCaptchaService, ReCaptchaService>();
         // services.AddTransient<ReCaptchaService>();
         
         
