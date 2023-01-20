@@ -2,6 +2,7 @@
 using Backend.Repositories.GenericRepository;
 using Backend.Repositories.UserRepository;
 using Backend.Services.EmailService;
+using Backend.Services.ReCaptcha;
 using Backend.Services.RoleService;
 using Backend.Services.UserService;
 using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
@@ -21,7 +22,9 @@ public static class RegisterDependencies
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IEmailService, EmailService>();
-
+        // services.AddTransient<ReCaptchaService>();
+        
+        
         //BackgroundTask
         services.AddHostedService<BackgroundTask.BackgroundTask>();
         

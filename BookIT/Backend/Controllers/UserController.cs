@@ -1,7 +1,6 @@
 ﻿using Backend.Entities.Users;
 using Backend.Models.Sorting;
 using Backend.Services.UserService;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Backend.Controllers;
 
 // [Authorize(Roles = "Administrator")]
-[AutoValidateAntiforgeryToken]
 public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
