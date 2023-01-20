@@ -1,9 +1,9 @@
-﻿@* @using Backend.Models.Recaptcha *@
-@* <script src="https://www.google.com/recaptcha/api.js?render={@ReCaptchaCredentials.SiteKey}"></script> *@
-@* <script> *@
-@*         grecaptcha.ready(function () { *@
-@*             grecaptcha.execute('@ReCaptchaCredentials.SiteKey', { action: 'submit' }).then(function (token) { *@
-@*                 $("#input-token").val(token); *@
-@*             }); *@
-@*         }); *@
-@* </script> *@
+﻿@*Do not touch at all*@
+<script src="https://www.google.com/recaptcha/api.js?render=6LdtNhQkAAAAAH3DcT7tn_z2XtFI2SU2l23b3nPJ"></script>
+<script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LdtNhQkAAAAAH3DcT7tn_z2XtFI2SU2l23b3nPJ', { action: 'submit' }).then(function (token) {
+                $("#input-token").val(token);
+            }); 
+        });
+</script>

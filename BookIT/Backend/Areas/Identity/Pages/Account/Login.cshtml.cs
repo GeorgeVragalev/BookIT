@@ -99,7 +99,7 @@ namespace Backend.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                if (!await IsCaptchaValid())
+                if (!await _reCaptchaService.IsValid(Input.Token))
                 {
                     ModelState.AddModelError(string.Empty, "You are not a human");
                     return Page();
@@ -130,12 +130,6 @@ namespace Backend.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
-        }
-
-        private async Task<bool> IsCaptchaValid()
-        {
-            var reCaptchaResult = await _reCaptchaService.TokenVerify(Input.Token);
-            return reCaptchaResult!.Success && reCaptchaResult.Score >= 0.5;
         }
     }
 }

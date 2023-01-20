@@ -5,13 +5,12 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Encodings.Web;
 using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
 using Backend.Services.EmailService;
+using Backend.Services.ReCaptcha;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -22,11 +21,13 @@ namespace Backend.Areas.Identity.Pages.Account
     {
         private readonly UserManager<User> _userManager;
         private readonly IEmailService _emailService;
+        private readonly IReCaptchaService _reCaptchaService;
 
-        public ForgotPasswordModel(UserManager<User> userManager, IEmailService emailService)
+        public ForgotPasswordModel(UserManager<User> userManager, IEmailService emailService, IReCaptchaService reCaptchaService)
         {
             _userManager = userManager;
             _emailService = emailService;
+            _reCaptchaService = reCaptchaService;
         }
 
         /// <summary>
@@ -49,12 +50,20 @@ namespace Backend.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            public string Token { get; set; }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
+                if (!await _reCaptchaService.IsValid(Input.Token))
+                {
+                    ModelState.AddModelError(string.Empty, "You are not a human");
+                    return Page();
+                }
+                
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {

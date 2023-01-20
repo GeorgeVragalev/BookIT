@@ -38,10 +38,14 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            
+             @*Do not remote or style this*@
+             <input id="input-token" hidden="hidden" asp-for="Input.Token"/>
         </form>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <partial name="_Recaptcha"/>
 }

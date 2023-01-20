@@ -6,17 +6,6 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<script src="https://www.google.com/recaptcha/api.js?render=6LdtNhQkAAAAAH3DcT7tn_z2XtFI2SU2l23b3nPJ"></script>
-<script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LdtNhQkAAAAAH3DcT7tn_z2XtFI2SU2l23b3nPJ', { action: 'submit' }).then(function (token) {
-                // Add your logic to submit to your backend server here.
-                console.log(token);
-                $("#input-token").val(token);
-            });
-        });
-
-</script>
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -42,7 +31,6 @@
                         </label>
                     </div>
                 </div>
-                <input id="input-token" asp-for="Input.Token"/>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
@@ -56,13 +44,13 @@
                     <p>
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
-                </div>
+                </div> 
+                @*Do not remote or style this*@
+                <input id="input-token" hidden="hidden" asp-for="Input.Token"/>
             </form>
         </section>
     </div>
 </div>
-
-<script>$("#input-token").val(token);</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>

@@ -5,6 +5,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Backend.Entities.Users;
+using Backend.Services.ReCaptcha;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,10 +16,12 @@ namespace Backend.Areas.Identity.Pages.Account
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;
+        private readonly IReCaptchaService _reCaptchaService;
 
-        public ResetPasswordModel(UserManager<User> userManager)
+        public ResetPasswordModel(UserManager<User> userManager, IReCaptchaService reCaptchaService)
         {
             _userManager = userManager;
+            _reCaptchaService = reCaptchaService;
         }
 
         /// <summary>
@@ -67,6 +70,8 @@ namespace Backend.Areas.Identity.Pages.Account
             [Required]
             public string Code { get; set; }
 
+            [Required]
+            public string Token { get; set; }
         }
 
         public IActionResult OnGet(string code = null)
@@ -89,6 +94,12 @@ namespace Backend.Areas.Identity.Pages.Account
         {
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+            
+            if (!await _reCaptchaService.IsValid(Input.Token))
+            {
+                ModelState.AddModelError(string.Empty, "You are not a human");
                 return Page();
             }
 
