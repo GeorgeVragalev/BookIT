@@ -23,12 +23,12 @@ namespace Backend.Areas.Identity.Pages.Account
     public class ResendEmailConfirmationModel : PageModel
     {
         private readonly UserManager<User> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
 
-        public ResendEmailConfirmationModel(UserManager<User> userManager, IEmailSender emailSender)
+        public ResendEmailConfirmationModel(UserManager<User> userManager, IEmailService emailService)
         {
             _userManager = userManager;
-            _emailSender = emailSender;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -84,6 +84,8 @@ namespace Backend.Areas.Identity.Pages.Account
                 values: new {userId = userId, code = code},
                 protocol: Request.Scheme);
 
+            _emailService.SendEmail(new Message(user.Email, EmailType.ConfirmEmail.ToString(),
+                EmailConfirmationMessageHelper.GetEmailMessage(EmailType.ConfirmEmail, callbackUrl)));
             ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             SuccessRequest = true;
             return Page();

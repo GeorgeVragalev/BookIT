@@ -5,14 +5,12 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Encodings.Web;
 using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
 using Backend.Services.EmailService;
 using Backend.Services.ReCaptcha;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -22,14 +20,14 @@ namespace Backend.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
         private readonly IReCaptchaService _reCaptchaService;
 
-        public ForgotPasswordModel(UserManager<User> userManager, IReCaptchaService reCaptchaService, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<User> userManager, IEmailService emailService, IReCaptchaService reCaptchaService)
         {
             _userManager = userManager;
+            _emailService = emailService;
             _reCaptchaService = reCaptchaService;
-            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -83,10 +81,9 @@ namespace Backend.Areas.Identity.Pages.Account
                     values: new {area = "Identity", code},
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                _emailService.SendEmail(new Message(user.Email, EmailType.ResetPassword.ToString(),
+                    EmailConfirmationMessageHelper.GetEmailMessage(EmailType.ResetPassword, callbackUrl)));
+
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

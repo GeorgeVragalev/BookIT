@@ -1,17 +1,11 @@
-﻿using MimeKit;
-using MimeKit.Cryptography;
+﻿using System.Text.Encodings.Web;
 
 namespace Backend.Helpers;
 
 public static class MessageHelper
 {
-    public static MimeMessage PrepareEmailMessage(string emailTo, string emailFrom, string subject, string htmlMessage)
+    public static string PrepareMessage(string callbackUrl)
     {
-        var emailMessage = new MimeMessage();
-        emailMessage.From.Add(new MailboxAddress("emailFrom", emailFrom));
-        emailMessage.To.Add(new MailboxAddress("emailTo", emailTo));
-        emailMessage.Subject = subject;
-        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) {Text = htmlMessage};
-        return emailMessage;
+        return $"Please reset your password by <a href=\"{HtmlEncoder.Default.Encode(callbackUrl)}\">clicking here</a>.";
     }
 }

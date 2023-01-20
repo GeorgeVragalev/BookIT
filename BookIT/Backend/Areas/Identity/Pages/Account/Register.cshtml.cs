@@ -1,10 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Backend.Entities.Users;
 using Backend.Helpers;
@@ -12,7 +12,6 @@ using Backend.Models;
 using Backend.Services.EmailService;
 using Backend.Services.ReCaptcha;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -26,15 +25,15 @@ namespace Backend.Areas.Identity.Pages.Account
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
         private readonly IReCaptchaService _reCaptchaService;
 
         public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
+            ILogger<RegisterModel> logger, 
+            IEmailService emailService, 
             IReCaptchaService reCaptchaService)
         {
             _userManager = userManager;
@@ -42,7 +41,7 @@ namespace Backend.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            _emailService = emailService;
             _reCaptchaService = reCaptchaService;
         }
 
@@ -146,8 +145,8 @@ namespace Backend.Areas.Identity.Pages.Account
                         values: new {area = "Identity", userId = userId, code = code, returnUrl = returnUrl},
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    _emailService.SendEmail(new Message(user.Email, EmailType.ConfirmEmail.ToString(),
+                        EmailConfirmationMessageHelper.GetEmailMessage(EmailType.ConfirmEmail, callbackUrl)));
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

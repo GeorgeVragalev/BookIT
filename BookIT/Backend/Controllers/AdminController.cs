@@ -2,9 +2,7 @@
 using System.Text.Encodings.Web;
 using Backend.Entities.Roles;
 using Backend.Entities.Users;
-using Backend.Helpers;
 using Backend.Models;
-using Backend.Services.DataImport;
 using Backend.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -52,22 +50,24 @@ public class AdminController : Controller
             var user = new User()
             {
                 Email = model.Email,
-                NormalizedEmail = model.Email.ToUpper(),
-                UserName = model.Email.Substring(0, model.Email.IndexOf("@")),
-                NormalizedUserName = model.Email.Substring(0, model.Email.IndexOf("@")).ToUpper(),
                 PasswordHash = new Password(16).Next(),
-                SecurityStamp =  Guid.NewGuid().ToString(),
-                PhoneNumberConfirmed = true,
-                EmailConfirmed = true
+                SecurityStamp =  Guid.NewGuid().ToString()
             };
+
             await _userService.Save(user);
 
             //assign role
             await _userManager.AddToRoleAsync(user, model.Role.ToString());
 
+            var userId = user.Id;
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            var callbackUrl = UrlHelper.PrepareCallbackUrl(Url, Request, code, "/Account/ConfirmEmail", user.Id);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new {area = "Identity", userId = userId, code = code, returnUrl = Url.Content("~/")},
+                protocol: Request.Scheme);
 
             await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
