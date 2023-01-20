@@ -1,9 +1,9 @@
-﻿using Backend.Services.DataImport.Stategy;
+﻿using Backend.Services.DataImport.Strategy;
 
 namespace Backend.Services.DataImport;
 
 public interface ICsvImport
 {
-    public bool ImportData(IFormFile csvFileName);
-    public void SetStrategy(IStrategy strategy);
+    public Task<bool> ImportData(IFormFile csvFileName);
+    public Task SetStrategy(IStrategy strategy);
 }

@@ -2,7 +2,7 @@
 using Backend.Repositories.GenericRepository;
 using Backend.Repositories.UserRepository;
 using Backend.Services.DataImport;
-using Backend.Services.DataImport.Stategy;
+using Backend.Services.DataImport.Strategy;
 using Backend.Services.EmailService;
 using Backend.Services.RoleService;
 using Backend.Services.UserService;

@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using Backend.Services.DataImport.Stategy;
+using Backend.Services.DataImport.Strategy;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -14,8 +14,12 @@ public class CsvImport : ICsvImport
         _strategy = strategy;
     }
 
-    public bool ImportData(IFormFile csvFileName)
+    public async Task<bool> ImportData(IFormFile csvFileName)
     {
+        if (!IsCsvValid(csvFileName))
+        {
+            return false;
+        }
         using (var reader = new StreamReader(csvFileName.OpenReadStream()))
         using (var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
                {
@@ -24,12 +28,26 @@ public class CsvImport : ICsvImport
                    HeaderValidated = null
                }))
         {
-            return _strategy.Import(csvReader);
+            return await _strategy.Import(csvReader);
         }
     }
 
-    public void SetStrategy(IStrategy strategy)
+    public bool IsCsvValid(IFormFile file)
+    {
+        var ext = Path.GetExtension(file.FileName);
+        
+        if (ext.Equals(".csv"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public Task SetStrategy(IStrategy strategy)
     {
         _strategy = strategy;
+        return Task.CompletedTask;
     }
 }

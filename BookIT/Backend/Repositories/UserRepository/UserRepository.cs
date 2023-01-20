@@ -26,8 +26,13 @@ public class UserRepository : IUserRepository
         return _repository.GetById(id);
     }
 
+    public Task<User?> GetByEmail(string email)
+    {
+        return Task.FromResult(GetAll().FirstOrDefault(user => user.Email.Equals(email)));
+    }
+
     public Task Save(User user)
-    { 
+    {
         _userStore.SetUserNameAsync(user, user.Email, CancellationToken.None); 
         user.EmailConfirmed = true;
         user.PhoneNumberConfirmed = true; 

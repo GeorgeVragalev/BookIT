@@ -22,6 +22,11 @@ public class UserService : IUserService
         return _userRepository.GetById(id);
     }
 
+    public Task<User?> GetByEmail(string email)
+    {
+        return _userRepository.GetByEmail(email);
+    }
+
     public IQueryable<User> GetAll()
     {
         return _userRepository.GetAll();

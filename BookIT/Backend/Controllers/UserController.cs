@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Backend.Controllers;
 
 // [Authorize(Roles = "Administrator")]
-[AutoValidateAntiforgeryToken]
+// [AutoValidateAntiforgeryToken]
 public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
