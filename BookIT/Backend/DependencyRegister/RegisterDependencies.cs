@@ -23,7 +23,7 @@ public static class RegisterDependencies
         //Services
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IEmailSender, EmailSender>();
+        services.AddScoped<IEmailSender, EmailService>();
         
         services.AddScoped<IStrategy, UserImportStrategy>();
         services.AddScoped(typeof(ICsvImport), typeof(CsvImport));
