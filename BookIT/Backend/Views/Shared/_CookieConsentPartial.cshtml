@@ -5,18 +5,27 @@
     var showBanner = !consentFeature?.CanTrack ?? false;
     var cookieString = consentFeature?.CreateConsentCookie();
 }
-
 @if (showBanner)
 {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        This website uses cookies to ensure you get the best experience on our website. 
-        @if (Url.Action() != Url.Action("Privacy", "Home"))
-        {
-            <input type="button" id="btnRedirect" value="Learn More"/>
-        }
-        <button type="button" class="accept-policy close" data-dismiss="Salert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Accept</span>
-        </button>
+    <div id="cookieConsent" class="cookie-consent-banner">
+        <div class="cookie-consent-banner__inner">
+            <div class="cookie-consent-banner__copy">
+                <div class="cookie-consent-banner__header">THIS WEBSITE USES COOKIES</div>
+                <div class="cookie-consent-banner__description">We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services. You consent to our cookies if you continue to use our website.</div>
+            </div>
+
+            <div class="cookie-consent-banner__actions">
+                <a type="button" class="accept-policy close cookie-consent-banner__cta" data-dismiss="Salert" aria-label="Close" data-cookie-string="@cookieString">
+                    Accept
+                </a>
+                @if (Url.Action() != Url.Action("Privacy", "Home"))
+                {
+                    <a type="button" href="@Url.Action("Privacy", "Home")" class="cookie-consent-banner__cta cookie-consent-banner__cta--secondary">
+                        Learn more
+                    </a>
+                }
+            </div>
+        </div>
     </div>
 
     <script>
@@ -27,7 +36,7 @@
         });
         
         (function () {
-            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            var button = document.querySelector("#cookieConsent a[data-cookie-string]");
             button.addEventListener("click", function (event) {
                 document.cookie = button.dataset.cookieString;
 				var cookieContainer = document.querySelector("#cookieConsent");
