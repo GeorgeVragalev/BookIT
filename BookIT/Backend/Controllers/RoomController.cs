@@ -1,6 +1,9 @@
-﻿using Backend.Entities.Rooms;
+﻿using System.Data;
+using System.Globalization;
+using Backend.Entities.Rooms;
 using Backend.Helpers;
 using Backend.Models;
+using Backend.Models.Sorting;
 using Backend.Services.RoomFolder.RoomService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +12,7 @@ namespace Backend.Controllers;
 public class RoomController : Controller
 {
     private readonly IRoomService _roomService;
+
     // GET
     public RoomController(IRoomService roomService)
     {
@@ -17,40 +21,39 @@ public class RoomController : Controller
 
     public IActionResult Rooms()
     {
-        var rooms = List();
+        var rooms = _roomService.GetAll().ToModel();
 
         return View(rooms);
     }
 
-    private IList<RoomModel> List()
-    {
-        var newRoom = new Room()
-        {
-            Capacity = 10,
-            Id = 1,
-            Name = "303",
-            Facilities = new List<Facility>()
-        };
-
-        var fac1 = new Facility()
-        {
-            Id = 1,
-            Quantity = 2,
-            Room = newRoom,
-            RoomId = 1,
-            FacilityType = FacilityType.Projector
-        };
-
-        newRoom.Facilities.Add(fac1);
-
-        var rooms = new List<RoomModel>()
-        {
-            newRoom.ToModel()
-        };
-        // var rooms = _roomService.GetAll();
-
-        return rooms;
-    }
+    // private IList<RoomModel> List()
+    // {
+    //     // var newRoom = new Room()
+    //     // {
+    //     //     Capacity = 10,
+    //     //     Id = 1,
+    //     //     Name = "303",
+    //     //     Facilities = new List<Facility>()
+    //     // };
+    //     //
+    //     // var fac1 = new Facility()
+    //     // {
+    //     //     Id = 1,
+    //     //     Quantity = 2,
+    //     //     Room = newRoom,
+    //     //     RoomId = 1,
+    //     //     FacilityType = FacilityType.Projector
+    //     // };
+    //     //
+    //     // newRoom.Facilities.Add(fac1);
+    //     //
+    //     // var rooms = new List<RoomModel>()
+    //     // {
+    //     //     newRoom.ToModel()
+    //     // };
+    //
+    //     return rooms;
+    // }
 
     [HttpPost]
     public Task<JsonResult> GetRoomsList()
@@ -63,21 +66,20 @@ public class RoomController : Controller
         var pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
         var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
 
-        var data = List();
-        //get total count of data in table
+        var data = _roomService.GetAll().ToModel();
+
         var totalRecord = data.Count();
-        /*// search data when search value found
         if (!string.IsNullOrEmpty(searchValue))
         {
             data = SearchByValue(data, searchValue);
-        }*/
+        }
 
         var filterRecord = data.Count();
 
-        /*if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
+        if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
         {
             data = SortDataByColumn(data, sortColumn, sortColumnDirection);
-        }*/
+        }
 
         //pagination
         var empList = data.Skip(skip).Take(pageSize).ToList();
@@ -85,8 +87,39 @@ public class RoomController : Controller
         {
             draw = draw, recordsTotal = totalRecord, recordsFiltered = filterRecord, data = empList
         };
-        
+
         return Task.FromResult(new JsonResult(returnObj));
     }
 
+    private IList<RoomModel> SortDataByColumn(IList<RoomModel> data, string sortColumn, string sortColumnDirection)
+    {
+        return sortColumn switch
+        {
+            "Name" => SortName(data, sortColumnDirection),
+            "Capacity" => SortCapacity(data, sortColumnDirection),
+            _ => data
+        };
+    }
+    private IList<RoomModel> SortName(IList<RoomModel> data, string sortColumnDirection)
+    {
+        return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
+            ? data.OrderBy(u => u.Name).ToList()
+            : data.OrderByDescending(u => u.Name).ToList();
+    }
+    
+    private IList<RoomModel> SortCapacity(IList<RoomModel> data, string sortColumnDirection)
+    {
+        return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
+            ? data.OrderBy(u => u.Capacity).ToList()
+            : data.OrderByDescending(u => u.Capacity).ToList();
+    }
+    
+    private IList<RoomModel> SearchByValue(IList<RoomModel> data, string searchValue)
+    {
+        return data.Where(x =>
+            x.Name.ToLower().Contains(searchValue.ToLower()) ||
+            x.Capacity == int.Parse(searchValue, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite) ||
+            x.FacilityString.Contains(searchValue.ToLower())
+        ).ToList();
+    }
 }

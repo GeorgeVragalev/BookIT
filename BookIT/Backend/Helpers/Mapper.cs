@@ -21,10 +21,20 @@ public static class Mapper
         {
             Capacity = room.Capacity,
             Name = room.Name,
-            Facilities = room.Facilities.Select(f => f.ToModel()).ToList()
+            Facilities = room.Facilities.Select(f => f.ToModel()).ToList(),
+            FacilityString = PrepareFacilityString(room.Facilities)
         };
     }
-    
+
+    public static IList<RoomModel> ToModel(this IList<Room> models)
+    {
+        return models.Select(room => room.ToModel()).ToList();
+    }
+    private static string PrepareFacilityString(IEnumerable<Facility> roomFacilities)
+    {
+        return string.Join(", ", roomFacilities.Select(roomFacility => roomFacility.FacilityType.ToString()).ToArray());
+    }
+
     public static FacilityModel ToModel(this Facility facility)
     {
         return new FacilityModel()
