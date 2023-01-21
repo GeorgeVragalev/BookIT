@@ -6,7 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-Backend-089DAA83-943A-4CEF-A08D-46525E145457</UserSecretsId>
     </PropertyGroup>
-
+    
+    <Target Name="ScssToCss" BeforeTargets="Build">
+        <Exec Command="mkdir $(ProjectDir)wwwroot\css" Condition="!Exists('$(ProjectDir)wwwroot\css')" />
+        <Exec Command="sass $(ProjectDir)Styles\site.scss $(ProjectDir)wwwroot\css\site.css" />
+    </Target>
+    
     <ItemGroup>
         <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
     </ItemGroup>
