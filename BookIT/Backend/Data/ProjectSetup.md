@@ -31,3 +31,9 @@ https://docs.driveworkspro.com/topic/HowToConfigureWindowsFirewallForSQLServer
 * **dotnet ef database update 0**                              : sets the dat of migration to 0
 * **dotnet ef migrations add [name]**                          : add a new migration
 * **dotnet ef migrations remove**                              : remove previous migration
+
+
+### Install npm sass
+This is used to configure scss to be compiled in the solution
+
+**npm install --global sass**
