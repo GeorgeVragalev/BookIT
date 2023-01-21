@@ -7,6 +7,7 @@ using Backend.Services.EmailService;
 using Backend.Services.ReCaptcha;
 using Backend.Services.RoleService;
 using Backend.Services.UserService;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
 
@@ -30,7 +31,6 @@ public static class RegisterDependencies
         services.AddScoped(typeof(ICsvImport), typeof(CsvImport));
 
         services.AddScoped<IReCaptchaService, ReCaptchaService>();
-        // services.AddTransient<ReCaptchaService>();
         
         //BackgroundTask
         services.AddHostedService<BackgroundTask.BackgroundTask>();
@@ -40,5 +40,12 @@ public static class RegisterDependencies
             .GetSection("EmailConfiguration")
             .Get<EmailConfiguration>();
         services.AddSingleton(emailConfig);
+
+        services.Configure<CookiePolicyOptions>(options =>
+        {
+            // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.None; 
+        }); 
     }
 }

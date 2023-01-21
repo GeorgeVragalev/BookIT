@@ -43,7 +43,11 @@ public class Startup
             options.AddPolicy("SuperAdmin",
                 policy => policy.RequireRole("SuperAdmin"));
         });
-        
+        serviceCollection.Configure<CookiePolicyOptions>(options =>
+        {
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.Strict;
+        });
         RegisterDependencies.Register(serviceCollection, _configurationManager);
     }
 
@@ -58,17 +62,18 @@ public class Startup
             // app.UseExceptionHandler("/Home/Error");
             app.UseExceptionHandler("/Error/Error");
             app.UseHsts();
-            app.UseCookiePolicy(new CookiePolicyOptions()
-            {
-                HttpOnly = HttpOnlyPolicy.Always,
-                Secure = CookieSecurePolicy.Always,
-                MinimumSameSitePolicy = SameSiteMode.None
-            });
+            app.UseCookiePolicy();
+            // app.UseCookiePolicy(new CookiePolicyOptions()
+            // {
+            //     HttpOnly = HttpOnlyPolicy.Always,
+            //     Secure = CookieSecurePolicy.Always,
+            //     MinimumSameSitePolicy = SameSiteMode.None
+            // });
         }
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
+        app.UseRequestLocalization();
         app.UseRouting();
 
         app.UseAuthentication();
@@ -76,7 +81,6 @@ public class Startup
 
         RouteBuilder.Route(app);
         app.MapRazorPages();
-
         app.Run();
     }
 }
