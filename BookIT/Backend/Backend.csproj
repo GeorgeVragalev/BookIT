@@ -8,12 +8,15 @@
     </PropertyGroup>
     
     <Target Name="ScssToCss" BeforeTargets="Build">
+        <Exec WorkingDirectory="$(ProjectDir)" Command="npm install --global sass"/>
         <Exec Command="mkdir $(ProjectDir)wwwroot\css" Condition="!Exists('$(ProjectDir)wwwroot\css')" />
-        <Exec Command="sass $(ProjectDir)Styles\site.scss $(ProjectDir)wwwroot\css\site.css" />
+        <Exec Command="sass $(ProjectDir)wwwroot\scss\site.scss $(ProjectDir)wwwroot\css\index.css" />
     </Target>
     
     <ItemGroup>
         <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+        <None Include="wwwroot\scss\site.scss" />
+        <None Include="wwwroot\scss\_colors.scss" />
     </ItemGroup>
 
     <ItemGroup>
