@@ -1,0 +1,47 @@
+﻿@model IList<Backend.Models.RoomModel>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<!DOCTYPE html>
+<link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+<div class="container">
+    <div class="table-responsive">
+        <table id="myRoomTable" class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Capacity</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<script>
+       $(document).ready(
+           function () {
+           $('#myRoomTable').DataTable(
+               {
+                   ajax: {
+                       url: "GetRoomsList",
+                       type: "POST",
+                   },
+                   processing: true,
+                   serverSide: true,
+                   filter: true,
+                   columns: [
+                       { data: "name", name: "Name" },
+                       { data: "capacity", name: "Capacity" },
+                   ],
+                    columnDefs: [{
+                       "defaultContent": "-",
+                       "targets": "_all"
+                     }]
+               }
+           );
+       });
+</script>

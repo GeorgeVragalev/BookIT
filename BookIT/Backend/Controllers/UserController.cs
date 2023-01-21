@@ -62,16 +62,16 @@ public class UserController : Controller
         return Task.FromResult(new JsonResult(returnObj));
     }
 
-    private IQueryable<User> SearchByValue(IQueryable<User> data, string searchValue)
+    private IList<User> SearchByValue(IList<User> data, string searchValue)
     {
         //TODO: Remove nullable from First and LastName
         return data.Where(x =>
             x.Email.ToLower().Contains(searchValue.ToLower()) ||
             x.FirstName.ToLower().Contains(searchValue.ToLower()) ||
-            x.LastName.ToLower().Contains(searchValue.ToLower()));
+            x.LastName.ToLower().Contains(searchValue.ToLower())).ToList();
     }
 
-    private IQueryable<User> SortDataByColumn(IQueryable<User> data, string sortColumn, string sortColumnDirection)
+    private IList<User> SortDataByColumn(IList<User> data, string sortColumn, string sortColumnDirection)
     {
         return sortColumn switch
         {
@@ -82,24 +82,24 @@ public class UserController : Controller
         };
     }
 
-    private IQueryable<User> SortLastName(IQueryable<User> data, string sortColumnDirection)
+    private IList<User> SortLastName(IList<User> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
-            ? data.OrderBy(u => u.FirstName)
-            : data.OrderByDescending(u => u.FirstName);
+            ? data.OrderBy(u => u.FirstName).ToList()
+            : data.OrderByDescending(u => u.FirstName).ToList();
     }
 
-    private IQueryable<User> SortFirstName(IQueryable<User> data,string sortColumnDirection)
+    private IList<User> SortFirstName(IList<User> data,string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
-            ? data.OrderBy(u => u.FirstName)
-            : data.OrderByDescending(u => u.FirstName);
+            ? data.OrderBy(u => u.FirstName).ToList()
+            : data.OrderByDescending(u => u.FirstName).ToList();
     }
 
-    private IOrderedQueryable<User> SortEmail(IQueryable<User> data, string sortColumnDirection)
+    private IList<User> SortEmail(IList<User> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
-            ? data.OrderBy(u => u.Email)
-            : data.OrderByDescending(u => u.Email);
+            ? data.OrderBy(u => u.Email).ToList()
+            : data.OrderByDescending(u => u.Email).ToList();
     }
 }

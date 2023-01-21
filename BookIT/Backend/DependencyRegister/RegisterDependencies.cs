@@ -1,11 +1,15 @@
 ﻿using Backend.Models;
 using Backend.Repositories.GenericRepository;
+using Backend.Repositories.RoomFolder.FacilityRepository;
+using Backend.Repositories.RoomFolder.RoomRepository;
 using Backend.Repositories.UserRepository;
 using Backend.Services.DataImport;
 using Backend.Services.DataImport.Strategy;
 using Backend.Services.EmailService;
 using Backend.Services.ReCaptcha;
 using Backend.Services.RoleService;
+using Backend.Services.RoomFolder.FacilityService;
+using Backend.Services.RoomFolder.RoomService;
 using Backend.Services.UserService;
 using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
 
@@ -18,12 +22,16 @@ public static class RegisterDependencies
     {
         //Repository
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoomRepository, RoomRepository>();
+        services.AddScoped<IFacilityRepository, FacilityRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         //Services
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IRoomService, RoomService>();
+        services.AddScoped<IFacilityService, FacilityService>();
         
         services.AddScoped<IStrategy, UserImportStrategy>();
         services.AddScoped(typeof(ICsvImport), typeof(CsvImport));

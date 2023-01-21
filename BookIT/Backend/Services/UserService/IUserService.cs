@@ -4,8 +4,10 @@ namespace Backend.Services.UserService;
 
 public interface IUserService
 {
-    public Task Save(User user);
+    public IList<User> GetAll();
     public Task<User?> GetById(int id);
     public Task<User?> GetByEmail(string email);
-    IQueryable<User> GetAll();
+    public Task Save(User user);
+    public Task Update(User user);
+    public Task Delete(User user);
 }
