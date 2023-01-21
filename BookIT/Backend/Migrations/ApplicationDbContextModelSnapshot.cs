@@ -193,6 +193,30 @@ namespace Backend.Migrations
                     b.ToTable("TeacherSubjects");
                 });
 
+            modelBuilder.Entity("Backend.Entities.Users.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AboutMe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Students");
+                });
+
             modelBuilder.Entity("Backend.Entities.Users.Teacher", b =>
                 {
                     b.Property<int>("Id")
@@ -274,6 +298,9 @@ namespace Backend.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
@@ -293,6 +320,10 @@ namespace Backend.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique()
+                        .HasFilter("[StudentId] IS NOT NULL");
 
                     b.HasIndex("TeacherId")
                         .IsUnique()
@@ -434,6 +465,17 @@ namespace Backend.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("Backend.Entities.Users.Student", b =>
+                {
+                    b.HasOne("Backend.Entities.UniversityEntities.Group", "Group")
+                        .WithMany("Students")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
             modelBuilder.Entity("Backend.Entities.Users.Teacher", b =>
                 {
                     b.HasOne("Backend.Entities.UniversityEntities.Department", "Department")
@@ -447,9 +489,15 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Entities.Users.User", b =>
                 {
+                    b.HasOne("Backend.Entities.Users.Student", "Student")
+                        .WithOne("User")
+                        .HasForeignKey("Backend.Entities.Users.User", "StudentId");
+
                     b.HasOne("Backend.Entities.Users.Teacher", "Teacher")
                         .WithOne("User")
                         .HasForeignKey("Backend.Entities.Users.User", "TeacherId");
+
+                    b.Navigation("Student");
 
                     b.Navigation("Teacher");
                 });
@@ -515,9 +563,20 @@ namespace Backend.Migrations
                     b.Navigation("Teachers");
                 });
 
+            modelBuilder.Entity("Backend.Entities.UniversityEntities.Group", b =>
+                {
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("Backend.Entities.UniversityEntities.Subject", b =>
                 {
                     b.Navigation("TeacherSubjects");
+                });
+
+            modelBuilder.Entity("Backend.Entities.Users.Student", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Teacher", b =>

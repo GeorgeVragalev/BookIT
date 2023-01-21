@@ -10,6 +10,12 @@ namespace Backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
+                name: "StudentId",
+                table: "AspNetUsers",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
                 name: "TeacherId",
                 table: "AspNetUsers",
                 type: "int",
@@ -95,6 +101,27 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    GroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TeacherSubjects",
                 columns: table => new
                 {
@@ -119,11 +146,23 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_StudentId",
+                table: "AspNetUsers",
+                column: "StudentId",
+                unique: true,
+                filter: "[StudentId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_TeacherId",
                 table: "AspNetUsers",
                 column: "TeacherId",
                 unique: true,
                 filter: "[TeacherId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_GroupId",
+                table: "Students",
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_DepartmentId",
@@ -136,6 +175,13 @@ namespace Backend.Migrations
                 column: "TeacherId");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_Students_StudentId",
+                table: "AspNetUsers",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "Id");
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Teachers_TeacherId",
                 table: "AspNetUsers",
                 column: "TeacherId",
@@ -146,17 +192,24 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AspNetUsers_Teachers_TeacherId",
+                name: "FK_AspNetUsers_Students_StudentId",
                 table: "AspNetUsers");
 
-            migrationBuilder.DropTable(
-                name: "Groups");
+            migrationBuilder.DropForeignKey(
+                name: "FK_AspNetUsers_Teachers_TeacherId",
+                table: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Periods");
 
             migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
                 name: "TeacherSubjects");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "Subjects");
@@ -168,7 +221,15 @@ namespace Backend.Migrations
                 name: "Departments");
 
             migrationBuilder.DropIndex(
+                name: "IX_AspNetUsers_StudentId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropIndex(
                 name: "IX_AspNetUsers_TeacherId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "StudentId",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(

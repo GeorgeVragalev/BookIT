@@ -16,6 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
     public DbSet<Group> Groups { get; set; }
     public DbSet<Period> Periods { get; set; }
     public DbSet<Subject> Subjects { get; set; }
+    public DbSet<Student> Students { get; set; }
     public DbSet<Teacher> Teachers { get; set; }
     public DbSet<TeacherSubject> TeacherSubjects { get; set; }
 
