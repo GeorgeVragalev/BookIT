@@ -9,12 +9,23 @@
 @if (showBanner)
 {
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        Use this space to summarize your privacy and cookie use policy. <a asp-page="/Privacy">Learn More</a>.
+        This website uses cookies to ensure you get the best experience on our website. 
+        @if (Url.Action() != Url.Action("Privacy", "Home"))
+        {
+            <input type="button" id="btnRedirect" value="Learn More"/>
+        }
         <button type="button" class="accept-policy close" data-dismiss="Salert" aria-label="Close" data-cookie-string="@cookieString">
             <span aria-hidden="true">Accept</span>
         </button>
     </div>
+
     <script>
+        $(function(){
+          $("#btnRedirect").click(function(){
+            window.location.href = "@Url.Action("Privacy", "Home")";
+          });
+        });
+        
         (function () {
             var button = document.querySelector("#cookieConsent button[data-cookie-string]");
             button.addEventListener("click", function (event) {

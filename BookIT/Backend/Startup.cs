@@ -36,6 +36,12 @@ public class Startup
 
         serviceCollection.AddControllersWithViews();
 
+        serviceCollection.Configure<CookiePolicyOptions>(options =>
+        {
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.None;
+        });
+        
         serviceCollection.AddRazorPages();
 
         serviceCollection.AddAuthorization(options =>
@@ -43,11 +49,7 @@ public class Startup
             options.AddPolicy("SuperAdmin",
                 policy => policy.RequireRole("SuperAdmin"));
         });
-        serviceCollection.Configure<CookiePolicyOptions>(options =>
-        {
-            options.CheckConsentNeeded = context => true;
-            options.MinimumSameSitePolicy = SameSiteMode.Strict;
-        });
+
         RegisterDependencies.Register(serviceCollection, _configurationManager);
     }
 
@@ -59,18 +61,11 @@ public class Startup
         }
         else
         {
-            // app.UseExceptionHandler("/Home/Error");
             app.UseExceptionHandler("/Error/Error");
             app.UseHsts();
-            app.UseCookiePolicy();
-            // app.UseCookiePolicy(new CookiePolicyOptions()
-            // {
-            //     HttpOnly = HttpOnlyPolicy.Always,
-            //     Secure = CookieSecurePolicy.Always,
-            //     MinimumSameSitePolicy = SameSiteMode.None
-            // });
         }
-
+        
+        app.UseCookiePolicy();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRequestLocalization();

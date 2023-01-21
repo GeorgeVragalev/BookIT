@@ -100,7 +100,7 @@ namespace Backend.Areas.Identity.Pages.Account
             
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Insert first name")]
+            [Display(Name = "Insert last name")]
             public string LastName { get; set; }
 
             [Required]
