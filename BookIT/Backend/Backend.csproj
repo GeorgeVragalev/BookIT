@@ -8,7 +8,7 @@
     </PropertyGroup>
     
     <Target Name="ScssToCss" BeforeTargets="Build">
-        <Exec WorkingDirectory="$(ProjectDir)" Command="npm install --global sass" />
+<!--        <Exec WorkingDirectory="$(ProjectDir)" Command="npm install &#45;&#45;global sass" />-->
         <Exec Command="mkdir $(ProjectDir)wwwroot\css" Condition="!Exists('$(ProjectDir)wwwroot\css')" />
         <Exec Command="sass $(ProjectDir)wwwroot\scss\site.scss $(ProjectDir)wwwroot\css\index.css" />
     </Target>

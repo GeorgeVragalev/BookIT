@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using Backend.Entities.Shared;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,4 +15,9 @@ public class User : IdentityUser<int>, IBaseEntity
     [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", 
         ErrorMessage = "Characters are not allowed.")]
     public string? LastName { get; set; }
+    
+    public int? TeacherId { get; set; }
+    
+    [IgnoreDataMember]
+    public virtual Teacher Teacher { get; set; }
 }
