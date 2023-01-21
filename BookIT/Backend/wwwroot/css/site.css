@@ -1,19 +1,6 @@
 @import "CookieBanner/CookieBanner.css";
-html {
-  font-size: 14px;
+.my-class {
+  color: green;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
+/*# sourceMappingURL=site.css.map */
