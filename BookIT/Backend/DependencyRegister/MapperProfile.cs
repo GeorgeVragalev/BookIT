@@ -24,28 +24,28 @@ public class MapperProfile : Profile
 
         CreateMap<Lesson, EventModel>()
             .ForMember(dest =>
-                    dest.Group,
+                    dest.group,
                 opt => opt.MapFrom(src => (src.Group != null) ? src.Group.Name : ""))
             .ForMember(dest =>
-                    dest.Subject,
+                    dest.subject,
                 opt => opt.MapFrom(src => (src.Subject != null) ? src.Subject.Name : ""))
             .ForMember(dest =>
-                    dest.Room,
+                    dest.room,
                 opt => opt.MapFrom(src => (src.Room != null) ? src.Room.Name : ""))
             .ForMember(dest =>
-                    dest.Teacher,
+                    dest.teacher,
                 opt => opt.MapFrom(src =>
                     (src.Teacher != null && src.Teacher.User != null)
                         ? src.Teacher.User.FirstName + src.Teacher.User.LastName
                         : ""))
             .ForMember(dest =>
-                    dest.Title,
+                    dest.title,
                 opt => opt.MapFrom(src => src.Name))
             .ForMember(dest =>
-                    dest.Start,
-                opt => opt.MapFrom(src => src.TimePeriod.StartTime.ToString("MM/dd/yyyy HH:mm")))
+                    dest.start,
+                opt => opt.MapFrom(src => src.TimePeriod.StartTime.ToString("MM/dd/yyyy") + " " + src.TimePeriod.StartTime.ToString("HH:mm")))
             .ForMember(dest =>
-                    dest.End,
-                opt => opt.MapFrom(src => src.TimePeriod.EndTime.ToString("MM/dd/yyyy HH:mm"))).ReverseMap();
+                    dest.end,
+                opt => opt.MapFrom(src => src.TimePeriod.EndTime.ToString("MM/dd/yyyy") + " " + src.TimePeriod.EndTime.ToString("HH:mm"))).ReverseMap();
     }
 }

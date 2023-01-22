@@ -21,8 +21,6 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var lessons = _lessonService.GetAll();
-        ViewData["Events"] = _mapper.Map<IList<EventModel>>(lessons);
         return View();
     }
 
@@ -36,20 +34,14 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
-    
+
     [Route("findall")]
     public IActionResult FindAllEvents()
     {
-        var lessons = _lessonService.GetAll().Select(e => new
-        {
-            id = e.Id,
-            title = e.Name,
-            start = e.TimePeriod.StartTime.ToString("d") +" "+ e.TimePeriod.StartTime.ToString("t"),
-            end = e.TimePeriod.EndTime.ToString("d") +" "+ e.TimePeriod.EndTime.ToString("t"),
-            group = e.Group?.Name,
-            teacher = e.Teacher?.User?.GetFullName()
-        });
-        return new JsonResult(lessons);
-    }
+        var lessons = _lessonService.GetAll();
 
+        var events = _mapper.Map<IList<EventModel>>(lessons);
+
+        return new JsonResult(events);
+    }
 }
