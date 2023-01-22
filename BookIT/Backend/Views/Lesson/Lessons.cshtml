@@ -10,6 +10,11 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Group</th>
+                    <th>Subject</th>
+                    <th>Teacher</th>
+                    <th>Start</th>
+                    <th>End</th>
                 </tr>
             </thead>
         </table>
@@ -30,7 +35,12 @@
                    serverSide: true,
                    filter: true,
                    columns: [
-                       { data: "name", name: "Name" }
+                       { data: "name", name: "Name" },
+                       { data: "group.name", name: "Group" },
+                       { data: "subject.name", name: "Subject" },
+                       { data: "teacher.name", name: "Teacher" },
+                       { data: "timePeriod.startTime", name: "Start" },
+                       { data: "timePeriod.endTime", name: "End" },
                    ],
                     columnDefs: [{
                        "defaultContent": "-",

@@ -34,7 +34,9 @@ public class Startup
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
-        serviceCollection.AddControllers().AddJsonOptions(x =>
+        serviceCollection.AddControllers()
+            .AddRazorRuntimeCompilation()
+            .AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         serviceCollection.Configure<CookiePolicyOptions>(options =>
