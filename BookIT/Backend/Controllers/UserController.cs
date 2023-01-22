@@ -23,10 +23,9 @@ public class UserController : Controller
     
     public Task<IActionResult> UsersList()
     {
-        return View();
+        return Task.FromResult<IActionResult>(View());
     }
 
-    //TODO: Move sorting methods to another class (let's discuss)
     [HttpPost]
     public Task<JsonResult> GetUsersList()
     {

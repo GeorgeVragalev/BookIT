@@ -30,7 +30,6 @@ public class Startup
         serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
         serviceCollection.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
-            // .AddRoles<Role>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();

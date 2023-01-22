@@ -16,7 +16,7 @@ public static class Mapper
             NormalizedEmail = model.Email.ToUpper()
         };
     }
-    
+
     public static Group ToEntity(this GroupModel model)
     {
         return new Group()
@@ -24,10 +24,10 @@ public static class Mapper
             Name = model.Name
         };
     }
-    
+
     public static Department ToEntity(this DepartmentModel model)
     {
-        var teachers = model.Teachers.Select(s => s.ToEntity()).ToList();
+        var teachers = model.Teachers.Select(s => s?.ToEntity()).ToList();
 
         return new Department()
         {
@@ -35,10 +35,10 @@ public static class Mapper
             Teachers = teachers
         };
     }
-    
+
     public static Subject ToEntity(this SubjectModel model)
     {
-        var teachers = model.Teachers.Select(s => s.ToEntity()).ToList();
+        var teachers = model.Teachers.Select(s => s?.ToEntity()).ToList();
 
         return new Subject()
         {
@@ -49,22 +49,22 @@ public static class Mapper
             Teachers = teachers
         };
     }
-    
+
     public static Teacher ToEntity(this TeacherModel model)
     {
-        var subjects = model.Subjects.Select(s => s.ToEntity()).ToList();
+        var subjects = model.Subjects?.Select(s => s?.ToEntity()).ToList();
         return new Teacher()
         {
             Department = model.Department.ToEntity(),
             Quote = model.Quote,
             User = model.User.ToEntity(),
             AboutMe = model.AboutMe,
-            DepartmentId = model.Department.Id, 
+            DepartmentId = model.Department.Id,
             Subjects = subjects
         };
     }
-    
-    
+
+
     public static RoomModel ToModel(this Room room)
     {
         return new RoomModel()
@@ -76,31 +76,36 @@ public static class Mapper
             FacilityString = PrepareFacilityString(room.Facilities)
         };
     }
-    
+
     public static UserModel ToModel(this User user)
     {
         return new UserModel()
         {
             Id = user.Id,
-            Email = user.Email, 
+            Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            TeacherModel = user?.Teacher?.ToModel(),
-            StudentModel = user?.Student?.ToModel(),
+            TeacherModel = user.Teacher?.ToModel(),
+            StudentModel = user.Student?.ToModel(),
             Role = RoleEnum.Student
         };
     }
-    
-    public static TeacherModel ToModel(this Teacher teacher)
+
+    public static TeacherModel? ToModel(this Teacher? teacher)
     {
-        var subjects = teacher?.Subjects?.Select(s => s.ToModel()).ToList();
-        return new TeacherModel()
+        var subjects = teacher?.Subjects?.Select(s => s?.ToModel()).ToList();
+        if (teacher != null)
         {
-            Id = teacher.Id,
-            Department = teacher.Department.ToModel(),
-            Quote = teacher.Quote,
-            Subjects = subjects
-        };
+            return new TeacherModel
+            {
+                Id = teacher.Id,
+                Department = teacher.Department.ToModel(),
+                Quote = teacher.Quote,
+                Subjects = subjects
+            };
+        }
+
+        return null;
     }
 
     public static StudentModel ToModel(this Student student)
@@ -110,15 +115,15 @@ public static class Mapper
             Id = student.Id,
             Group = student.Group.ToModel(),
             User = student.User.ToModel(),
-            AboutMe = student.AboutMe, 
+            AboutMe = student.AboutMe,
         };
     }
-    
+
     public static IList<RoomModel> ToModel(this IList<Room> models)
     {
         return models.Select(room => room.ToModel()).ToList();
     }
-    
+
     public static IList<UserModel> ToModel(this IList<User> models)
     {
         return models.Select(user => user.ToModel()).ToList();
@@ -138,11 +143,11 @@ public static class Mapper
             FacilityType = facility.FacilityType
         };
     }
-    
-    public static DepartmentModel ToModel(this Department department)
+
+    public static DepartmentModel ToModel(this Department? department)
     {
         var teachers = department.Teachers.Select(t => t.ToModel()).ToList();
-        
+
         return new DepartmentModel()
         {
             Id = department.Id,
@@ -150,10 +155,10 @@ public static class Mapper
             Teachers = teachers
         };
     }
-    
-    public static SubjectModel ToModel(this Subject subject)
+
+    public static SubjectModel? ToModel(this Subject subject)
     {
-        var teachers = subject.Teachers?.Select(t => t.ToModel()).ToList();
+        var teachers = subject.Teachers.Select(t => t.ToModel()).ToList();
 
         return new SubjectModel()
         {
@@ -165,8 +170,8 @@ public static class Mapper
             Name = subject.Name
         };
     }
-    
-    public static GroupModel ToModel(this Group group)
+
+    public static GroupModel ToModel(this Group? group)
     {
         var students = group.Students.Select(s => s.ToModel()).ToList();
         return new GroupModel()

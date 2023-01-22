@@ -10,5 +10,5 @@ public class SubjectModel : IBaseEntity
     public int? Laboratories { get; set; }
     public int? Exams { get; set; }
     public int? Hours { get; set; }
-    public virtual IList<TeacherModel> Teachers { get; set; }
+    public virtual List<TeacherModel?> Teachers { get; set; }
 }

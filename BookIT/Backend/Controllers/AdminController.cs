@@ -77,7 +77,7 @@ public class AdminController : Controller
                 var group = _groupService.GetAll().FirstOrDefault();
                 var student = new Student()
                 {
-                    GroupId = group.Id,
+                    GroupId = group?.Id,
                     Group = group,
                     AboutMe = "dadf",
                     UserId = user.Id,
@@ -98,7 +98,7 @@ public class AdminController : Controller
                     Quote = "If you reach it",
                     AboutMe = "Best teacher",
                     UserId = user.Id,
-                    DepartmentId = dep.Id,
+                    DepartmentId = dep?.Id,
                     Department = dep,
                     User = user,
                     Subjects = subjects
