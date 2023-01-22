@@ -1,6 +1,7 @@
 ﻿using Backend.Entities.LessonEntities;
 using Backend.Entities.Rooms;
 using Backend.Entities.UniversityEntities;
+using Backend.Entities.Users;
 using Backend.Services.Rooms.RoomService;
 using Backend.Services.University.DepartmentService;
 using Backend.Services.University.GroupService;
@@ -63,14 +64,41 @@ public class DummySeedService : IDummySeedService
             Capacity = 30,
             Name = "FAF-CAB"
         };
-       
-        
-        await _roomService.Save(fafCab);
-        await _timePeriodService.Save(firstLesson);
-        await _groupService.Save(faf203);
-        await _departmentService.Save(fcim);
-        await _subjectService.Save(tmps);
 
+
+        if (_groupService.GetAll().Count == 0)
+        {
+            await _groupService.Save(faf203);
+        }
+        
+        if (_roomService.GetAll().Count == 0)
+        {
+            await _roomService.Save(fafCab);
+        }
+        
+        if (_departmentService.GetAll().Count == 0)
+        {
+            await _departmentService.Save(fcim);
+        }
+        
+        if (_subjectService.GetAll().Count == 0)
+        {
+            await _subjectService.Save(tmps);
+        }
+        
+        if (_timePeriodService.GetAll().Count == 0)
+        {
+            await _timePeriodService.Save(firstLesson);
+        }
+        
+        var teacher = new Teacher()
+        {
+            Department = fcim,
+            DepartmentId = fcim.Id,
+            Quote = "If you reach it",
+
+        };
+            
         var lesson = new Lesson()
         {
             Group = faf203,
@@ -83,8 +111,13 @@ public class DummySeedService : IDummySeedService
             TimePeriod = firstLesson,
             Room = fafCab,
             RoomId = fafCab.Id,
+            // Teacher = teacher,
+            // TeacherId = teacher.Id
         };
-
-        await _lessonService.Save(lesson);
+        
+        if (_lessonService.GetAll().Count == 0)
+        {
+            await _lessonService.Save(lesson);
+        }
     }
 }

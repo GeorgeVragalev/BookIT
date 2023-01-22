@@ -82,7 +82,29 @@ public class ImportController : Controller
         
         return RedirectToAction("Index");
     }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Groups(IFormFile file)
+    {
+        await _csvImport.SetStrategy(_groupImportStrategy);
 
+        await ImportData(file);
+        
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Subjects(IFormFile file)
+    {
+        await _csvImport.SetStrategy(_subjectImportStrategy);
+
+        await ImportData(file);
+        
+        return RedirectToAction("Index");
+    }
+    
     private async Task ImportData(IFormFile file)
     {
         try

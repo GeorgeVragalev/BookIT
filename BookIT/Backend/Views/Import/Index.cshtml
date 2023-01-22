@@ -32,3 +32,23 @@
         @ViewBag.Message
     </div>
 }
+
+<h2>Upload Groups</h2>
+@using(Html.BeginForm("Groups","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
+{
+    <div>
+        @Html.TextBox("file", "", new {  type= "file"}) <br />
+        <input type="submit" value="Upload Groups" accept=".xls,.xlsx,.csv"/>
+        @ViewBag.Message
+    </div>
+}
+
+<h2>Upload Subjects</h2>
+@using(Html.BeginForm("Subjects","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
+{
+    <div>
+        @Html.TextBox("file", "", new {  type= "file"}) <br />
+        <input type="submit" value="Upload Subjects" accept=".xls,.xlsx,.csv"/>
+        @ViewBag.Message
+    </div>
+}
