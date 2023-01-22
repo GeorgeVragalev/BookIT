@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230122102226_university")]
+    [Migration("20230122193816_university")]
     partial class university
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,53 @@ namespace Backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Backend.Entities.LessonEntities.Lesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TimePeriodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WeekType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.HasIndex("TimePeriodId");
+
+                    b.ToTable("Lessons");
+                });
 
             modelBuilder.Entity("Backend.Entities.Roles.Role", b =>
                 {
@@ -132,28 +179,6 @@ namespace Backend.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("Backend.Entities.UniversityEntities.Period", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("WeekDay")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Periods");
-                });
-
             modelBuilder.Entity("Backend.Entities.UniversityEntities.Subject", b =>
                 {
                     b.Property<int>("Id")
@@ -180,6 +205,28 @@ namespace Backend.Migrations
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("Backend.Entities.UniversityEntities.TimePeriod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WeekDay")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TimePeriods");
+                });
+
             modelBuilder.Entity("Backend.Entities.Users.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -191,7 +238,7 @@ namespace Backend.Migrations
                     b.Property<string>("AboutMe")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -215,7 +262,7 @@ namespace Backend.Migrations
                     b.Property<string>("AboutMe")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Quote")
@@ -437,6 +484,41 @@ namespace Backend.Migrations
                     b.ToTable("SubjectTeacher");
                 });
 
+            modelBuilder.Entity("Backend.Entities.LessonEntities.Lesson", b =>
+                {
+                    b.HasOne("Backend.Entities.UniversityEntities.Group", "Group")
+                        .WithMany("Lessons")
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Backend.Entities.Rooms.Room", "Room")
+                        .WithMany("Lessons")
+                        .HasForeignKey("RoomId");
+
+                    b.HasOne("Backend.Entities.UniversityEntities.Subject", "Subject")
+                        .WithMany("Lessons")
+                        .HasForeignKey("SubjectId");
+
+                    b.HasOne("Backend.Entities.Users.Teacher", "Teacher")
+                        .WithMany("Lessons")
+                        .HasForeignKey("TeacherId");
+
+                    b.HasOne("Backend.Entities.UniversityEntities.TimePeriod", "TimePeriod")
+                        .WithMany("Lessons")
+                        .HasForeignKey("TimePeriodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Room");
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
+
+                    b.Navigation("TimePeriod");
+                });
+
             modelBuilder.Entity("Backend.Entities.Rooms.Facility", b =>
                 {
                     b.HasOne("Backend.Entities.Rooms.Room", "Room")
@@ -452,9 +534,7 @@ namespace Backend.Migrations
                 {
                     b.HasOne("Backend.Entities.UniversityEntities.Group", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
@@ -463,9 +543,7 @@ namespace Backend.Migrations
                 {
                     b.HasOne("Backend.Entities.UniversityEntities.Department", "Department")
                         .WithMany("Teachers")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
@@ -554,6 +632,8 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Rooms.Room", b =>
                 {
                     b.Navigation("Facilities");
+
+                    b.Navigation("Lessons");
                 });
 
             modelBuilder.Entity("Backend.Entities.UniversityEntities.Department", b =>
@@ -563,19 +643,31 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Entities.UniversityEntities.Group", b =>
                 {
+                    b.Navigation("Lessons");
+
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("Backend.Entities.UniversityEntities.Subject", b =>
+                {
+                    b.Navigation("Lessons");
+                });
+
+            modelBuilder.Entity("Backend.Entities.UniversityEntities.TimePeriod", b =>
+                {
+                    b.Navigation("Lessons");
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Student", b =>
                 {
-                    b.Navigation("User")
-                        .IsRequired();
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Teacher", b =>
                 {
-                    b.Navigation("User")
-                        .IsRequired();
+                    b.Navigation("Lessons");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

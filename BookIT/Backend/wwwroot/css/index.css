@@ -96,7 +96,7 @@
   border: none !important;
 }
 #calendar .fc-list-heading {
-  border-bottom: 3px solid #f2208a;
+  border-bottom: 8px solid #f2208a;
 }
 #calendar .fc-list-heading .fc-widget-heade {
   background: transparent;
@@ -150,6 +150,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  border: 1px solid red;
 }
 .sidebar .list__item {
   font-size: 2rem;

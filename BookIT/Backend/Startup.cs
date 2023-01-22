@@ -3,7 +3,6 @@ using Backend.Data;
 using Backend.DependencyRegister;
 using Backend.Entities.Roles;
 using Backend.Entities.Users;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RouteBuilder = Backend.DependencyRegister.RouteBuilder;
@@ -34,7 +33,9 @@ public class Startup
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
-        serviceCollection.AddControllers().AddJsonOptions(x =>
+        serviceCollection.AddControllers()
+            .AddRazorRuntimeCompilation()
+            .AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         serviceCollection.Configure<CookiePolicyOptions>(options =>

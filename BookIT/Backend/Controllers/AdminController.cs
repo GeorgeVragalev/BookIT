@@ -34,7 +34,8 @@ public class AdminController : Controller
     private readonly ISubjectService _subjectService;
 
     public AdminController(RoleManager<Role> roleManager, IUserService userService, UserManager<User> userManager,
-        IEmailSender emailSender, IStudentService studentService, ITeacherService teacherService, IDepartmentService departmentService, IGroupService groupService, ISubjectService subjectService)
+        IEmailSender emailSender, IStudentService studentService, ITeacherService teacherService, IDepartmentService departmentService, 
+        IGroupService groupService, ISubjectService subjectService)
     {
         _roleManager = roleManager;
         _userService = userService;

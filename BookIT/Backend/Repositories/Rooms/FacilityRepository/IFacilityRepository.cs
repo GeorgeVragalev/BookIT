@@ -1,12 +1,9 @@
 ﻿using Backend.Entities.Rooms;
+using Backend.Repositories.GenericRepository;
 
 namespace Backend.Repositories.Rooms.FacilityRepository;
 
-public interface IFacilityRepository
+public interface IFacilityRepository : IGenericRepository<Facility>
 {
-    public IQueryable<Facility> GetAll();
-    public Task<Facility?> GetById(int id);
-    public Task Save(Facility facility);
-    public Task Update(Facility facility);
-    public Task Delete(Facility facility);
+    
 }

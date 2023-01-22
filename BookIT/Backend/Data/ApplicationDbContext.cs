@@ -1,4 +1,5 @@
 ﻿using Backend.Configurations;
+using Backend.Entities.LessonEntities;
 using Backend.Entities.Roles;
 using Backend.Entities.Rooms;
 using Backend.Entities.UniversityEntities;
@@ -14,10 +15,11 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
     public DbSet<Facility> Facilities { get; set; }
     public DbSet<Department> Departments { get; set; }
     public DbSet<Group> Groups { get; set; }
-    public DbSet<TimePeriod> Periods { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<Teacher> Teachers { get; set; }
+    public DbSet<Lesson> Lessons { get; set; }
+    public DbSet<TimePeriod> TimePeriods { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     

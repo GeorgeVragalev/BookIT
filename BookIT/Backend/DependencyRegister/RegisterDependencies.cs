@@ -1,8 +1,10 @@
 ﻿using Backend.BackgroundTask;
 using Backend.Models;
 using Backend.Repositories.GenericRepository;
+using Backend.Repositories.LessonRepository;
 using Backend.Repositories.Rooms.FacilityRepository;
 using Backend.Repositories.Rooms.RoomRepository;
+using Backend.Repositories.TimePeriodRepository;
 using Backend.Repositories.University.DepartmentRepository;
 using Backend.Repositories.University.GroupRepository;
 using Backend.Repositories.University.SubjectRepository;
@@ -19,7 +21,9 @@ using Backend.Services.Rooms.FacilityService;
 using Backend.Services.Rooms.RoomService;
 using Backend.Services.University.DepartmentService;
 using Backend.Services.University.GroupService;
+using Backend.Services.University.LessonService;
 using Backend.Services.University.SubjectService;
+using Backend.Services.University.TimePeriodService;
 using Backend.Services.Users.StudentService;
 using Backend.Services.Users.TeacherService;
 using Backend.Services.Users.UserService;
@@ -47,6 +51,8 @@ public static class RegisterDependencies
         services.AddScoped<ISubjectRepository, SubjectRepository>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<IGroupRepository, GroupRepository>();
+        services.AddScoped<ILessonRepository, LessonRepository>();
+        services.AddScoped<ITimePeriodRepository, TimePeriodRepository>();
 
         //Services
         services.AddScoped<IRoleService, RoleService>();
@@ -59,6 +65,8 @@ public static class RegisterDependencies
         services.AddScoped<IGroupService, GroupService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<ISubjectService, SubjectService>();
+        services.AddScoped<ILessonService, LessonService>();
+        services.AddScoped<ITimePeriodService, TimePeriodService>();
         
         //Csv import
         services.AddScoped<IStrategy, UserImportStrategy>();
