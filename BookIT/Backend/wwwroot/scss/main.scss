@@ -12,6 +12,10 @@
   
   &__list {
     display: flex;
+    
+    .list__item {
+      list-style-type: none;
+    }
   }
 }
 

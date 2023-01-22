@@ -25,6 +25,9 @@
 <header >
     <na  class="header">
         <ul class="header__list list">
+            <li class="list__item" style="margin-left: 5.5rem">
+                <img src="~/logo.png" width="130px" />
+            </li>
             @if (User.IsInRole(RoleEnum.Administrator.ToString()))
             {
                 <li class="list__item">
@@ -38,9 +41,9 @@
    @if (SignInManager.IsSignedIn(User))
    {
        <aside class="sidebar">
-           <div class="d-flex flex-column flex-shrink-0 bg-light">
+           <div class="d-flex flex-column flex-shrink-0">
                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                   <li class="nav-item">
+                   <li >
                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
                            <i class="bi bi-house-door"></i>
                        </a>
