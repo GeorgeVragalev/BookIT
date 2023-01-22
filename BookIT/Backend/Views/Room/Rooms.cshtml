@@ -1,0 +1,51 @@
+﻿@model IList<Backend.Models.RoomModel>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="container">
+    <div class="table-responsive">
+        <table id="myRoomTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Capacity</th>
+                <th>Facilities</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<script>
+       $(document).ready(
+           function () {
+           $('#myRoomTable').DataTable(
+               {
+                   ajax: {
+                       url: "GetRoomsList",
+                       type: "POST",
+                   },
+                   processing: true,
+                   serverSide: true,
+                   filter: true,
+                   columns: [
+                       { data: "name", name: "Name" },
+                       { data: "capacity", name: "Capacity" },
+                       { data: "facilityString", name:"Facilities" },
+                   ],
+                    columnDefs: [{
+                       "defaultContent": "-",
+                       "targets": "_all"
+                     }]
+               }
+           );
+       });
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

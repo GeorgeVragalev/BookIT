@@ -1,16 +1,20 @@
-﻿using Backend.Entities.Users;
+﻿using Backend.Entities.Roles;
+using Backend.Entities.Rooms;
+using Backend.Entities.UniversityEntities;
+using Backend.Entities.Users;
 using Backend.Models;
 
 namespace Backend.Helpers;
 
 public static class Mapper
 {
-    public static User ToEntity(this UserModel model)
+    private static string PrepareFacilityString(IEnumerable<Facility> roomFacilities)
     {
-        return new User()
-        {
-            Email = model.Email,
-            NormalizedEmail = model.Email.ToUpper()
-        };
-    } 
+        return string.Join(", ", roomFacilities.Select(roomFacility => roomFacility.FacilityType.ToString()).ToArray());
+    }
+
+    private static string ListToString<T>(this IEnumerable<T> roomFacilities)
+    {
+        return string.Join(", ", roomFacilities.ToArray());
+    }
 }

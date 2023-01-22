@@ -2,7 +2,7 @@
 using Backend.Repositories.GenericRepository;
 using Microsoft.AspNetCore.Identity;
 
-namespace Backend.Repositories.UserRepository;
+namespace Backend.Repositories.Users.UserRepository;
 
 public class UserRepository : IUserRepository
 {

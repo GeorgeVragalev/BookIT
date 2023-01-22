@@ -16,7 +16,7 @@ public class EmailService : IEmailService
     public void SendEmail(Message message)
     {
         var emailMessage = CreateEmailMessage(message);
-        Send(emailMessage);
+        // Send(emailMessage);
     }
 
     private MimeMessage CreateEmailMessage(Message message)
@@ -34,7 +34,7 @@ public class EmailService : IEmailService
         using var client = new SmtpClient();
         try
         {
-            client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
+            client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, false);
             client.AuthenticationMechanisms.Remove("XOAUTH2");
             client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
             client.Send(mailMessage);

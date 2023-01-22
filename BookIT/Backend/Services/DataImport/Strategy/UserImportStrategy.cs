@@ -1,7 +1,8 @@
-﻿using Backend.Entities.Users;
+﻿using AutoMapper;
+using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
-using Backend.Services.UserService;
+using Backend.Services.Users.UserService;
 using CsvHelper;
 using Microsoft.AspNetCore.Identity;
 using PasswordGenerator;
@@ -19,7 +20,7 @@ public class UserImportStrategy : IStrategy
         _userManager = userManager;
     }
 
-    public async Task<bool> Import(CsvReader csvReader)
+    public async Task<bool> Import(IMapper mapper, CsvReader csvReader)
     {
         try
         {
@@ -27,9 +28,9 @@ public class UserImportStrategy : IStrategy
 
             foreach (var model in userModels)
             {
-                var user = model.ToEntity();
+                var user = mapper.Map<User>(model);
                 SetUserProperties(user);
-                await _userService.Save(user); 
+                await _userService.Save(user);
                 await _userManager.AddToRoleAsync(user, model.Role.ToString());
             }
 
@@ -45,9 +46,9 @@ public class UserImportStrategy : IStrategy
     private void SetUserProperties(User user)
     {
         var email = user.Email;
-        user.UserName =  email.Substring(0, email.IndexOf("@"));
+        user.UserName = email.Substring(0, email.IndexOf("@"));
         user.FirstName = email.Substring(0, email.IndexOf("."));
-        user.LastName =  email.Substring(email.IndexOf("."), email.IndexOf("@"));
+        user.LastName = email.Substring(email.IndexOf("."), email.IndexOf("@"));
         user.PasswordHash = new Password(16).Next();
         user.NormalizedUserName = email.Substring(0, email.IndexOf("@")).ToUpper();
         user.SecurityStamp = Guid.NewGuid().ToString();

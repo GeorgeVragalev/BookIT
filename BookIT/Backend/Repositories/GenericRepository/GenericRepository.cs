@@ -17,9 +17,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, IBase
         _dbSet = context.Set<T>();
     }
 
-    public IQueryable<User> GetAll()
+    public IQueryable<T> GetAll()
     {
-        return null;
+        return Table;
     }
 
     public async Task<T?> GetById(int id)

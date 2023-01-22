@@ -1,6 +1,9 @@
-﻿using Backend.Entities.Users;
+﻿using AutoMapper;
+using Backend.Entities.Users;
+using Backend.Helpers;
+using Backend.Models;
 using Backend.Models.Sorting;
-using Backend.Services.UserService;
+using Backend.Services.Users.UserService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,21 +15,20 @@ public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly IUserService _userService;
+    private readonly IMapper _mapper;
 
-    public UserController(UserManager<User> userManager, IUserService userService)
+    public UserController(UserManager<User> userManager, IUserService userService, IMapper mapper)
     {
         _userManager = userManager;
         _userService = userService;
+        _mapper = mapper;
     }
     
-    public async Task<IActionResult> UsersList()
+    public Task<IActionResult> UsersList()
     {
-        var users = await _userManager.Users.ToListAsync();
-
-        return View(users);
+        return Task.FromResult<IActionResult>(View());
     }
 
-    //TODO: Move sorting methods to another class (let's discuss)
     [HttpPost]
     public Task<JsonResult> GetUsersList()
     {
@@ -37,7 +39,8 @@ public class UserController : Controller
         var searchValue = Request.Form["search[value]"].FirstOrDefault();
         var pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
         var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
-        var data = _userService.GetAll();
+        var dbData = _userService.GetAll();
+        var data = _mapper.Map<IList<UserModel>>(dbData);
         //get total count of data in table
         var totalRecord = data.Count();
         // search data when search value found
@@ -62,16 +65,16 @@ public class UserController : Controller
         return Task.FromResult(new JsonResult(returnObj));
     }
 
-    private IQueryable<User> SearchByValue(IQueryable<User> data, string searchValue)
+    private IList<UserModel> SearchByValue(IList<UserModel> data, string searchValue)
     {
         //TODO: Remove nullable from First and LastName
         return data.Where(x =>
             x.Email.ToLower().Contains(searchValue.ToLower()) ||
             x.FirstName.ToLower().Contains(searchValue.ToLower()) ||
-            x.LastName.ToLower().Contains(searchValue.ToLower()));
+            x.LastName.ToLower().Contains(searchValue.ToLower())).ToList();
     }
 
-    private IQueryable<User> SortDataByColumn(IQueryable<User> data, string sortColumn, string sortColumnDirection)
+    private IList<UserModel> SortDataByColumn(IList<UserModel> data, string sortColumn, string sortColumnDirection)
     {
         return sortColumn switch
         {
@@ -82,24 +85,24 @@ public class UserController : Controller
         };
     }
 
-    private IQueryable<User> SortLastName(IQueryable<User> data, string sortColumnDirection)
+    private IList<UserModel> SortLastName(IList<UserModel> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
-            ? data.OrderBy(u => u.FirstName)
-            : data.OrderByDescending(u => u.FirstName);
+            ? data.OrderBy(u => u.FirstName).ToList()
+            : data.OrderByDescending(u => u.FirstName).ToList();
     }
 
-    private IQueryable<User> SortFirstName(IQueryable<User> data,string sortColumnDirection)
+    private IList<UserModel> SortFirstName(IList<UserModel> data,string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
-            ? data.OrderBy(u => u.FirstName)
-            : data.OrderByDescending(u => u.FirstName);
+            ? data.OrderBy(u => u.FirstName).ToList()
+            : data.OrderByDescending(u => u.FirstName).ToList();
     }
 
-    private IOrderedQueryable<User> SortEmail(IQueryable<User> data, string sortColumnDirection)
+    private IList<UserModel> SortEmail(IList<UserModel> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
-            ? data.OrderBy(u => u.Email)
-            : data.OrderByDescending(u => u.Email);
+            ? data.OrderBy(u => u.Email).ToList()
+            : data.OrderByDescending(u => u.Email).ToList();
     }
 }

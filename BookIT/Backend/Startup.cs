@@ -1,4 +1,5 @@
-﻿using Backend.Data;
+﻿using System.Text.Json.Serialization;
+using Backend.Data;
 using Backend.DependencyRegister;
 using Backend.Entities.Roles;
 using Backend.Entities.Users;
@@ -29,19 +30,19 @@ public class Startup
         serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
         serviceCollection.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
-            // .AddRoles<Role>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
-        serviceCollection.AddControllersWithViews();
+        serviceCollection.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         serviceCollection.Configure<CookiePolicyOptions>(options =>
         {
             options.CheckConsentNeeded = context => true;
             options.MinimumSameSitePolicy = SameSiteMode.None;
         });
-        
+
         serviceCollection.AddRazorPages();
         
         serviceCollection.AddControllersWithViews()
@@ -67,7 +68,7 @@ public class Startup
             app.UseExceptionHandler("/Error/Error");
             app.UseHsts();
         }
-        
+
         app.UseCookiePolicy();
         app.UseHttpsRedirection();
         app.UseStaticFiles();

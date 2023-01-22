@@ -1,7 +1,7 @@
 ﻿using Backend.Entities.Users;
 using Backend.Repositories.GenericRepository;
 
-namespace Backend.Repositories.UserRepository;
+namespace Backend.Repositories.Users.UserRepository;
 
 public interface IUserRepository : IGenericRepository<User>
 {

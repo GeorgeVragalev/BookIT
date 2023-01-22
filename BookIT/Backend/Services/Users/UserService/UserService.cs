@@ -1,7 +1,7 @@
 ﻿using Backend.Entities.Users;
-using Backend.Repositories.UserRepository;
+using Backend.Repositories.Users.UserRepository;
 
-namespace Backend.Services.UserService;
+namespace Backend.Services.Users.UserService;
 
 public class UserService : IUserService
 {
@@ -12,9 +12,9 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task Save(User user)
+    public IList<User> GetAll()
     {
-        await _userRepository.Save(user);
+        return _userRepository.GetAll().ToList();
     }
 
     public Task<User?> GetById(int id)
@@ -27,8 +27,18 @@ public class UserService : IUserService
         return _userRepository.GetByEmail(email);
     }
 
-    public IQueryable<User> GetAll()
+    public Task Save(User user)
     {
-        return _userRepository.GetAll();
+        return _userRepository.Save(user);
+    }
+
+    public Task Update(User user)
+    {
+        return _userRepository.Update(user);
+    }
+
+    public Task Delete(User user)
+    {
+        return _userRepository.Delete(user);
     }
 }
