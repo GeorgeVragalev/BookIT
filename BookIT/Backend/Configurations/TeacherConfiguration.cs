@@ -14,5 +14,9 @@ public class TeacherConfiguration : IEntityTypeConfiguration<Teacher>
 
         builder.Property(t => t.Quote).IsRequired(false);
         builder.Property(t => t.AboutMe).IsRequired(false);
+
+        builder
+            .HasMany(t => t.Subjects)
+            .WithMany(s => s.Teachers);
     }
 }

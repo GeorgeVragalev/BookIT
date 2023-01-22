@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230121223627_university")]
+    [Migration("20230122102226_university")]
     partial class university
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,21 +178,6 @@ namespace Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
-                });
-
-            modelBuilder.Entity("Backend.Entities.UniversityEntities.TeacherSubject", b =>
-                {
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SubjectId", "TeacherId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("TeacherSubjects");
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Student", b =>
@@ -437,6 +422,21 @@ namespace Backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SubjectTeacher", b =>
+                {
+                    b.Property<int>("SubjectsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeachersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubjectsId", "TeachersId");
+
+                    b.HasIndex("TeachersId");
+
+                    b.ToTable("SubjectTeacher");
+                });
+
             modelBuilder.Entity("Backend.Entities.Rooms.Facility", b =>
                 {
                     b.HasOne("Backend.Entities.Rooms.Room", "Room")
@@ -446,25 +446,6 @@ namespace Backend.Migrations
                         .IsRequired();
 
                     b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("Backend.Entities.UniversityEntities.TeacherSubject", b =>
-                {
-                    b.HasOne("Backend.Entities.UniversityEntities.Subject", "Subject")
-                        .WithMany("TeacherSubjects")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend.Entities.Users.Teacher", "Teacher")
-                        .WithMany("TeacherSubjects")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Student", b =>
@@ -555,6 +536,21 @@ namespace Backend.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SubjectTeacher", b =>
+                {
+                    b.HasOne("Backend.Entities.UniversityEntities.Subject", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Entities.Users.Teacher", null)
+                        .WithMany()
+                        .HasForeignKey("TeachersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Backend.Entities.Rooms.Room", b =>
                 {
                     b.Navigation("Facilities");
@@ -570,11 +566,6 @@ namespace Backend.Migrations
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("Backend.Entities.UniversityEntities.Subject", b =>
-                {
-                    b.Navigation("TeacherSubjects");
-                });
-
             modelBuilder.Entity("Backend.Entities.Users.Student", b =>
                 {
                     b.Navigation("User")
@@ -583,8 +574,6 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Entities.Users.Teacher", b =>
                 {
-                    b.Navigation("TeacherSubjects");
-
                     b.Navigation("User")
                         .IsRequired();
                 });

@@ -4,6 +4,9 @@ using Backend.Entities.Roles;
 using Backend.Entities.UniversityEntities;
 using Backend.Entities.Users;
 using Backend.Models;
+using Backend.Services.University.DepartmentService;
+using Backend.Services.University.GroupService;
+using Backend.Services.University.SubjectService;
 using Backend.Services.Users.StudentService;
 using Backend.Services.Users.TeacherService;
 using Backend.Services.Users.UserService;
@@ -26,15 +29,21 @@ public class AdminController : Controller
     private readonly IEmailSender _emailSender;
     private readonly IStudentService _studentService;
     private readonly ITeacherService _teacherService;
+    private readonly IGroupService _groupService;
+    private readonly IDepartmentService _departmentService;
+    private readonly ISubjectService _subjectService;
 
     public AdminController(RoleManager<Role> roleManager, IUserService userService, UserManager<User> userManager,
-        IEmailSender emailSender, IStudentService studentService, ITeacherService teacherService)
+        IEmailSender emailSender, IStudentService studentService, ITeacherService teacherService, IDepartmentService departmentService, IGroupService groupService, ISubjectService subjectService)
     {
         _roleManager = roleManager;
         _userService = userService;
         _userManager = userManager;
         _emailSender = emailSender;
         _studentService = studentService;
+        _departmentService = departmentService;
+        _groupService = groupService;
+        _subjectService = subjectService;
         _teacherService = teacherService;
     }
 
@@ -65,9 +74,11 @@ public class AdminController : Controller
 
             if (model.Role == RoleEnum.Student)
             {
+                var group = _groupService.GetAll().FirstOrDefault();
                 var student = new Student()
                 {
-                    GroupId = 1,
+                    GroupId = group.Id,
+                    Group = group,
                     AboutMe = "dadf",
                     UserId = user.Id,
                     User = user
@@ -80,13 +91,17 @@ public class AdminController : Controller
             }
             else if (model.Role == RoleEnum.Teacher)
             {
+                var dep = _departmentService.GetAll().FirstOrDefault();
+                var subjects = _subjectService.GetAll();
                 var teacher = new Teacher()
                 {
                     Quote = "If you reach it",
                     AboutMe = "Best teacher",
                     UserId = user.Id,
-                    DepartmentId = 1,
-                    User = user
+                    DepartmentId = dep.Id,
+                    Department = dep,
+                    User = user,
+                    Subjects = subjects
                 };
 
                 await _teacherService.Save(teacher);

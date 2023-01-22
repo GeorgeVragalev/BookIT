@@ -15,5 +15,5 @@ public class Teacher : IBaseEntity
     public int UserId { get; set; }
     public virtual User User { get; set; }
     
-    public virtual IList<TeacherSubject>? TeacherSubjects { get; set; }
+    public virtual IList<Subject>? Subjects { get; set; }
 }

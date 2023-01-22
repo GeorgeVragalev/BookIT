@@ -122,24 +122,24 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TeacherSubjects",
+                name: "SubjectTeacher",
                 columns: table => new
                 {
-                    TeacherId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                    SubjectsId = table.Column<int>(type: "int", nullable: false),
+                    TeachersId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeacherSubjects", x => new { x.SubjectId, x.TeacherId });
+                    table.PrimaryKey("PK_SubjectTeacher", x => new { x.SubjectsId, x.TeachersId });
                     table.ForeignKey(
-                        name: "FK_TeacherSubjects_Subjects_SubjectId",
-                        column: x => x.SubjectId,
+                        name: "FK_SubjectTeacher_Subjects_SubjectsId",
+                        column: x => x.SubjectsId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TeacherSubjects_Teachers_TeacherId",
-                        column: x => x.TeacherId,
+                        name: "FK_SubjectTeacher_Teachers_TeachersId",
+                        column: x => x.TeachersId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -165,14 +165,14 @@ namespace Backend.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubjectTeacher_TeachersId",
+                table: "SubjectTeacher",
+                column: "TeachersId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Teachers_DepartmentId",
                 table: "Teachers",
                 column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeacherSubjects_TeacherId",
-                table: "TeacherSubjects",
-                column: "TeacherId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Students_StudentId",
@@ -206,7 +206,7 @@ namespace Backend.Migrations
                 name: "Students");
 
             migrationBuilder.DropTable(
-                name: "TeacherSubjects");
+                name: "SubjectTeacher");
 
             migrationBuilder.DropTable(
                 name: "Groups");
