@@ -34,6 +34,11 @@ public static class Mapper
     {
         return string.Join(", ", roomFacilities.Select(roomFacility => roomFacility.FacilityType.ToString()).ToArray());
     }
+    
+    private static string ListToString<T>(this IEnumerable<T> roomFacilities)
+    {
+        return string.Join(", ", roomFacilities.ToArray());
+    }
 
     public static FacilityModel ToModel(this Facility facility)
     {
