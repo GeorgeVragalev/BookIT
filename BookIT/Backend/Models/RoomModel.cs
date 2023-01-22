@@ -9,4 +9,5 @@ public class RoomModel
     public string Name { get; set; }
     public int Capacity { get; set; }
     public IList<FacilityModel> Facilities { get; set; }
+    public string FacilityString { get; set; }
 }

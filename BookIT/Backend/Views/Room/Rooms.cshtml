@@ -5,15 +5,14 @@
 }
 
 
-<!DOCTYPE html>
-<link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
 <div class="container">
     <div class="table-responsive">
-        <table id="myRoomTable" class="table table-bordered">
+        <table id="myRoomTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
             <thead>
             <tr>
                 <th>Name</th>
                 <th>Capacity</th>
+                <th>Facilities</th>
             </tr>
             </thead>
         </table>
@@ -36,6 +35,7 @@
                    columns: [
                        { data: "name", name: "Name" },
                        { data: "capacity", name: "Capacity" },
+                       { data: "facilityString", name:"Facilities" },
                    ],
                     columnDefs: [{
                        "defaultContent": "-",
@@ -45,3 +45,7 @@
            );
        });
 </script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
