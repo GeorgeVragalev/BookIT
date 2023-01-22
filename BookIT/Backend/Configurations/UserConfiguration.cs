@@ -15,9 +15,6 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         builder.HasIndex(x => x.TeacherId);
         builder.HasIndex(x => x.StudentId);
 
-        builder.Ignore(u => u.Teacher);
-        builder.Ignore(u => u.Student);
-
         builder
             .HasOne(u => u.Teacher)
             .WithOne(t => t.User)

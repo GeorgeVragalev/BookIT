@@ -1,7 +1,7 @@
 ﻿using Backend.Entities.Users;
 using Backend.Services.DataImport;
 using Backend.Services.DataImport.Strategy;
-using Backend.Services.UserService;
+using Backend.Services.Users.UserService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

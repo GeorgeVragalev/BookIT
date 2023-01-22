@@ -10,10 +10,10 @@ public class Teacher : IBaseEntity
     public string? Quote { get; set; }
 
     public int DepartmentId { get; set; }
-    public Department Department { get; set; }
+    public virtual Department Department { get; set; }
     
     public int UserId { get; set; }
-    public User User { get; set; }
+    public virtual User User { get; set; }
     
-    public IList<TeacherSubject>? TeacherSubjects { get; set; }
+    public virtual IList<TeacherSubject>? TeacherSubjects { get; set; }
 }

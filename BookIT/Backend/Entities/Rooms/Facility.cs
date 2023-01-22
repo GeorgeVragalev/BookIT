@@ -9,5 +9,5 @@ public class Facility : IBaseEntity
     public FacilityType FacilityType { get; set; }
     public int Quantity { get; set; }
     public int RoomId { get; set; }
-    public Room Room { get; set; }
+    public virtual Room Room { get; set; }
 }

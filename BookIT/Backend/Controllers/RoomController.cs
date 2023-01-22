@@ -1,7 +1,7 @@
 ﻿using Backend.Entities.Rooms;
 using Backend.Helpers;
 using Backend.Models;
-using Backend.Services.RoomFolder.RoomService;
+using Backend.Services.Rooms.RoomService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;

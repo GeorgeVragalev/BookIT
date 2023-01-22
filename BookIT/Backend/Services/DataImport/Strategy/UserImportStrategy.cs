@@ -1,7 +1,7 @@
 ﻿using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
-using Backend.Services.UserService;
+using Backend.Services.Users.UserService;
 using CsvHelper;
 using Microsoft.AspNetCore.Identity;
 using PasswordGenerator;

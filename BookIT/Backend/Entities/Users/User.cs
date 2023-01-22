@@ -17,10 +17,8 @@ public class User : IdentityUser<int>, IBaseEntity
     public string? LastName { get; set; }
     
     public int? TeacherId { get; set; }
-    [IgnoreDataMember]
     public virtual Teacher Teacher { get; set; }
     
     public int? StudentId { get; set; }
-    [IgnoreDataMember]
     public virtual Student Student { get; set; }
 }

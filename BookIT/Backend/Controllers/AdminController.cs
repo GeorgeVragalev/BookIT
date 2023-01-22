@@ -1,9 +1,12 @@
 ﻿using System.Text;
 using System.Text.Encodings.Web;
 using Backend.Entities.Roles;
+using Backend.Entities.UniversityEntities;
 using Backend.Entities.Users;
 using Backend.Models;
-using Backend.Services.UserService;
+using Backend.Services.Users.StudentService;
+using Backend.Services.Users.TeacherService;
+using Backend.Services.Users.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -21,14 +24,18 @@ public class AdminController : Controller
     private readonly UserManager<User> _userManager;
     private readonly IUserService _userService;
     private readonly IEmailSender _emailSender;
+    private readonly IStudentService _studentService;
+    private readonly ITeacherService _teacherService;
 
     public AdminController(RoleManager<Role> roleManager, IUserService userService, UserManager<User> userManager,
-        IEmailSender emailSender)
+        IEmailSender emailSender, IStudentService studentService, ITeacherService teacherService)
     {
         _roleManager = roleManager;
         _userService = userService;
         _userManager = userManager;
         _emailSender = emailSender;
+        _studentService = studentService;
+        _teacherService = teacherService;
     }
 
     [HttpGet]
@@ -53,12 +60,46 @@ public class AdminController : Controller
                 PasswordHash = new Password(16).Next(),
                 SecurityStamp =  Guid.NewGuid().ToString()
             };
-
+            
             await _userService.Save(user);
+
+            if (model.Role == RoleEnum.Student)
+            {
+                var student = new Student()
+                {
+                    GroupId = 1,
+                    AboutMe = "dadf",
+                    UserId = user.Id,
+                    User = user
+                };
+
+                await _studentService.Save(student);
+                
+                user.Student = student;
+                user.StudentId = student.Id;
+            }
+            else if (model.Role == RoleEnum.Teacher)
+            {
+                var teacher = new Teacher()
+                {
+                    Quote = "If you reach it",
+                    AboutMe = "Best teacher",
+                    UserId = user.Id,
+                    DepartmentId = 1,
+                    User = user
+                };
+
+                await _teacherService.Save(teacher);
+                
+                user.Teacher = teacher;
+                user.TeacherId = teacher.Id;
+            }
+            
+            await _userService.Update(user);
 
             //assign role
             await _userManager.AddToRoleAsync(user, model.Role.ToString());
-
+            
             var userId = user.Id;
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 

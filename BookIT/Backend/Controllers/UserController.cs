@@ -1,6 +1,6 @@
 ﻿using Backend.Entities.Users;
 using Backend.Models.Sorting;
-using Backend.Services.UserService;
+using Backend.Services.Users.UserService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

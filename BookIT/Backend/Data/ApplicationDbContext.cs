@@ -28,9 +28,11 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
-    
+        
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-        optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder
+            .UseLazyLoadingProxies()
+            .UseSqlServer(connectionString);
 
         base.OnConfiguring(optionsBuilder);
     }
