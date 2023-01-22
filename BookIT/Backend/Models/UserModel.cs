@@ -8,9 +8,12 @@ public class UserModel: IBaseEntity
 {
     public int Id { get; set; }
     
-    [RegularExpression(@"^[a-zA-Z''-'\s@.]{1,40}$", 
+    [RegularExpression(@"^[a-zA-Z''-'\s@.]$", 
         ErrorMessage = "Characters are not allowed.")]
     public string Email { get; set; }
+    
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
     public RoleEnum Role { get; set; }
     public StudentModel? StudentModel{ get; set; }
     public TeacherModel? TeacherModel{ get; set; }

@@ -83,6 +83,8 @@ public static class Mapper
         {
             Id = user.Id,
             Email = user.Email, 
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             TeacherModel = user?.Teacher?.ToModel(),
             StudentModel = user?.Student?.ToModel(),
             Role = RoleEnum.Student
@@ -91,7 +93,7 @@ public static class Mapper
     
     public static TeacherModel ToModel(this Teacher teacher)
     {
-        var subjects = teacher.Subjects.Select(s => s.ToModel()).ToList();
+        var subjects = teacher?.Subjects?.Select(s => s.ToModel()).ToList();
         return new TeacherModel()
         {
             Id = teacher.Id,
@@ -115,6 +117,11 @@ public static class Mapper
     public static IList<RoomModel> ToModel(this IList<Room> models)
     {
         return models.Select(room => room.ToModel()).ToList();
+    }
+    
+    public static IList<UserModel> ToModel(this IList<User> models)
+    {
+        return models.Select(user => user.ToModel()).ToList();
     }
 
     private static string ListToString<T>(this IEnumerable<T> roomFacilities)

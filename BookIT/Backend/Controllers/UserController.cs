@@ -1,4 +1,6 @@
 ﻿using Backend.Entities.Users;
+using Backend.Helpers;
+using Backend.Models;
 using Backend.Models.Sorting;
 using Backend.Services.Users.UserService;
 using Microsoft.AspNetCore.Identity;
@@ -19,13 +21,9 @@ public class UserController : Controller
         _userService = userService;
     }
     
-    public async Task<IActionResult> UsersList()
+    public Task<IActionResult> UsersList()
     {
-        var users = await _userManager.Users.ToListAsync();
-        
-        var userModels = users.Select(u=>u.ToMofl)
-        
-        return View(users);
+        return View();
     }
 
     //TODO: Move sorting methods to another class (let's discuss)
@@ -39,7 +37,7 @@ public class UserController : Controller
         var searchValue = Request.Form["search[value]"].FirstOrDefault();
         var pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
         var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
-        var data = _userService.GetAll();
+        var data = _userService.GetAll().ToModel();
         //get total count of data in table
         var totalRecord = data.Count();
         // search data when search value found
@@ -64,7 +62,7 @@ public class UserController : Controller
         return Task.FromResult(new JsonResult(returnObj));
     }
 
-    private IList<User> SearchByValue(IList<User> data, string searchValue)
+    private IList<UserModel> SearchByValue(IList<UserModel> data, string searchValue)
     {
         //TODO: Remove nullable from First and LastName
         return data.Where(x =>
@@ -73,7 +71,7 @@ public class UserController : Controller
             x.LastName.ToLower().Contains(searchValue.ToLower())).ToList();
     }
 
-    private IList<User> SortDataByColumn(IList<User> data, string sortColumn, string sortColumnDirection)
+    private IList<UserModel> SortDataByColumn(IList<UserModel> data, string sortColumn, string sortColumnDirection)
     {
         return sortColumn switch
         {
@@ -84,21 +82,21 @@ public class UserController : Controller
         };
     }
 
-    private IList<User> SortLastName(IList<User> data, string sortColumnDirection)
+    private IList<UserModel> SortLastName(IList<UserModel> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
             ? data.OrderBy(u => u.FirstName).ToList()
             : data.OrderByDescending(u => u.FirstName).ToList();
     }
 
-    private IList<User> SortFirstName(IList<User> data,string sortColumnDirection)
+    private IList<UserModel> SortFirstName(IList<UserModel> data,string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
             ? data.OrderBy(u => u.FirstName).ToList()
             : data.OrderByDescending(u => u.FirstName).ToList();
     }
 
-    private IList<User> SortEmail(IList<User> data, string sortColumnDirection)
+    private IList<UserModel> SortEmail(IList<UserModel> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
             ? data.OrderBy(u => u.Email).ToList()
