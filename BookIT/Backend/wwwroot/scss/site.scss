@@ -1,5 +1,7 @@
 ﻿@import "colors";
 
-.my-class {
-  color: $my-color;
-}
+@import "calendar";
+
+@import "main";
+
+@import "com";

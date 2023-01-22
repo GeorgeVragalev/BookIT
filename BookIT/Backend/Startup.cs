@@ -3,7 +3,6 @@ using Backend.Data;
 using Backend.DependencyRegister;
 using Backend.Entities.Roles;
 using Backend.Entities.Users;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RouteBuilder = Backend.DependencyRegister.RouteBuilder;
@@ -46,7 +45,10 @@ public class Startup
         });
 
         serviceCollection.AddRazorPages();
-
+        
+        serviceCollection.AddControllersWithViews()
+            .AddRazorRuntimeCompilation();
+        
         serviceCollection.AddAuthorization(options =>
         {
             options.AddPolicy("SuperAdmin",

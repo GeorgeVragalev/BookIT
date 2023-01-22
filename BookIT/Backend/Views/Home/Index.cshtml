@@ -2,6 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center my-class">
-    <h1 class="display-4">Welcome to BookIt</h1>
+<div class="text-center">
+    <div id="calendar"> </div>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">	
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,listWeek'
+            },
+            firstDay: 1,
+            slotMinutes: 30,
+            events: [
+                {
+                    title: 'Test event',
+                    start: moment().add(1, 'day'),
+                    end: moment().add(1, 'day').add(4, 'hours'),
+                },
+                {
+                                    title: 'Test event 2',
+                                    start: moment().add(1, 'day').add(5, 'hours'),
+                                    end: moment().add(1, 'day').add(7, 'hours'),
+                                },
+            ]
+        });
+    });
+</script>
+}
+
