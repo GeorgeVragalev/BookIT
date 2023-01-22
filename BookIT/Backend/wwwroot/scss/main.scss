@@ -20,7 +20,7 @@
 }
 
 .main {
-  background: #FFFFFF;
+  background: #fefefe;
   margin-left: 8rem !important;
   padding: 4rem;
   border-radius: 40px 0 0 0 !important;
@@ -36,4 +36,28 @@
   overflow-x: auto;
   overflow-y: hidden;
   bottom: 0;
+  
+  .list {
+    list-style-type: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    border: 1px solid red;
+    
+    &__item {
+      font-size: 2rem;
+      list-style-type: none;
+      font-weight: bolder;
+      
+      .item__content {
+        color: $pink;
+        width: fit-content;
+        border-radius: 50%;
+
+        &--white {
+          background-color: $white !important;
+        }
+      }
+    } 
+  }
 }

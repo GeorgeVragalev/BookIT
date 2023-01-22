@@ -1,39 +1,93 @@
-:root {
-  --fc-small-font-size: 3em;
-  --fc-page-bg-color: #fff;
-  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
-  --fc-neutral-text-color: #808080;
-  --fc-border-color: #ddd;
-  --fc-button-text-color: #fff;
-  --fc-button-bg-color: #2C3E50;
-  --fc-button-border-color: #2C3E50;
-  --fc-button-hover-bg-color: #1e2b37;
-  --fc-button-hover-border-color: #1a252f;
-  --fc-button-active-bg-color: #1a252f;
-  --fc-button-active-border-color: #151e27;
-  --fc-event-bg-color: rgba(0, 0, 0, 0.25) !important;
-  --fc-event-border-color: rgba(0, 0, 0, 0.25) !important;
-  --fc-event-text-color: #fff;
-  --fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
-  --fc-more-link-bg-color: #d0d0d0;
-  --fc-more-link-text-color: inherit;
-  --fc-event-resizer-thickness: 8px;
-  --fc-event-resizer-dot-total-width: 8px;
-  --fc-event-resizer-dot-border-width: 1px;
-  --fc-non-business-color: rgba(215, 215, 215, 0.3);
-  --fc-bg-event-color: rgb(143, 223, 130);
-  --fc-bg-event-opacity: 0.3;
-  --fc-highlight-color: rgba(188, 232, 241, 0.3);
-  --fc-today-bg-color: rgba(255, 220, 40, 0.15);
-  --fc-now-indicator-color: red;
+#calendar {
+  /* Today button*/
 }
-
+#calendar .fc-state-hover {
+  border: none;
+}
 #calendar .fc-scroller::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
+}
+#calendar .fc-body {
+  border-color: #e9e9e9;
+}
+#calendar .fc-time-grid .fc-slats .fc-minor td {
+  border-top: none;
+}
+#calendar .fc-widget-header {
+  background-color: #eaeaf6 !important;
 }
 #calendar .fc-scroller {
   -ms-overflow-style: none; /* Edge */
   scrollbar-width: none; /* Firefox */
+}
+#calendar .fc-today {
+  background-color: #eaeaf6;
+  color: #f2208a;
+}
+#calendar .fc-head {
+  line-height: 5rem;
+}
+#calendar .fc-today-button {
+  font-size: 16px;
+  background: rgb(63, 94, 251);
+  border: none;
+  padding: 0 2em;
+  background: linear-gradient(90deg, rgb(4, 2, 91) 0%, rgb(252, 70, 107) 100%);
+  border-radius: 64px;
+  color: #fefefe;
+}
+#calendar .fc-prev-button {
+  font-size: 16px;
+  margin-right: 0.8rem;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  border-radius: 50px 0 0 50px;
+}
+#calendar .fc-prev-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
+}
+#calendar .fc-next-button {
+  font-size: 16px;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  margin-right: 0.8rem;
+  border-radius: 0 50px 50px 0;
+}
+#calendar .fc-next-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
+}
+#calendar .fc-month-button {
+  border-radius: 50px 0 0 50px;
+  font-size: 16px;
+  font-weight: bolder;
+  border: 3px solid #0E0E26;
+  color: #0E0E26;
+  margin-right: 0.6rem;
+  background-color: #fefefe;
+}
+#calendar .fc-state-active {
+  background-color: #eaeaf6 !important;
+}
+#calendar .fc-agendaWeek-button {
+  font-size: 16px;
+  font-weight: bolder;
+  border: 3px solid #0E0E26;
+  color: #0E0E26;
+  margin-right: 0.6rem;
+  background-color: #fefefe;
+}
+#calendar .fc-listWeek-button {
+  font-size: 16px;
+  border: 3px solid #0E0E26;
+  color: #0E0E26;
+  font-weight: bolder;
+  background-color: #fefefe;
+  border-radius: 0 50px 50px 0;
+  padding: 0 1.2em;
 }
 #calendar .fc-agenda-view .fc-day-grid .fc-row {
   display: none;
@@ -42,10 +96,17 @@
   border: none !important;
 }
 #calendar .fc-list-heading {
-  border-bottom: 3px solid #E375D8;
+  border-bottom: 3px solid #f2208a;
 }
 #calendar .fc-list-heading .fc-widget-heade {
   background: transparent;
+}
+
+/* Events */
+.fc-time-grid-event .fc-v-event .fc-event {
+  border: 1px solid red;
+  font-size: 16px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .header {
@@ -67,7 +128,7 @@
 }
 
 .main {
-  background: #FFFFFF;
+  background: #fefefe;
   margin-left: 8rem !important;
   padding: 4rem;
   border-radius: 40px 0 0 0 !important;
@@ -84,10 +145,29 @@
   overflow-y: hidden;
   bottom: 0;
 }
+.sidebar .list {
+  list-style-type: none;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.sidebar .list__item {
+  font-size: 2rem;
+  list-style-type: none;
+  font-weight: bolder;
+}
+.sidebar .list__item .item__content {
+  color: #f2208a;
+  width: fit-content;
+  border-radius: 50%;
+}
+.sidebar .list__item .item__content--white {
+  background-color: #fefefe !important;
+}
 
 .button-text--pink {
   border: none;
-  color: #E375D8 !important;
+  color: #f2208a !important;
   background: transparent;
   font-size: 1.5rem;
 }
