@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Globalization;
+using AutoMapper;
 using Backend.Entities.Rooms;
 using Backend.Helpers;
 using Backend.Models;
@@ -12,16 +13,19 @@ namespace Backend.Controllers;
 public class RoomController : Controller
 {
     private readonly IRoomService _roomService;
+    private readonly IMapper _mapper;
 
     // GET
-    public RoomController(IRoomService roomService)
+    public RoomController(IRoomService roomService, IMapper mapper)
     {
         _roomService = roomService;
+        _mapper = mapper;
     }
 
     public IActionResult Rooms()
     {
-        var rooms = _roomService.GetAll().ToModel();
+        // var rooms = _roomService.GetAll().ToModel();
+        var rooms = new List<RoomModel>();
 
         return View(rooms);
     }
@@ -66,7 +70,8 @@ public class RoomController : Controller
         var pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
         var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
 
-        var data = _roomService.GetAll().ToModel();
+        var dbData =  _roomService.GetAll();
+        var data = _mapper.Map<IList<RoomModel>>(dbData);
 
         var totalRecord = data.Count();
         if (!string.IsNullOrEmpty(searchValue))

@@ -23,8 +23,8 @@ public class GroupImportStrategy : IStrategy
 
             foreach (var model in groupModels)
             {
-                var group = model.ToEntity();
-                await _groupService.Save(group);
+                // var group = model.ToEntity();
+                // await _groupService.Save(group);
             }
 
             return true;

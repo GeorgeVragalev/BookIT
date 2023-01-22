@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Users;
+﻿using AutoMapper;
+using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
 using Backend.Models.Sorting;
@@ -14,11 +15,13 @@ public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly IUserService _userService;
+    private readonly IMapper _mapper;
 
-    public UserController(UserManager<User> userManager, IUserService userService)
+    public UserController(UserManager<User> userManager, IUserService userService, IMapper mapper)
     {
         _userManager = userManager;
         _userService = userService;
+        _mapper = mapper;
     }
     
     public Task<IActionResult> UsersList()
@@ -36,7 +39,8 @@ public class UserController : Controller
         var searchValue = Request.Form["search[value]"].FirstOrDefault();
         var pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
         var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
-        var data = _userService.GetAll().ToModel();
+        var dbData = _userService.GetAll();
+        var data = _mapper.Map<IList<UserModel>>(dbData);
         //get total count of data in table
         var totalRecord = data.Count();
         // search data when search value found

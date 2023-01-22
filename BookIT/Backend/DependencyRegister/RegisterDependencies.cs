@@ -32,6 +32,11 @@ public static class RegisterDependencies
     //Register all the dependencies
     public static void Register(IServiceCollection services, ConfigurationManager configurationManager)
     {
+        //Special services
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddScoped<IReCaptchaService, ReCaptchaService>();
+        services.AddScoped<IDummySeedService, DummySeedService>();
+        
         //Repository
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
@@ -60,10 +65,6 @@ public static class RegisterDependencies
         services.AddScoped<IStrategy, DepartmentImportStrategy>();
         services.AddScoped(typeof(ICsvImport), typeof(CsvImport));
 
-        //Special services
-        services.AddScoped<IReCaptchaService, ReCaptchaService>();
-        services.AddScoped<IDummySeedService, DummySeedService>();
-        
         //BackgroundTask
         services.AddHostedService<BackgroundTask.BackgroundTask>();
         services.AddHostedService<DummyValuesDbSeed>();

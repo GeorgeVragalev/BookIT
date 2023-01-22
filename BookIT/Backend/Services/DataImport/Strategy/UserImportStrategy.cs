@@ -27,10 +27,10 @@ public class UserImportStrategy : IStrategy
 
             foreach (var model in userModels)
             {
-                var user = model.ToEntity();
-                SetUserProperties(user);
-                await _userService.Save(user); 
-                await _userManager.AddToRoleAsync(user, model.Role.ToString());
+                // var user = model.ToEntity();
+                // SetUserProperties(user);
+                // await _userService.Save(user); 
+                // await _userManager.AddToRoleAsync(user, model.Role.ToString());
             }
 
             return true;

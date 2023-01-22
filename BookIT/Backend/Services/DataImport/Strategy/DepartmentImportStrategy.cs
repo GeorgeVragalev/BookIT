@@ -22,8 +22,8 @@ public class DepartmentImportStrategy : IStrategy
 
             foreach (var model in departmentModels)
             {
-                var department = model.ToEntity();
-                await _departmentService.Save(department);
+                // var department = model.ToEntity();
+                // await _departmentService.Save(department);
             }
 
             return true;

@@ -24,8 +24,8 @@ public class SubjectImportStrategy : IStrategy
 
             foreach (var model in subjectModels)
             {
-                var subject = model.ToEntity();
-                await _subjectService.Save(subject);
+                // var subject = model.ToEntity();
+                // await _subjectService.Save(subject);
             }
 
             return true;
