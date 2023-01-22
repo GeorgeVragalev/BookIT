@@ -222,7 +222,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Periods");
+                    b.ToTable("TimePeriods");
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Student", b =>

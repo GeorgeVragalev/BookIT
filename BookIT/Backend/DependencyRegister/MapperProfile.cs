@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Backend.Entities.LessonEntities;
 using Backend.Entities.Rooms;
 using Backend.Entities.UniversityEntities;
 using Backend.Entities.Users;
@@ -18,5 +19,7 @@ public class MapperProfile : Profile
         CreateMap<Subject, SubjectModel>().ReverseMap();
         CreateMap<Room, RoomModel>().ReverseMap();
         CreateMap<Facility, FacilityModel>().ReverseMap();
+        CreateMap<Lesson, LessonModel>().ReverseMap();
+        CreateMap<TimePeriod, TimePeriodModel>().ReverseMap();
     }
 }

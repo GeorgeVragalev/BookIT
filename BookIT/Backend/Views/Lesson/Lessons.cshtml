@@ -1,0 +1,46 @@
+﻿@model IList<Backend.Models.LessonModel>
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="table-responsive">
+        <table id="myRoomTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<script>
+       $(document).ready(
+           function () {
+           $('#myRoomTable').DataTable(
+               {
+                   ajax: {
+                       url: "GetLessonsList",
+                       type: "POST",
+                   },
+                   processing: true,
+                   serverSide: true,
+                   filter: true,
+                   columns: [
+                       { data: "name", name: "Name" }
+                   ],
+                    columnDefs: [{
+                       "defaultContent": "-",
+                       "targets": "_all"
+                     }]
+               }
+           );
+       });
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

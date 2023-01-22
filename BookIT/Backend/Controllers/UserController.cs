@@ -24,9 +24,9 @@ public class UserController : Controller
         _mapper = mapper;
     }
     
-    public Task<IActionResult> UsersList()
+    public IActionResult UsersList()
     {
-        return Task.FromResult<IActionResult>(View());
+        return View();
     }
 
     [HttpPost]
