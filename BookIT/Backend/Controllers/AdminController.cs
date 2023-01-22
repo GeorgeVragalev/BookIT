@@ -86,8 +86,8 @@ public class AdminController : Controller
 
                 await _studentService.Save(student);
                 
-                user.Student = student;
-                user.StudentId = student.Id;
+                // user.Student = student;
+                // user.StudentId = student.Id;
             }
             else if (model.Role == RoleEnum.Teacher)
             {

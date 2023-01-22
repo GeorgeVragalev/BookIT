@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Import";
+    Layout = "_Layout";
+}
+
+<h2>Upload Users</h2>
+@using(Html.BeginForm("Users","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
+{
+    <div>
+        @Html.TextBox("file", "", new {  type= "file"}) <br />
+        <input type="submit" value="Upload Users" accept=".xls,.xlsx,.csv"/>
+        @ViewBag.Message
+    </div>
+}
+
+<h2>Upload Departments</h2>
+@using(Html.BeginForm("Departments","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
+{
+    <div>
+        @Html.TextBox("file", "", new {  type= "file"}) <br />
+        <input type="submit" value="Upload Departments" accept=".xls,.xlsx,.csv"/>
+        @ViewBag.Message
+    </div>
+}

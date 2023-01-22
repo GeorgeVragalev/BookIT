@@ -1,7 +1,10 @@
-﻿namespace Backend.Models;
+﻿using Backend.Entities.Shared;
 
-public class RoomModel
+namespace Backend.Models;
+
+public class RoomModel: IBaseEntity
 {
+    public int Id { get; set; }
     public RoomModel()
     {
         Facilities = new List<FacilityModel>();

@@ -22,6 +22,9 @@ public class UserController : Controller
     public async Task<IActionResult> UsersList()
     {
         var users = await _userManager.Users.ToListAsync();
+        
+        var userModels = users.Select(u=>u.ToMofl)
+        
         return View(users);
     }
 

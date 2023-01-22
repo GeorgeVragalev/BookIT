@@ -2,7 +2,7 @@
 
 namespace Backend.Entities.UniversityEntities;
 
-public class Period : IBaseEntity
+public class TimePeriod : IBaseEntity
 {
     public int Id { get; set; }
     public WeekDayType WeekDay { get; set; }

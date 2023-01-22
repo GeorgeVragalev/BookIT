@@ -57,6 +57,7 @@ public static class RegisterDependencies
         
         //Csv import
         services.AddScoped<IStrategy, UserImportStrategy>();
+        services.AddScoped<IStrategy, DepartmentImportStrategy>();
         services.AddScoped(typeof(ICsvImport), typeof(CsvImport));
 
         //Special services
