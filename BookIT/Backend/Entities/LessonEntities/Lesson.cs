@@ -16,14 +16,14 @@ public class Lesson : IBaseEntity
     public virtual TimePeriod TimePeriod { get; set; }
 
     public int? RoomId { get; set; }
-    public virtual Room Room { get; set; }
+    public virtual Room? Room { get; set; }
 
     public int? TeacherId { get; set; }
-    public virtual Teacher Teacher { get; set; }
+    public virtual Teacher? Teacher { get; set; }
 
     public int? GroupId { get; set; }
-    public virtual Group Group { get; set; }
+    public virtual Group? Group { get; set; }
 
     public int? SubjectId { get; set; }
-    public virtual Subject Subject { get; set; }
+    public virtual Subject? Subject { get; set; }
 }

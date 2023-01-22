@@ -35,6 +35,9 @@ public class LessonController : Controller
         var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
 
         var dbData = _lessonService.GetAll();
+        var events = _mapper.Map<IList<EventModel>>(dbData);
+        ViewData["Events"] = events;
+        
         var data = _mapper.Map<IList<LessonModel>>(dbData);
 
         var totalRecord = data.Count();

@@ -21,5 +21,31 @@ public class MapperProfile : Profile
         CreateMap<Facility, FacilityModel>().ReverseMap();
         CreateMap<Lesson, LessonModel>().ReverseMap();
         CreateMap<TimePeriod, TimePeriodModel>().ReverseMap();
+
+        CreateMap<Lesson, EventModel>()
+            .ForMember(dest =>
+                    dest.Group,
+                opt => opt.MapFrom(src => (src.Group != null) ? src.Group.Name : ""))
+            .ForMember(dest =>
+                    dest.Subject,
+                opt => opt.MapFrom(src => (src.Subject != null) ? src.Subject.Name : ""))
+            .ForMember(dest =>
+                    dest.Room,
+                opt => opt.MapFrom(src => (src.Room != null) ? src.Room.Name : ""))
+            .ForMember(dest =>
+                    dest.Teacher,
+                opt => opt.MapFrom(src =>
+                    (src.Teacher != null && src.Teacher.User != null)
+                        ? src.Teacher.User.FirstName + src.Teacher.User.LastName
+                        : ""))
+            .ForMember(dest =>
+                    dest.Title,
+                opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest =>
+                    dest.Start,
+                opt => opt.MapFrom(src => src.TimePeriod.StartTime.ToString("MM/dd/yyyy HH:mm")))
+            .ForMember(dest =>
+                    dest.End,
+                opt => opt.MapFrom(src => src.TimePeriod.EndTime.ToString("MM/dd/yyyy HH:mm"))).ReverseMap();
     }
 }
