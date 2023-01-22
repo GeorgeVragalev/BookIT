@@ -117,6 +117,11 @@ public static class Mapper
         return models.Select(room => room.ToModel()).ToList();
     }
 
+    private static string ListToString<T>(this IEnumerable<T> roomFacilities)
+    {
+        return string.Join(", ", roomFacilities.ToArray());
+    }
+
     public static FacilityModel ToModel(this Facility facility)
     {
         return new FacilityModel()
