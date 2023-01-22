@@ -1,32 +1,33 @@
 ﻿using AutoMapper;
+using Backend.Entities.Rooms;
 using Backend.Entities.UniversityEntities;
 using Backend.Helpers;
 using Backend.Models;
+using Backend.Services.Rooms.RoomService;
 using Backend.Services.University.DepartmentService;
-using Backend.Services.University.GroupService;
 using CsvHelper;
 
 namespace Backend.Services.DataImport.Strategy;
 
-public class GroupImportStrategy : IStrategy
+public class RoomImportStrategy : IStrategy
 {
-    private readonly IGroupService _groupService;
+    private readonly IRoomService _roomService;
 
-    public GroupImportStrategy(IGroupService groupService)
+    public RoomImportStrategy(IRoomService roomService)
     {
-        _groupService = groupService;
+        _roomService = roomService;
     }
 
     public async Task<bool> Import(IMapper mapper, CsvReader csvReader)
     {
         try
         {
-            var groupModels = csvReader.GetRecords<GroupModel>().ToList();
+            var roomModels = csvReader.GetRecords<RoomModel>().ToList();
 
-            foreach (var model in groupModels)
+            foreach (var model in roomModels)
             {
-                var group = mapper.Map<Group>(model);
-                await _groupService.Save(group);
+                var room = mapper.Map<Room>(model);
+                await _roomService.Save(room);
             }
 
             return true;

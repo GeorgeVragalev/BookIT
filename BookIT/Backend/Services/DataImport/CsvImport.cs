@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using AutoMapper;
 using Backend.Services.DataImport.Strategy;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -8,10 +9,12 @@ namespace Backend.Services.DataImport;
 public class CsvImport : ICsvImport
 {
     private IStrategy _strategy;
+    private IMapper _mapper;
 
-    public CsvImport(IStrategy strategy)
+    public CsvImport(IStrategy strategy, IMapper mapper)
     {
         _strategy = strategy;
+        _mapper = mapper;
     }
 
     public async Task<bool> ImportData(IFormFile csvFileName)
@@ -20,16 +23,16 @@ public class CsvImport : ICsvImport
         {
             return false;
         }
-        using (var reader = new StreamReader(csvFileName.OpenReadStream()))
-        using (var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
-               {
-                   PrepareHeaderForMatch = args => args.Header.ToLower(),
-                   MissingFieldFound = null,
-                   HeaderValidated = null
-               }))
+
+        using var reader = new StreamReader(csvFileName.OpenReadStream());
+        using var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
         {
-            return await _strategy.Import(csvReader);
-        }
+            PrepareHeaderForMatch = args => args.Header.ToLower(),
+            MissingFieldFound = null,
+            HeaderValidated = null
+        });
+        
+        return await _strategy.Import(_mapper, csvReader);
     }
 
     public bool IsCsvValid(IFormFile file)

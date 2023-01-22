@@ -15,6 +15,6 @@ public class UserModel: IBaseEntity
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public RoleEnum Role { get; set; }
-    public StudentModel? StudentModel{ get; set; }
-    public TeacherModel? TeacherModel{ get; set; }
+    public StudentModel? Student{ get; set; }
+    public TeacherModel? Teacher{ get; set; }
 }

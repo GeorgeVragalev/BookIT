@@ -1,4 +1,6 @@
-﻿using Backend.Helpers;
+﻿using AutoMapper;
+using Backend.Entities.UniversityEntities;
+using Backend.Helpers;
 using Backend.Models;
 using Backend.Services.University.DepartmentService;
 using Backend.Services.University.GroupService;
@@ -16,7 +18,7 @@ public class SubjectImportStrategy : IStrategy
         _subjectService = subjectService;
     }
 
-    public async Task<bool> Import(CsvReader csvReader)
+    public async Task<bool> Import(IMapper mapper, CsvReader csvReader)
     {
         try
         {
@@ -24,8 +26,8 @@ public class SubjectImportStrategy : IStrategy
 
             foreach (var model in subjectModels)
             {
-                // var subject = model.ToEntity();
-                // await _subjectService.Save(subject);
+                var subject = mapper.Map<Subject>(model);
+                await _subjectService.Save(subject);
             }
 
             return true;

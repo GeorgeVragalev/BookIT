@@ -124,7 +124,7 @@ public class RoomController : Controller
         return data.Where(x =>
             x.Name.ToLower().Contains(searchValue.ToLower()) ||
             x.Capacity == int.Parse(searchValue, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite) ||
-            x.FacilityString.Contains(searchValue.ToLower())
+            x.FacilityString != null && x.FacilityString.Contains(searchValue.ToLower())
         ).ToList();
     }
 }

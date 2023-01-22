@@ -6,6 +6,6 @@ public class StudentModel : IBaseEntity
 {
     public int Id { get; set; }
     public string? AboutMe { get; set; }
-    public virtual GroupModel Group { get; set; }
-    public virtual UserModel User { get; set; }
+    public virtual UserModel? User { get; set; }
+    public virtual GroupModel? Group { get; set; }
 }

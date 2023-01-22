@@ -12,7 +12,7 @@ public class MapperProfile : Profile
     {
         CreateMap<User, UserModel>().ReverseMap();
         CreateMap<Teacher, TeacherModel>().ReverseMap();
-        CreateMap<Student, Student>().ReverseMap();
+        CreateMap<Student, StudentModel>().ReverseMap();
         CreateMap<Department, DepartmentModel>().ReverseMap();
         CreateMap<Group, GroupModel>().ReverseMap();
         CreateMap<Subject, SubjectModel>().ReverseMap();

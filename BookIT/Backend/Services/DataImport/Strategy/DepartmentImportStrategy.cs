@@ -1,4 +1,6 @@
-﻿using Backend.Helpers;
+﻿using AutoMapper;
+using Backend.Entities.UniversityEntities;
+using Backend.Helpers;
 using Backend.Models;
 using Backend.Services.University.DepartmentService;
 using CsvHelper;
@@ -14,7 +16,7 @@ public class DepartmentImportStrategy : IStrategy
         _departmentService = departmentService;
     }
 
-    public async Task<bool> Import(CsvReader csvReader)
+    public async Task<bool> Import(IMapper mapper, CsvReader csvReader)
     {
         try
         {
@@ -22,8 +24,8 @@ public class DepartmentImportStrategy : IStrategy
 
             foreach (var model in departmentModels)
             {
-                // var department = model.ToEntity();
-                // await _departmentService.Save(department);
+                var department = mapper.Map<Department>(model);
+                await _departmentService.Save(department);
             }
 
             return true;

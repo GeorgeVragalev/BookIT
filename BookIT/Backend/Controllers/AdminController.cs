@@ -67,7 +67,10 @@ public class AdminController : Controller
             {
                 Email = model.Email,
                 PasswordHash = new Password(16).Next(),
-                SecurityStamp =  Guid.NewGuid().ToString()
+                SecurityStamp =  Guid.NewGuid().ToString(),
+                FirstName = model.Email.Substring(0,  model.Email.IndexOf(".", StringComparison.Ordinal)),
+                LastName =  model.Email.Substring(model.Email.IndexOf(".", StringComparison.Ordinal),  model.Email.IndexOf("@", StringComparison.Ordinal))
+
             };
             
             await _userService.Save(user);

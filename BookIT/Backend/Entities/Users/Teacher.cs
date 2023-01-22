@@ -13,7 +13,7 @@ public class Teacher : IBaseEntity
     public virtual Department? Department { get; set; }
     
     public int UserId { get; set; }
-    public virtual User User { get; set; }
+    public virtual User? User { get; set; }
     
-    public virtual IList<Subject> Subjects { get; set; }
+    public virtual IList<Subject>? Subjects { get; set; }
 }

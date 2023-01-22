@@ -11,5 +11,5 @@ public class Subject : IBaseEntity
     public int? Exams { get; set; }
     public int? Hours { get; set; }
     
-    public virtual List<Teacher?> Teachers { get; set; }
+    public virtual List<Teacher>? Teachers { get; set; }
 }
