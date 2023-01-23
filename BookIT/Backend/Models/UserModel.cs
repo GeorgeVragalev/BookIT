@@ -17,7 +17,4 @@ public class UserModel: IBaseEntity
     public RoleEnum Role { get; set; }
     public StudentModel? Student{ get; set; }
     public TeacherModel? Teacher{ get; set; }
-    
-    public string EditUrl{ get; set; }
-    public string DeleteUrl{ get; set; }
 }

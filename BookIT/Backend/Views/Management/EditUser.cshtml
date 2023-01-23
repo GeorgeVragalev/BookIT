@@ -7,7 +7,7 @@
     Layout = "_Layout";
 }
 
-@using (Html.BeginForm("UpdateUser", "Management"))
+@using (Html.BeginForm("UpdateUser", "Management", Model))
 {
     <h2>Edit user with id: @Model.Id</h2>
     <hr/>

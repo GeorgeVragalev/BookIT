@@ -69,16 +69,10 @@ $(document).ready(
 
         $('#myUserTable tbody').on('click', '#Edit', function() {
             var data = table.row($(this).parents('tr')).data();
-            $.ajax({
-                url: "GetEditUrl",
-                type: "POST",
-                data: {
-                    id: JSON.stringify(data.id)
-                },
-                success: function(response) {
-                    window.location.href = response.url;
-                }
-            });
+            
+            var link = '@Url.Action("EditUser")' + "/" + data.id;
+            
+            window.location.href = link;
         });
 
         $('#myUserTable tbody').on('click', '#Delete', function() {

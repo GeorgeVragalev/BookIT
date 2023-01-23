@@ -123,11 +123,14 @@ public class ManagementController : Controller
     }
     
     [HttpPost]
-    public async Task UpdateUser(UserModel userModel)
+    public async Task<RedirectToActionResult> UpdateUser(UserModel userModel)
     {
-        var user = _mapper.Map<User>(userModel);
-        await _userService.Update(user);
-        RedirectToAction("UserList");
+        var dbUser = await _userService.GetById(userModel.Id);
+        
+        _mapper.Map<UserModel, User>(userModel, dbUser);
+        
+        await _userService.Update(dbUser);
+        return RedirectToAction("UserList");
     }
 
     [HttpDelete]
