@@ -13,6 +13,7 @@ html {
 }
 
 html {
+  font-size: 62.5% !important;
   position: relative;
   min-height: 100%;
 }
