@@ -63,6 +63,7 @@
 #calendar .fc-month-button {
   padding: 0 1.2em;
   font-size: 16px;
+  font-weight: lighter;
   margin-right: 0.8rem;
   border: none;
   color: #fefefe;
@@ -79,6 +80,7 @@
 #calendar .fc-agendaWeek-button {
   padding: 0 1.2em;
   font-size: 16px;
+  font-weight: lighter;
   border: none;
   color: #fefefe;
   background: #0E0E26;
@@ -105,30 +107,39 @@
 #calendar--list .fc-listWeek-button {
   display: none;
 }
+#calendar--list .fc-scroller {
+  height: unset !important;
+}
+#calendar--list .fc-list-heading td {
+  background-color: #eaeaf6 !important;
+  height: 3.5rem !important;
+}
 #calendar--list .fc-today-button {
   display: none;
 }
 #calendar--list .fc-prev-button {
   font-size: 16px;
   margin-right: 0.8rem;
-  color: #f2208a;
-  background: #eaeaf6;
-  border: 2px solid #f2208a;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
   border-radius: 50px 0 0 50px;
 }
 #calendar--list .fc-prev-button:hover {
-  opacity: 0.7;
+  opacity: 0.9;
+  color: #f2208a;
 }
 #calendar--list .fc-next-button {
   font-size: 16px;
-  color: #f2208a;
-  background: #eaeaf6;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
   margin-right: 0.8rem;
   border-radius: 0 50px 50px 0;
-  border: 2px solid #f2208a;
 }
 #calendar--list .fc-next-button:hover {
-  opacity: 0.7;
+  opacity: 0.9;
+  color: #f2208a;
 }
 #calendar--list .fc-center h2 {
   display: none;

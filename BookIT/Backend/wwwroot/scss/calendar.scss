@@ -72,6 +72,7 @@
   .fc-month-button {
     padding: 0 1.2em;
     font-size: 16px;
+    font-weight: lighter;
     margin-right: 0.8rem;
     border: none;
     color: $white;
@@ -91,6 +92,7 @@
   .fc-agendaWeek-button {
     padding: 0 1.2em;
     font-size: 16px;
+    font-weight: lighter;
     border: none;
     color: $white;
     background: $blue;
@@ -125,32 +127,43 @@
     display: none;
   }
   
+  .fc-scroller {
+    height: unset !important;
+  }
+  
+  .fc-list-heading td{
+    background-color: $violet !important;
+    height: 3.5rem !important;
+  }
+  
   .fc-today-button {
     display: none;
   }
   .fc-prev-button {
     font-size: 16px;
     margin-right: 0.8rem;
-    color: $pink;
-    background: $violet;
-    border: 2px solid $pink;
+    border: none;
+    color: $white;
+    background: $blue;
     border-radius: 50px 0  0 50px;
 
     &:hover {
-      opacity: 0.7;
+      opacity: 0.9;
+      color: $pink;
     }
   }
 
   .fc-next-button {
     font-size: 16px;
-    color: $pink;
-    background: $violet;
+    border: none;
+    color: $white;
+    background: $blue;
     margin-right: 0.8rem;
     border-radius: 0 50px 50px 0;
-    border: 2px solid $pink;
 
     &:hover {
-      opacity: 0.7;
+      opacity: 0.9;
+      color: $pink;
     }
   }
   
