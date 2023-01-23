@@ -135,7 +135,7 @@
 }
 
 .sidebar {
-  padding-top: 7rem;
+  padding-top: 9rem;
   background: #0E0E26;
   position: fixed;
   top: 0;
@@ -148,7 +148,7 @@
 .sidebar .list {
   list-style-type: none;
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   align-items: center;
 }
 .sidebar .list__item {
@@ -157,11 +157,16 @@
   font-weight: bolder;
 }
 .sidebar .list__item .item__content {
-  color: #f2208a;
+  color: #fefefe;
   width: fit-content;
   border-radius: 50%;
 }
+.sidebar .list__item .item__content:hover {
+  background-color: #fefefe;
+  color: #f2208a;
+}
 .sidebar .list__item .item__content--white {
+  color: #f2208a;
   background-color: #fefefe !important;
 }
 
