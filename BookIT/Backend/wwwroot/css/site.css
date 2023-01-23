@@ -49,3 +49,7 @@ body {
   flex-direction: column;
   padding: 0 7rem;
 }
+
+.calendar-container {
+  padding: 0 20rem;
+}
