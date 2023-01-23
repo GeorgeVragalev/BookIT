@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Backend.Entities.Roles;
 using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
+using Backend.Services.Users.StudentService;
+using Backend.Services.Users.TeacherService;
 using Backend.Services.Users.UserService;
 using CsvHelper;
 using Microsoft.AspNetCore.Identity;
@@ -13,11 +16,15 @@ public class UserImportStrategy : IStrategy
 {
     private readonly IUserService _userService;
     private readonly UserManager<User> _userManager;
+    private readonly ITeacherService _teacherService;
+    private readonly IStudentService _studentService;
 
-    public UserImportStrategy(IUserService userService, UserManager<User> userManager)
+    public UserImportStrategy(IUserService userService, UserManager<User> userManager, ITeacherService teacherService, IStudentService studentService)
     {
         _userService = userService;
         _userManager = userManager;
+        _teacherService = teacherService;
+        _studentService = studentService;
     }
 
     public async Task<bool> Import(IMapper mapper, CsvReader csvReader)
@@ -31,6 +38,26 @@ public class UserImportStrategy : IStrategy
                 var user = mapper.Map<User>(model);
                 SetUserProperties(user);
                 await _userService.Save(user);
+                
+                if (model.Role == RoleEnum.Student)
+                {
+                    var student = new Student()
+                    {
+                        User = user,
+                        UserId = user.Id
+                    };
+                    await _studentService.Save(student);
+                }
+                else if (model.Role == RoleEnum.Teacher)
+                {
+                    var teacher = new Teacher()
+                    {
+                        User = user,
+                        UserId = user.Id
+                    };
+                    await _teacherService.Save(teacher);
+                }
+                
                 await _userManager.AddToRoleAsync(user, model.Role.ToString());
             }
 

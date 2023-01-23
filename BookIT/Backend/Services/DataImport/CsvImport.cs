@@ -29,6 +29,7 @@ public class CsvImport : ICsvImport
         {
             PrepareHeaderForMatch = args => args.Header.ToLower(),
             MissingFieldFound = null,
+            IgnoreReferences = true,
             HeaderValidated = null
         });
         
