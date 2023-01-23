@@ -1,5 +1,6 @@
 @import "index.css";
 @import "CookieBanner/CookieBanner.css";
+@import "Button.css";
 
 html {
   font-size: 14px;

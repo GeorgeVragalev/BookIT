@@ -44,7 +44,8 @@ public class Startup
         });
 
         serviceCollection.AddRazorPages();
-
+        serviceCollection.AddControllersWithViews()
+            .AddRazorRuntimeCompilation();
         serviceCollection.AddAuthorization(options =>
         {
             options.AddPolicy("SuperAdmin",

@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Shared;
+﻿using Backend.Entities.LessonEntities;
+using Backend.Entities.Shared;
 using Backend.Entities.Users;
 
 namespace Backend.Entities.UniversityEntities;
@@ -11,5 +12,7 @@ public class Subject : IBaseEntity
     public int? Exams { get; set; }
     public int? Hours { get; set; }
     
-    public virtual List<Teacher>? Teachers { get; set; }
+    public virtual IList<Teacher>? Teachers { get; set; }
+    public virtual IList<Lesson>? Lessons { get; set; }
+
 }
