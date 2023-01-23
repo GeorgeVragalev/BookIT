@@ -1,0 +1,105 @@
+﻿@model IList<Backend.Models.UserModel>
+
+@{
+    Layout = "_Layout";
+}
+
+<div>
+    <button id="createUser" class="button-17">Create new user</button>
+    <div class="container">
+        <div class="table-responsive">
+            <table id="myUserTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Actions<th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(
+    function() {
+        var table = $('#myUserTable').DataTable({
+            ajax: {
+                url: "LoadUserList",
+                type: "POST",
+            },
+            processing: true,
+            serverSide: true,
+            filter: true,
+            columns: [{
+                    data: "id",
+                    name: "Id"
+                },
+                {
+                    data: "email",
+                    name: "Email"
+                },
+                {
+                    data: "firstName",
+                    name: "FirstName"
+                },
+                {
+                    data: "lastName",
+                    name: "LastName"
+                },
+                {
+                    data: "editUrl",
+                    name: "Edit"
+                },
+            ],
+            columnDefs: [{
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button id = Edit class=button-17>Edit</button> <button id = Delete class = button-17 style='color: red''>Delete</button>"
+                },
+                {
+                    "searchable": false,
+                    "targets": [4]
+                }
+            ]
+        });
+
+        $('#myUserTable tbody').on('click', '#Edit', function() {
+            var data = table.row($(this).parents('tr')).data();
+            
+            var link = '@Url.Action("EditUser")' + "/" + data.id;
+            
+            window.location.href = link;
+        });
+
+        $('#myUserTable tbody').on('click', '#Delete', function() {
+            var data = table.row($(this).parents('tr')).data();
+            $.ajax({
+                url: "DeleteUser",
+                type: "DELETE",
+                data: {
+                    id: JSON.stringify(data.id)
+                },
+                success: function() {
+                    window.location.reload();
+                }
+            });
+        });
+            $('#createUser').click(function() {
+            $.ajax({
+                    url: "GetCreateUserLink",
+                type: "Get",
+                success: function(response) {
+                    window.location.href = response.url
+                }
+            });
+        });
+    })
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

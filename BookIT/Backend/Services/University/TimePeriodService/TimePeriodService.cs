@@ -6,35 +6,35 @@ namespace Backend.Services.University.TimePeriodService;
 
 public class TimePeriodService : ITimePeriodService
 {
-    private readonly ITimePeriodRepository _lessonRepository;
+    private readonly ITimePeriodRepository _timePeriodRepository;
 
-    public TimePeriodService(ITimePeriodRepository lessonRepository)
+    public TimePeriodService(ITimePeriodRepository timePeriodRepository)
     {
-        _lessonRepository = lessonRepository;
+        _timePeriodRepository = timePeriodRepository;
     }
 
     public IList<TimePeriod> GetAll()
     {
-        return _lessonRepository.GetAll().ToList();
+        return _timePeriodRepository.GetAll().ToList();
     }
 
     public Task<TimePeriod?> GetById(int id)
     {
-        return _lessonRepository.GetById(id);
+        return _timePeriodRepository.GetById(id);
     }
 
-    public Task Save(TimePeriod lesson)
+    public Task Save(TimePeriod timePeriod)
     {
-        return _lessonRepository.Save(lesson);
+        return _timePeriodRepository.Save(timePeriod);
     }
 
-    public Task Update(TimePeriod lesson)
+    public Task Update(TimePeriod timePeriod)
     {
-        return _lessonRepository.Update(lesson);
+        return _timePeriodRepository.Update(timePeriod);
     }
 
-    public Task Delete(TimePeriod lesson)
+    public Task Delete(TimePeriod timePeriod)
     {
-        return _lessonRepository.Delete(lesson);
+        return _timePeriodRepository.Delete(timePeriod);
     }
 }

@@ -7,6 +7,7 @@ using Backend.Services.University.DepartmentService;
 using Backend.Services.University.GroupService;
 using Backend.Services.University.LessonService;
 using Backend.Services.University.SubjectService;
+using Backend.Services.University.TimePeriodService;
 using Backend.Services.Users.TeacherService;
 
 namespace Backend.Services.DummySeedService;

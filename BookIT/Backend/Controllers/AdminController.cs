@@ -19,7 +19,7 @@ using PasswordGenerator;
 
 namespace Backend.Controllers;
 
-[Authorize(Roles = "Administrator")]
+// [Authorize(Roles = "Administrator")]
 [AutoValidateAntiforgeryToken]
 public class AdminController : Controller
 {

@@ -1,7 +1,6 @@
-﻿using Backend.Entities.LessonEntities;
-using Backend.Entities.UniversityEntities;
+﻿using Backend.Entities.UniversityEntities;
 
-namespace Backend.Services.University.LessonService;
+namespace Backend.Services.University.TimePeriodService;
 
 public interface ITimePeriodService
 {
