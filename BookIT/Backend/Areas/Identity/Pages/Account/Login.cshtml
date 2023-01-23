@@ -37,13 +37,13 @@
             </div>
             <div class="auth-form--footer">
                 <p>
-                    <a id="forgot-password" type="button" class="button-17"  asp-page="./ForgotPassword">Forgot your password?</a>
+                    <a id="forgot-password" type="button" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" type="button" class="button-17"  asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        <a asp-page="./Register" type="button" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
                    <p>
-                    <a id="resend-confirmation" type="button" class="button-17"  asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    <a id="resend-confirmation" type="button" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                 </p>
                 </div>
                 @*Do not remote or style this*@
@@ -51,15 +51,15 @@
             </form>
         
     </div>
-    <div class="col-md-6" align="center">
-            <h2>Utm Student ?</h2>
-            <h6>We have been waiting for you :3!</h6>
-            <section>
-                <form id="special-access" method="post">
-                    <button id="special-button" class="button-17" style="color: #0b5ed7" asp-page="./ForgotPassword">Special access</button>
-                </form>
-            </section>
-        </div>
+    @* <div class="col-md-6" align="center"> *@
+    @*         <h2>Utm Student ?</h2> *@
+    @*         <h6>We have been waiting for you :3!</h6> *@
+    @*         <section> *@
+    @*             <form id="special-access" method="post"> *@
+    @*                 <button id="special-button" class="button-17" style="color: #0b5ed7" asp-page="./ForgotPassword">Special access</button> *@
+    @*             </form> *@
+    @*         </section> *@
+    @*     </div> *@
 </div>
 
 @section Scripts {
