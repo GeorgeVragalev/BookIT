@@ -46,6 +46,11 @@ public class MapperProfile : Profile
                 opt => opt.MapFrom(src => src.TimePeriod.StartTime.ToString("MM/dd/yyyy") + " " + src.TimePeriod.StartTime.ToString("HH:mm")))
             .ForMember(dest =>
                     dest.end,
-                opt => opt.MapFrom(src => src.TimePeriod.EndTime.ToString("MM/dd/yyyy") + " " + src.TimePeriod.EndTime.ToString("HH:mm"))).ReverseMap();
+                opt => opt.MapFrom(src => src.TimePeriod.EndTime.ToString("MM/dd/yyyy") + " " + src.TimePeriod.EndTime.ToString("HH:mm")))
+            .ReverseMap();
+
+        CreateMap<LessonModel, LessonImportModel>()
+            .ReverseMap();
+
     }
 }

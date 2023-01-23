@@ -22,6 +22,11 @@ public class StudentRepository : IStudentRepository
         return _repository.GetById(id);
     }
 
+    public Task<Student?> GetByEmail(string email)
+    {
+        return Task.FromResult(_repository.GetAll().FirstOrDefault(t => t.User != null && t.User.Email == email));
+    }
+
     public Task Save(Student student)
     {
         return _repository.Save(student);

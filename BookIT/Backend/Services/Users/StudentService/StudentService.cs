@@ -22,6 +22,11 @@ public class StudentService : IStudentService
         return _studentRepository.GetById(id);
     }
 
+    public Task<Student?> GetByEmail(string email)
+    {
+        return _studentRepository.GetByEmail(email);
+    }
+
     public Task Save(Student student)
     {
         return _studentRepository.Save(student);

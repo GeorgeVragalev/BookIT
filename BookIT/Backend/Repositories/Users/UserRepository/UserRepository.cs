@@ -28,7 +28,7 @@ public class UserRepository : IUserRepository
 
     public Task<User?> GetByEmail(string email)
     {
-        return Task.FromResult(GetAll().FirstOrDefault(user => user.Email.Equals(email)));
+        return Task.FromResult(GetAll().FirstOrDefault(user => user.Email == email));
     }
 
     public Task Save(User user)

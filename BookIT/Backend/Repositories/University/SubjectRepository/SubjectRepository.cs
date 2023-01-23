@@ -36,4 +36,9 @@ public class SubjectRepository : ISubjectRepository
     {
         return _repository.Delete(subject);
     }
+
+    public Task<Subject?> GetByName(string name)
+    {
+        return Task.FromResult(_repository.GetAll().FirstOrDefault(s => s.Name ==name));
+    }
 }

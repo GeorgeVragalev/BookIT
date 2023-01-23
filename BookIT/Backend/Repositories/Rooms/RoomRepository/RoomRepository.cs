@@ -22,9 +22,9 @@ public class RoomRepository : IRoomRepository
         return _repository.GetById(id);
     }
 
-    public Task<Room?> GetByRoomName(string roomName)
+    public Task<Room?> GetByName(string name)
     {
-        return Task.FromResult(_repository.GetAll().FirstOrDefault(room => room.Name ==roomName));
+        return Task.FromResult(_repository.GetAll().FirstOrDefault(room => room.Name ==name));
     }
 
     public Task Save(Room room)

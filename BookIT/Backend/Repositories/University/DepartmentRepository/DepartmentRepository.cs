@@ -36,4 +36,9 @@ public class DepartmentRepository : IDepartmentRepository
     {
         return _repository.Delete(department);
     }
+
+    public Task<Department?> GetByName(string name)
+    {
+        return Task.FromResult(_repository.GetAll().FirstOrDefault(d => d.Name ==name));
+    }
 }

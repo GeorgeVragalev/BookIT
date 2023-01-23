@@ -5,5 +5,5 @@ namespace Backend.Repositories.University.SubjectRepository;
 
 public interface ISubjectRepository : IGenericRepository<Subject>
 {
-    
+    public Task<Subject?> GetByName(string name);
 }

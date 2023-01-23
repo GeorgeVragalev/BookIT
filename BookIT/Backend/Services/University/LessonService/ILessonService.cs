@@ -6,7 +6,7 @@ public interface ILessonService
 {
     public IList<Lesson> GetAll();
     public Task<Lesson?> GetById(int id);
-    public Task<Lesson?> GetByLessonName(string lessonName);
+    public Task<Lesson?> GetByName(string lessonName);
     public Task Save(Lesson lesson);
     public Task Update(Lesson lesson);
     public Task Delete(Lesson lesson);
