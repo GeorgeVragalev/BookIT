@@ -24,40 +24,8 @@ public class RoomController : Controller
 
     public IActionResult Rooms()
     {
-        // var rooms = _roomService.GetAll().ToModel();
-        var rooms = new List<RoomModel>();
-
-        return View(rooms);
+        return View();
     }
-
-    // private IList<RoomModel> List()
-    // {
-    //     // var newRoom = new Room()
-    //     // {
-    //     //     Capacity = 10,
-    //     //     Id = 1,
-    //     //     Name = "303",
-    //     //     Facilities = new List<Facility>()
-    //     // };
-    //     //
-    //     // var fac1 = new Facility()
-    //     // {
-    //     //     Id = 1,
-    //     //     Quantity = 2,
-    //     //     Room = newRoom,
-    //     //     RoomId = 1,
-    //     //     FacilityType = FacilityType.Projector
-    //     // };
-    //     //
-    //     // newRoom.Facilities.Add(fac1);
-    //     //
-    //     // var rooms = new List<RoomModel>()
-    //     // {
-    //     //     newRoom.ToModel()
-    //     // };
-    //
-    //     return rooms;
-    // }
 
     [HttpPost]
     public Task<JsonResult> GetRoomsList()
