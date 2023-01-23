@@ -45,12 +45,12 @@
     border: 3px solid #0E0E26 !important;
 }
 
-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
+/*.form {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    flex-direction: column;*/
+/*}*/
 
 .upload-cards {
     display: flex;
