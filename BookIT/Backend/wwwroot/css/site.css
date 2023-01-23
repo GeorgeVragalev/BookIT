@@ -51,5 +51,18 @@ body {
 }
 
 .calendar-container {
-  padding: 0 20rem;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2rem;
+
+}
+
+.calendar-container  #calendar {
+    flex: 2;
+  }
+
+.calendar-container  #calendar--list {
+  flex: 1;
 }

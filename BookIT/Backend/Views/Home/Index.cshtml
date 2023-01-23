@@ -4,7 +4,8 @@
 
 <div class="text-center">
         <div class="calendar-container">
-        <div id="calendar"> </div>
+            <div id="calendar"> </div>
+            <div id="calendar--list"> </div>
         </div>
 </div>
 
@@ -16,13 +17,27 @@
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,listWeek'
+                right: 'month,agendaWeek'
             },
             firstDay: 1,
             slotMinutes: 30,
             events: 'https://localhost:44311/FindAll'
         });
     });
+    
+        $(document).ready(function () {
+            $('#calendar--list').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'listWeek'
+                },
+                firstDay: 1,
+                defaultView: 'listWeek',
+                slotMinutes: 30,
+                events: 'https://localhost:44311/FindAll'
+            });
+        });
 </script>
 }
 

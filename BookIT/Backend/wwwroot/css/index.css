@@ -61,33 +61,33 @@
   color: #f2208a;
 }
 #calendar .fc-month-button {
-  border-radius: 50px 0 0 50px;
+  padding: 0 1.2em;
   font-size: 16px;
-  font-weight: bolder;
-  border: 3px solid #0E0E26;
-  color: #0E0E26;
-  margin-right: 0.6rem;
-  background-color: #fefefe;
+  margin-right: 0.8rem;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  border-radius: 50px 0 0 50px;
+}
+#calendar .fc-month-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
 }
 #calendar .fc-state-active {
-  background-color: #eaeaf6 !important;
+  opacity: 0.9;
 }
 #calendar .fc-agendaWeek-button {
-  font-size: 16px;
-  font-weight: bolder;
-  border: 3px solid #0E0E26;
-  color: #0E0E26;
-  margin-right: 0.6rem;
-  background-color: #fefefe;
-}
-#calendar .fc-listWeek-button {
-  font-size: 16px;
-  border: 3px solid #0E0E26;
-  color: #0E0E26;
-  font-weight: bolder;
-  background-color: #fefefe;
-  border-radius: 0 50px 50px 0;
   padding: 0 1.2em;
+  font-size: 16px;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  margin-right: 0.8rem;
+  border-radius: 0 50px 50px 0;
+}
+#calendar .fc-agendaWeek-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
 }
 #calendar .fc-agenda-view .fc-day-grid .fc-row {
   display: none;
@@ -100,6 +100,52 @@
 }
 #calendar .fc-list-heading .fc-widget-heade {
   background: transparent;
+}
+
+#calendar--list .fc-listWeek-button {
+  display: none;
+}
+#calendar--list .fc-today-button {
+  display: none;
+}
+#calendar--list .fc-prev-button {
+  font-size: 16px;
+  margin-right: 0.8rem;
+  color: #f2208a;
+  background: #eaeaf6;
+  border: 2px solid #f2208a;
+  border-radius: 50px 0 0 50px;
+}
+#calendar--list .fc-prev-button:hover {
+  opacity: 0.7;
+}
+#calendar--list .fc-next-button {
+  font-size: 16px;
+  color: #f2208a;
+  background: #eaeaf6;
+  margin-right: 0.8rem;
+  border-radius: 0 50px 50px 0;
+  border: 2px solid #f2208a;
+}
+#calendar--list .fc-next-button:hover {
+  opacity: 0.7;
+}
+#calendar--list .fc-center h2 {
+  display: none;
+}
+#calendar--list .fc-left {
+  width: 30vw;
+  display: flex;
+  justify-content: flex-end;
+}
+#calendar--list .fc-view-container {
+  height: 92%;
+}
+#calendar--list .fc-view-container .fc-view {
+  height: 100%;
+}
+#calendar--list .fc-view-container .fc-list-empty {
+  background: #eaeaf6 !important;
 }
 
 /* Events */

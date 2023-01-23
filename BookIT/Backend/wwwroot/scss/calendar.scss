@@ -70,36 +70,37 @@
   }
   
   .fc-month-button {
-    border-radius: 50px 0  0 50px;
+    padding: 0 1.2em;
     font-size: 16px;
-    font-weight: bolder;
-    border: 3px solid $blue;
-    color: $blue;
-    margin-right: 0.6rem;
-    background-color: $white;
+    margin-right: 0.8rem;
+    border: none;
+    color: $white;
+    background: $blue;
+    border-radius: 50px 0  0 50px;
+    
+    &:hover {
+      opacity: 0.9;
+      color: $pink;
+    }
   }
   
   .fc-state-active {
-    background-color: $violet !important;
+    opacity: 0.9;
   }
   
   .fc-agendaWeek-button {
-    font-size: 16px;
-    font-weight: bolder;
-    border: 3px solid $blue;
-    color: $blue;
-    margin-right: 0.6rem;
-    background-color: $white;
-  }
-  
-  .fc-listWeek-button {
-    font-size: 16px;
-    border: 3px solid $blue;
-    color: $blue;
-    font-weight: bolder;
-    background-color: $white;
-    border-radius: 0 50px 50px 0;
     padding: 0 1.2em;
+    font-size: 16px;
+    border: none;
+    color: $white;
+    background: $blue;
+    margin-right: 0.8rem;
+    border-radius: 0 50px 50px 0;
+
+    &:hover {
+      opacity: 0.9;
+      color: $pink;
+    }
   }
 
   .fc-agenda-view .fc-day-grid .fc-row {
@@ -117,6 +118,65 @@
         background: transparent;
       }
     }
+}
+
+#calendar--list {
+  .fc-listWeek-button {
+    display: none;
+  }
+  
+  .fc-today-button {
+    display: none;
+  }
+  .fc-prev-button {
+    font-size: 16px;
+    margin-right: 0.8rem;
+    color: $pink;
+    background: $violet;
+    border: 2px solid $pink;
+    border-radius: 50px 0  0 50px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .fc-next-button {
+    font-size: 16px;
+    color: $pink;
+    background: $violet;
+    margin-right: 0.8rem;
+    border-radius: 0 50px 50px 0;
+    border: 2px solid $pink;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  
+  .fc-center {
+    h2 {
+      display: none;
+    }
+  }
+  
+  .fc-left {
+    width: 30vw;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .fc-view-container {
+    height: 92%;
+    
+    .fc-view {
+      height: 100%;
+    }
+    
+    .fc-list-empty {
+      background: $violet !important;
+    }
+  }
 }
 
 /* Events */
