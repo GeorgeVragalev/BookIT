@@ -21,4 +21,9 @@ public class User : IdentityUser<int>, IBaseEntity
     
     public int? StudentId { get; set; }
     public virtual Student? Student { get; set; }
+
+    public string GetFullName()
+    {
+        return FirstName + " " + LastName;
+    }
 }

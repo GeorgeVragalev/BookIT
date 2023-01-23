@@ -66,7 +66,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("TimePeriodId");
 
-                    b.ToTable("Lessons");
+                    b.ToTable("Lessons", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.Roles.Role", b =>
@@ -120,7 +120,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Facilities");
+                    b.ToTable("Facilities", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.Rooms.Room", b =>
@@ -140,7 +140,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.UniversityEntities.Department", b =>
@@ -157,7 +157,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.UniversityEntities.Group", b =>
@@ -174,7 +174,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.UniversityEntities.Subject", b =>
@@ -200,7 +200,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subjects");
+                    b.ToTable("Subjects", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.UniversityEntities.TimePeriod", b =>
@@ -222,7 +222,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TimePeriods");
+                    b.ToTable("TimePeriods", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Student", b =>
@@ -246,7 +246,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.Teacher", b =>
@@ -273,7 +273,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.Users.User", b =>
@@ -479,7 +479,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("TeachersId");
 
-                    b.ToTable("SubjectTeacher");
+                    b.ToTable("SubjectTeacher", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Entities.LessonEntities.Lesson", b =>
