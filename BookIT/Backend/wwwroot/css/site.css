@@ -87,7 +87,7 @@ body {
 
 .button--save {
   font-size:14px;
-  padding: 0.2em 1em;
+  padding: 0.6em 1em;
   font-weight: bold;
   margin: 2rem 0;
   border: none;
@@ -95,12 +95,55 @@ body {
   height: 4rem;
   color: #fefefe;
   border-radius: 15px;
-  background: #f2208a !important;
+  background: #659f29 !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.button--delete {
+  font-size:14px;
+  padding: 0.6em 1em;
+  font-weight: bold;
+  margin: 2rem 0;
+  border: none;
+  width: fit-content;
+  height: 4rem;
+  color: #fefefe;
+  border-radius: 15px;
+  background: #c92a52 !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.button--green {
+  font-size:14px;
+  padding: 0.6em 1em;
+  font-weight: bold;
+  margin: 2rem 0;
+  border: none;
+  width: fit-content;
+  height: 4rem;
+  color: #fefefe;
+  border-radius: 15px;
+  background: #659f29 !important;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .button--save:hover {
   border: 1px solid #9d9d9d;
+  color: #fefefe !important;
+  font-weight: bold;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.button--green:hover{
+  border: 1px solid #9d9d9d;
+  color: #fefefe !important;
+  font-weight: bold;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.button--delete:hover {
+  border: 1px solid #9d9d9d;
+  color: #fefefe !important;
   font-weight: bold;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
