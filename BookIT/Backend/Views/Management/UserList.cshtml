@@ -3,7 +3,18 @@
 @{
     Layout = "_Layout";
 }
-
+@if (TempData["EditMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @TempData["EditMessage"]
+    </div>
+}
+@if (TempData["DeletedMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @TempData["DeletedMessage"]
+    </div>
+}
 <div>
     <button id="createUser" class="button-17">Create new user</button>
     <div class="container">
@@ -67,38 +78,22 @@ $(document).ready(
             ]
         });
 
+        $('#createUser').click(function() {
+            window.location.href = '@Url.Action("CreateUser")';
+        });
         $('#myUserTable tbody').on('click', '#Edit', function() {
             var data = table.row($(this).parents('tr')).data();
-            
-            var link = '@Url.Action("EditUser")' + "/" + data.id;
-            
-            window.location.href = link;
+            window.location.href = '@Url.Action("EditUser")' + "/" + data.id;
         });
-
         $('#myUserTable tbody').on('click', '#Delete', function() {
             var data = table.row($(this).parents('tr')).data();
-            $.ajax({
-                url: "DeleteUser",
-                type: "DELETE",
-                data: {
-                    id: JSON.stringify(data.id)
-                },
-                success: function() {
-                    window.location.reload();
-                }
-            });
+            window.location.href = '@Url.Action("DeleteUser")' + "/" + data.id;
         });
-            $('#createUser').click(function() {
-            $.ajax({
-                    url: "GetCreateUserLink",
-                type: "Get",
-                success: function(response) {
-                    window.location.href = response.url
-                }
-            });
-        });
+
+
+
     })
-</script>
+    </script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>

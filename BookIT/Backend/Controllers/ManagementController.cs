@@ -49,8 +49,6 @@ public class ManagementController : Controller
 
     public IActionResult UserList()
     {
-        // var dbData = _userService.GetAll();
-        // var data = _mapper.Map<IList<UserModel>>(dbData);
         return View();
     }
 
@@ -90,18 +88,11 @@ public class ManagementController : Controller
         return Task.FromResult(new JsonResult(returnObj));
     }
 
-    [HttpPost]
-    public Task<JsonResult> GetEditUrl(int id)
+    [HttpGet("management/createuser")]
+    public IActionResult CreateUser()
     {
-        return Task.FromResult(Json(new {url = Url.Action("EditUser", new {id = id})}));
+        return View();
     }
-    
-    [HttpGet]
-    public Task<JsonResult> GetCreateUserLink()
-    {
-        return Task.FromResult(Json(new {url = Url.Action("CreateUser")}));
-    }
-    
     [HttpGet("management/edituser/{id:int}")]
     public async Task<IActionResult> EditUser(int id)
     {
@@ -111,15 +102,9 @@ public class ManagementController : Controller
         {
             return View("UserList");
         }
-
         var model = _mapper.Map<UserModel>(user);
+        TempData["EditMessage"] = "Record edited very successfully";
         return View(model);
-    }
-    
-    [HttpGet]
-    public IActionResult CreateUser()
-    {
-        return View();
     }
     
     [HttpPost]
@@ -133,7 +118,6 @@ public class ManagementController : Controller
         return RedirectToAction("UserList");
     }
 
-    [HttpDelete]
     public async Task<RedirectToActionResult> DeleteUser(int id)
     {
         var user = await _userService.GetById(id);
@@ -143,6 +127,7 @@ public class ManagementController : Controller
         }
 
         await _userService.Delete(user);
+        TempData["DeletedMessage"] = "Record deleted very successfully";
         return RedirectToAction("UserList");
     }
 
@@ -194,6 +179,4 @@ public class ManagementController : Controller
     }
 
     #endregion
-
-    
 }
