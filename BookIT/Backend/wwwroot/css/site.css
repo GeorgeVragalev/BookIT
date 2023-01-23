@@ -14,6 +14,7 @@ html {
 }
 
 html {
+  font-size: 62.5% !important;
   position: relative;
   min-height: 100%;
 }
@@ -21,7 +22,7 @@ html {
 body {
   background: #0E0E26 !important;
   min-height: 100vh;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 .align-content-center {
@@ -29,6 +30,7 @@ body {
 }
 
 .button--auth {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   align-self: center;
   font-size: 24px;
   font-weight: bolder;
@@ -41,6 +43,12 @@ body {
   border: none;
   z-index: 20;
   right: 33vw;
+  transition: all300ms ease;
+}
+
+.button--auth:hover {
+  box-shadow: rgba(50, 50, 93, 0.05) 0px 30px 60px -12px inset,
+  rgba(0, 0, 0, 0.1) 0px 18px 36px -18px inset;
 }
 
 
@@ -52,5 +60,103 @@ body {
 }
 
 .calendar-container {
-  padding: 0 20rem;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2rem;
+
+}
+
+.calendar-container  #calendar {
+    flex: 2;
+  }
+
+.calendar-container  #calendar--list {
+  flex: 1;
+}
+
+.auth-container__form--usual {
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.auth-container__form--usual .form-label {
+   font-size: 12px ;
+   font-weight: lighter;
+   color: #d9d9d9;
+   margin-bottom: 0.2rem;
+ }
+
+.auth-container__form--usual .auth-container__form-item {
+  background-color: #eaeaf6;
+  line-height: 5rem;
+  height: 4rem;
+}
+
+.button--save {
+  font-size:14px;
+  padding: 0.6em 1em;
+  font-weight: bold;
+  margin: 2rem 0;
+  border: none;
+  width: fit-content;
+  height: 4rem;
+  color: #fefefe;
+  border-radius: 15px;
+  background: #659f29 !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.button--delete {
+  font-size:14px;
+  padding: 0.6em 1em;
+  font-weight: bold;
+  margin: 2rem 0;
+  border: none;
+  width: fit-content;
+  height: 4rem;
+  color: #fefefe;
+  border-radius: 15px;
+  background: #c92a52 !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.button--green {
+  font-size:14px;
+  padding: 0.6em 1em;
+  font-weight: bold;
+  margin: 2rem 0;
+  border: none;
+  width: fit-content;
+  height: 4rem;
+  color: #fefefe;
+  border-radius: 15px;
+  background: #659f29 !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.button--save:hover {
+  border: 1px solid #9d9d9d;
+  color: #fefefe !important;
+  font-weight: bold;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.button--green:hover{
+  border: 1px solid #9d9d9d;
+  color: #fefefe !important;
+  font-weight: bold;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.button--delete:hover {
+  border: 1px solid #9d9d9d;
+  color: #fefefe !important;
+  font-weight: bold;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.notification-section {
+  margin: 2rem 0;
 }
