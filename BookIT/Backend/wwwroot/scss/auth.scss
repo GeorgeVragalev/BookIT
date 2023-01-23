@@ -1,0 +1,71 @@
+﻿.auth {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10rem;
+  background-color: #0e0e26 !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100% !important;
+  width: 100% !important;
+  z-index: 10;
+
+  &__form {
+    margin-top: 15vh; 
+    width: 60rem;
+    background-color: #fefefe;
+    padding: 2rem;
+    border-radius: 2rem;
+    height: fit-content;
+
+    .auth-container {
+      padding: 1rem;
+      
+      &__welcome-msg {
+        font-size: 26px;
+        font-weight: bolder;
+        text-transform: uppercase;
+        color: #0e0e26;
+        text-align: center;
+
+        &--tiny {
+          color: #0e0e26;
+          font-size: 16px;
+          margin-top: 0.5rem;
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+      }
+
+      &__form {
+        margin-top: 1rem;
+        padding: 0 7rem;
+        
+        .form-label {
+          font-size: 12px;
+          font-weight: lighter;
+          color: #d9d9d9;
+          margin-bottom: 0.2rem;
+        }
+        
+        &-item {
+          background-color: $violet;
+          line-height: 5rem;
+          height: 4rem;
+        }
+
+        &--register {
+          margin-top: 1.2rem;
+
+        }
+      }
+
+      &__redirect {
+        display: flex;
+        justify-content: space-between;
+        margin: 3rem 0 1rem;
+      }
+    }
+  }
+}

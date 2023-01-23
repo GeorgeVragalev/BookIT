@@ -1,5 +1,6 @@
 @import "index.css";
 @import "CookieBanner/CookieBanner.css";
+@import "upload-block.css";
 @import "Button.css";
 
 html {
@@ -18,5 +19,38 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background: #0E0E26 !important;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.align-content-center {
+  text-align: center;
+}
+
+.button--auth {
+  align-self: center;
+  font-size: 24px;
+  font-weight: bolder;
+  width: 5rem;
+  height: 5rem;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #f2208a;
+  color: #fefefe;
+  border: none;
+  z-index: 20;
+  right: 33vw;
+}
+
+
+.auth-form--footer {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0 7rem;
+}
+
+.calendar-container {
+  padding: 0 20rem;
 }

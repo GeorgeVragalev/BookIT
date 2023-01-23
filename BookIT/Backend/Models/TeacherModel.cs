@@ -11,4 +11,5 @@ public class TeacherModel : IBaseEntity
     public virtual DepartmentModel? Department { get; set; }
     public virtual UserModel? User { get; set; }
     public virtual List<SubjectModel>? Subjects { get; set; }
+    public virtual IList<LessonModel>? Lessons { get; set; }
 }

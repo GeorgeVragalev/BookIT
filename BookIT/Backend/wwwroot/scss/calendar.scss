@@ -1,0 +1,126 @@
+﻿#calendar {
+  .fc-state-hover {
+    border: none;
+  }
+  
+  .fc-scroller::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+
+  .fc-body {
+    border-color: #e9e9e9;  
+  }
+
+  .fc-time-grid .fc-slats .fc-minor td {
+    border-top: none;
+  }
+  .fc-widget-header {
+    background-color: $violet !important;
+  }
+  .fc-scroller {
+    -ms-overflow-style: none; /* Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .fc-today {
+    background-color: $violet;  
+    color: $pink;
+  }
+  
+  .fc-head {
+    line-height: 5rem;
+  }
+  
+  /* Today button*/
+  .fc-today-button {
+    font-size: 16px;
+    background: rgb(63,94,251);
+    border: none;
+    padding: 0 2em;
+    background: linear-gradient(90deg, rgba(4,2,91,1) 0%, rgba(252,70,107,1) 100%);
+    border-radius: 64px;
+    color: $white;
+  }
+  
+  .fc-prev-button {
+    font-size: 16px;
+    margin-right: 0.8rem;
+    border: none;
+    color: $white;
+    background: $blue;
+    border-radius: 50px 0  0 50px;
+    
+    &:hover {
+      opacity: 0.9;
+      color: $pink;
+    }
+  }
+  
+  .fc-next-button {
+    font-size: 16px;
+    border: none;
+    color: $white;
+    background: $blue;
+    margin-right: 0.8rem;
+    border-radius: 0 50px 50px 0;
+
+    &:hover {
+      opacity: 0.9;
+      color: $pink;
+    }
+  }
+  
+  .fc-month-button {
+    border-radius: 50px 0  0 50px;
+    font-size: 16px;
+    font-weight: bolder;
+    border: 3px solid $blue;
+    color: $blue;
+    margin-right: 0.6rem;
+    background-color: $white;
+  }
+  
+  .fc-state-active {
+    background-color: $violet !important;
+  }
+  
+  .fc-agendaWeek-button {
+    font-size: 16px;
+    font-weight: bolder;
+    border: 3px solid $blue;
+    color: $blue;
+    margin-right: 0.6rem;
+    background-color: $white;
+  }
+  
+  .fc-listWeek-button {
+    font-size: 16px;
+    border: 3px solid $blue;
+    color: $blue;
+    font-weight: bolder;
+    background-color: $white;
+    border-radius: 0 50px 50px 0;
+    padding: 0 1.2em;
+  }
+
+  .fc-agenda-view .fc-day-grid .fc-row {
+    display: none;
+  }
+  
+    .fc-list-view {
+       border: none !important;
+    }
+
+    .fc-list-heading {
+      border-bottom: 8px solid $pink;
+
+      .fc-widget-heade {
+        background: transparent;
+      }
+    }
+}
+
+/* Events */
+.fc-time-grid-event .fc-v-event .fc-event {
+  font-size: 16px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}

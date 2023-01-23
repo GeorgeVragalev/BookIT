@@ -5,6 +5,8 @@ using Backend.Services.Rooms.RoomService;
 using Backend.Services.University.DepartmentService;
 using Backend.Services.University.GroupService;
 using Backend.Services.University.SubjectService;
+using Backend.Services.Users.StudentService;
+using Backend.Services.Users.TeacherService;
 using Backend.Services.Users.UserService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +28,10 @@ public class ImportController : Controller
     private readonly IStrategy _userImportStrategy;
     private readonly IStrategy _subjectImportStrategy;
     private readonly IStrategy _groupImportStrategy;
+    private readonly ITeacherService _teacherService;
+    private readonly IStudentService _studentService;
 
-    public ImportController(ICsvImport csvImport, IUserService userService, UserManager<User> userManager, IDepartmentService departmentService, IRoomService roomService, ISubjectService subjectService, IGroupService groupService)
+    public ImportController(ICsvImport csvImport, IUserService userService, UserManager<User> userManager, IDepartmentService departmentService, IRoomService roomService, ISubjectService subjectService, IGroupService groupService, IStudentService studentService, ITeacherService teacherService)
     {
         _csvImport = csvImport;
         _userService = userService;
@@ -36,7 +40,9 @@ public class ImportController : Controller
         _roomService = roomService;
         _subjectService = subjectService;
         _groupService = groupService;
-        _userImportStrategy = new UserImportStrategy(userService, userManager);
+        _studentService = studentService;
+        _teacherService = teacherService;
+        _userImportStrategy = new UserImportStrategy(userService, userManager, teacherService, studentService);
         _subjectImportStrategy = new SubjectImportStrategy(subjectService);
         _groupImportStrategy = new GroupImportStrategy(groupService);
         _departmentImportStrategy = new DepartmentImportStrategy(departmentService);
@@ -82,7 +88,29 @@ public class ImportController : Controller
         
         return RedirectToAction("Index");
     }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Groups(IFormFile file)
+    {
+        await _csvImport.SetStrategy(_groupImportStrategy);
 
+        await ImportData(file);
+        
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Subjects(IFormFile file)
+    {
+        await _csvImport.SetStrategy(_subjectImportStrategy);
+
+        await ImportData(file);
+        
+        return RedirectToAction("Index");
+    }
+    
     private async Task ImportData(IFormFile file)
     {
         try

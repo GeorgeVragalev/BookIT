@@ -17,6 +17,5 @@ public class Teacher : IBaseEntity
     public virtual User? User { get; set; }
 
     public virtual IList<Subject>? Subjects { get; set; }
-    
     public virtual IList<Lesson>? Lessons { get; set; }
 }

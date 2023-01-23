@@ -2,34 +2,74 @@
     ViewBag.Title = "Import";
     Layout = "_Layout";
 }
-
-<h2>Upload Users</h2>
-@using(Html.BeginForm("Users","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
-{
-    <div>
-        @Html.TextBox("file", "", new {  type= "file"}) <br />
-        <input type="submit" value="Upload Users" accept=".xls,.xlsx,.csv"/>
-        
-        @ViewBag.Message
+<div class="upload-cards">
+    <div class="card">
+        <h3>Upload Users</h3>
+        <div class="drop_box">
+            <p>Files Supported: .xls,.xlsx,.csv</p>
+            @using (Html.BeginForm("Users", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.TextBox("file", "", new { type = "file" })
+                <br/>
+                <input type="submit" value="Submit" class="btn" accept=".xls,.xlsx,.csv"/>
+                @ViewBag.Message
+            }
+        </div>
     </div>
-}
 
-<h2>Upload Departments</h2>
-@using(Html.BeginForm("Departments","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
-{
-    <div>
-        @Html.TextBox("file", "", new {  type= "file"}) <br />
-        <input type="submit" value="Upload Departments" accept=".xls,.xlsx,.csv"/>
-        @ViewBag.Message
+    <div class="card">
+        <h3>Upload Departments</h3>
+        <div class="drop_box">
+            <p>Files Supported: .xls,.xlsx,.csv</p>
+            @using (Html.BeginForm("Departments", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.TextBox("file", "", new { type = "file" })
+                <br/>
+                <input type="submit" class="btn" value="Submit" accept=".xls,.xlsx,.csv"/>
+                @ViewBag.Message
+            }
+        </div>
     </div>
-}
 
-<h2>Upload Rooms</h2>
-@using(Html.BeginForm("Rooms","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
-{
-    <div>
-        @Html.TextBox("file", "", new {  type= "file"}) <br />
-        <input type="submit" value="Upload Rooms" accept=".xls,.xlsx,.csv"/>
-        @ViewBag.Message
+    <div class="card">
+        <h3>Upload Rooms</h3>
+        <div class="drop_box">
+            <p>Files Supported: .xls,.xlsx,.csv</p>
+            @using(Html.BeginForm("Rooms","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
+            {
+                @Html.TextBox("file", "", new { type = "file" })
+                <br/>
+                <input type="submit" class="btn" value="Submit" accept=".xls,.xlsx,.csv"/>
+                @ViewBag.Message
+            }
+        </div>
     </div>
-}
+
+    <div class="card">
+        <h3>Upload Groups</h3>
+        <div class="drop_box">
+            <p>Files Supported: .xls,.xlsx,.csv</p>
+            @using(Html.BeginForm("Groups","Import", FormMethod.Post, new { enctype="multipart/form-data"}))
+            {
+                @Html.TextBox("file", "", new { type = "file" })
+                <br/>
+                <input type="submit" class="btn" value="Submit" accept=".xls,.xlsx,.csv"/>
+                @ViewBag.Message
+            }
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Upload Subjects</h3>
+        <div class="drop_box">
+            <p>Files Supported: .xls,.xlsx,.csv</p>
+            @using(Html.BeginForm("Subjects","Import", FormMethod.Post, new { enctype="multipart/form-data", @class="form"}))
+            {
+                @Html.TextBox("file", "", new { type = "file" })
+                <br/>
+                <input type="submit" class="btn" value="Submit" accept=".xls,.xlsx,.csv"/>
+                @ViewBag.Message
+            }
+        </div>
+    </div>
+</div>

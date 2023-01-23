@@ -1,0 +1,61 @@
+﻿.card {
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+    width: 600px;
+    height: fit-content;
+    background-color: #ffffff;
+    padding: 10px 30px 40px;
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.drop_box {
+    margin: 10px 0;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 3px dotted #0E0E26;
+    border-radius: 5px;
+    background: #eaeaf6;
+}
+
+.drop_box p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: #a3a3a3;
+}
+
+.drop_box .btn{
+   
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #eaeaf6;
+    color: #0E0E26;
+    padding: 0.5em 2em !important;
+    font-weight: bolder !important;
+    border-radius: 0.8rem !important;
+    border: 3px solid #0E0E26 !important;
+}
+
+/*.form {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    flex-direction: column;*/
+/*}*/
+
+.upload-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: flex-start;
+}

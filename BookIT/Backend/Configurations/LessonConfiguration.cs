@@ -8,6 +8,7 @@ public class LessonConfiguration
     public void Configure(EntityTypeBuilder<Lesson> builder)
     {
         builder.HasKey(r => r.Id);
+        
         builder.Property(s => s.Name).IsRequired(false);
         builder.Property(s => s.TeacherId).IsRequired(false);
         builder.Property(s => s.GroupId).IsRequired(false);
