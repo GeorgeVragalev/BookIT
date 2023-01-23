@@ -66,3 +66,43 @@ body {
 .calendar-container  #calendar--list {
   flex: 1;
 }
+
+.auth-container__form--usual {
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.auth-container__form--usual .form-label {
+   font-size: 12px ;
+   font-weight: lighter;
+   color: #d9d9d9;
+   margin-bottom: 0.2rem;
+ }
+
+.auth-container__form--usual .auth-container__form-item {
+  background-color: #eaeaf6;
+  line-height: 5rem;
+  height: 4rem;
+}
+
+.button--save {
+  font-size:14px;
+  font-weight: bold;
+  margin: 2rem 0;
+  border: none;
+  width: 8rem;
+  height: 4rem;
+  color: #fefefe;
+  border-radius: 15px;
+  background: #f2208a !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.button--save:hover {
+  font-weight: bold;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.notification-section {
+  margin: 2rem 0;
+}

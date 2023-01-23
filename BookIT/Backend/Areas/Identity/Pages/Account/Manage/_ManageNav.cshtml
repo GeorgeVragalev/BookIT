@@ -13,3 +13,23 @@
     <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
 </ul>
+
+<style lang="scss" scoped>
+    .nav-link {
+        font-size: 16px !important;
+        color: #0E0E26;
+    }
+    
+    .nav-link:hover {
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    background: transparent !important;
+        color: #f2208a !important;
+    }
+    .nav-link.active {
+        font-size: 16px;
+        background-color: transparent !important;
+        color: #f2208a !important;
+        font-weight: bold;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+</style>

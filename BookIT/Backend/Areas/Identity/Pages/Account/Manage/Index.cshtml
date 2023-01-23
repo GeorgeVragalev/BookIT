@@ -6,21 +6,25 @@
 }
 
 <h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
+<div class="row d-flex" style="justify-content: center; margin-top:3rem;">
+    <div class="col-md-6 align-self-center">
         <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Username" class="form-control" disabled />
+            <div class="auth-container__form--usual">
                 <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Username" class="form-control auth-container__form-item" disabled/>
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.PhoneNumber" class="form-control" />
+            <div class="auth-container__form--usual">
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control auth-container__form-item"/>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <div class="notification-section">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <partial name="_StatusMessage" for="StatusMessage" />
+            </div>
+            <div style="text-align: center">
+                <button id="update-profile-button" type="submit" class="button--save">Save</button>
+            </div>
         </form>
     </div>
 </div>
