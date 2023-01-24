@@ -51,6 +51,5 @@ public class MapperProfile : Profile
 
         CreateMap<LessonModel, LessonImportModel>()
             .ReverseMap();
-
     }
 }

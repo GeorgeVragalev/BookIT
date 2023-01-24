@@ -1,0 +1,94 @@
+﻿@model IList<Backend.Models.RoomModel>
+
+@{
+    Layout = "_Layout";
+}
+@if (TempData["EditMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @TempData["EditMessage"]
+    </div>
+}
+@if (TempData["DeletedMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @TempData["DeletedMessage"]
+    </div>
+}
+<div>
+    <button id="createRoom" class="button-17">Create new room</button>
+    <div class="container">
+        <div class="table-responsive">
+            <table id="myRoomTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Capacity</th>
+                    <th>Actions<th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(
+    function() {
+        var table = $('#myRoomTable').DataTable({
+            ajax: {
+                url: "LoadRoomsList",
+                type: "POST",
+            },
+            processing: true,
+            serverSide: true,
+            filter: true,
+            columns: [{
+                    data: "id",
+                    name: "Id"
+                },
+                {
+                    data: "name",
+                    name: "Name"
+                },
+                {
+                    data: "capacity",
+                    name: "Capacity"
+                },
+                {
+                    data: "editUrl",
+                    name: "Edit"
+                },
+            ],
+            columnDefs: [{
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button id = Edit class=button-17>Edit</button> <button id = Delete class = button-17 style='color: red''>Delete</button>"
+                },
+                {
+                    "searchable": false,
+                    "targets": [4]
+                }
+            ]
+        });
+
+
+        $('#createRoom').click(function() {
+            window.location.href = '@Url.Action("CreateRoom")';
+        });
+        $('#myRoomTable tbody').on('click', '#Edit', function() {
+            var data = table.row($(this).parents('tr')).data();
+            window.location.href = '@Url.Action("EditRoom")' + "/" + data.id;
+        });
+        $('#myRoomTable tbody').on('click', '#Delete', function() {
+            var data = table.row($(this).parents('tr')).data();
+            window.location.href = '@Url.Action("DeleteRoom")' + "/" + data.id;
+        });
+
+    })
+    </script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

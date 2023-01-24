@@ -2,6 +2,7 @@
 using Backend.Entities.Rooms;
 using Backend.Entities.UniversityEntities;
 using Backend.Entities.Users;
+using Backend.Services.Rooms.FacilityService;
 using Backend.Services.Rooms.RoomService;
 using Backend.Services.University.DepartmentService;
 using Backend.Services.University.GroupService;
@@ -21,8 +22,9 @@ public class DummySeedService : IDummySeedService
     private readonly ILessonService _lessonService;
     private readonly ITimePeriodService _timePeriodService;
     private readonly IRoomService _roomService;
+    private readonly IFacilityService _facilityService;
 
-    public DummySeedService(IGroupService groupService, IDepartmentService departmentService, ISubjectService subjectService, ILessonService lessonService, ITeacherService teacherService, ITimePeriodService timePeriodService, IRoomService roomService)
+    public DummySeedService(IGroupService groupService, IDepartmentService departmentService, ISubjectService subjectService, ILessonService lessonService, ITeacherService teacherService, ITimePeriodService timePeriodService, IRoomService roomService, IFacilityService facilityService)
     {
         _groupService = groupService;
         _departmentService = departmentService;
@@ -31,6 +33,7 @@ public class DummySeedService : IDummySeedService
         _teacherService = teacherService;
         _timePeriodService = timePeriodService;
         _roomService = roomService;
+        _facilityService = facilityService;
     }
 
     public async Task SeedDb()
@@ -60,21 +63,35 @@ public class DummySeedService : IDummySeedService
             WeekDay = WeekDayType.Monday
         };
         
+
+
         var fafCab = new Room()
         {
             Capacity = 30,
-            Name = "FAF-CAB"
+            Name = "FAF-CAB",
         };
-
+        
+        if (_roomService.GetAll().Count == 0)
+        {
+            await _roomService.Save(fafCab);
+        }
 
         if (_groupService.GetAll().Count == 0)
         {
             await _groupService.Save(faf203);
         }
         
-        if (_roomService.GetAll().Count == 0)
+        var table = new Facility()
         {
-            await _roomService.Save(fafCab);
+            Quantity = 5,
+            FacilityType = FacilityType.Table,
+            Room = fafCab,
+            RoomId = fafCab.Id
+        };
+        
+        if (_facilityService.GetAll().Count == 0)
+        {
+            await _facilityService.Save(table);
         }
         
         if (_departmentService.GetAll().Count == 0)
@@ -91,7 +108,7 @@ public class DummySeedService : IDummySeedService
         {
             await _timePeriodService.Save(firstLesson);
         }
-        
+
         var teacher = new Teacher()
         {
             Department = fcim,
