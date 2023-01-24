@@ -1,36 +1,65 @@
 ﻿using AutoMapper;
 using Backend.Entities.LessonEntities;
 using Backend.Entities.Roles;
+using Backend.Entities.Rooms;
 using Backend.Entities.Users;
 using Backend.Models;
 using Backend.Models.Sorting;
+using Backend.Services.Rooms.FacilityService;
+using Backend.Services.Rooms.RoomService;
+using Backend.Services.University.DepartmentService;
+using Backend.Services.University.GroupService;
 using Backend.Services.University.LessonService;
+using Backend.Services.University.SubjectService;
+using Backend.Services.Users.StudentService;
+using Backend.Services.Users.TeacherService;
 using Backend.Services.Users.UserService;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Backend.Controllers;
 
 public class ManagementController : Controller
 {
+    #region Ctor
+
     private readonly RoleManager<Role> _roleManager;
     private readonly UserManager<User> _userManager;
     private readonly IUserService _userService;
+    private readonly IEmailSender _emailSender;
+    private readonly IStudentService _studentService;
+    private readonly ITeacherService _teacherService;
+    private readonly IGroupService _groupService;
+    private readonly IRoomService _roomService;
+    private readonly IDepartmentService _departmentService;
+    private readonly ISubjectService _subjectService;
+    private readonly IFacilityService _facilityService;
     private readonly ILessonService _lessonService;
     private readonly IMapper _mapper;
 
-    public ManagementController(RoleManager<Role> roleManager,
-        UserManager<User> userManager,
-        IUserService userService,
-        IMapper mapper, ILessonService lessonService)
+    public ManagementController(RoleManager<Role> roleManager, UserManager<User> userManager, IUserService userService,
+        IEmailSender emailSender, IStudentService studentService, ITeacherService teacherService,
+        IGroupService groupService, IDepartmentService departmentService, ISubjectService subjectService,
+        IMapper mapper, IRoomService roomService, IFacilityService facilityService, ILessonService lessonService)
     {
         _roleManager = roleManager;
         _userManager = userManager;
         _userService = userService;
+        _emailSender = emailSender;
+        _studentService = studentService;
+        _teacherService = teacherService;
+        _groupService = groupService;
+        _departmentService = departmentService;
+        _subjectService = subjectService;
         _mapper = mapper;
+        _roomService = roomService;
+        _facilityService = facilityService;
         _lessonService = lessonService;
     }
-
+    #endregion
+    
     #region User
 
     public IActionResult UserList()
@@ -325,4 +354,146 @@ public class ManagementController : Controller
     }
 
     #endregion
+    
+    #region Rooms
+    
+    public IActionResult RoomsList()
+    {
+        return View();
+    }
+    
+    [HttpPost]
+    public Task<JsonResult> LoadRoomsList()
+    {
+        var draw = Request.Form["draw"].FirstOrDefault();
+        var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"]
+            .FirstOrDefault();
+        var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+        var searchValue = Request.Form["search[value]"].FirstOrDefault();
+        var pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
+        var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
+        var data = GetRoomModelList();
+
+        //get total count of data in table
+        var totalRecord = data.Count();
+        // search data when search value found
+        if (!string.IsNullOrEmpty(searchValue))
+        {
+            data = SearchByValue(data, searchValue);
+        }
+
+        var filterRecord = data.Count();
+
+        if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
+        {
+            data = SortDataByColumn(data, sortColumn, sortColumnDirection);
+        }
+
+        //pagination
+        var empList = data.Skip(skip).Take(pageSize).ToList();
+        var returnObj = new
+        {
+            draw = draw, recordsTotal = totalRecord, recordsFiltered = filterRecord, data = empList
+        };
+        return Task.FromResult(new JsonResult(returnObj));
+    }
+    
+    private IList<RoomModel> SearchByValue(IList<RoomModel> data, string searchValue)
+    {
+        //TODO: Remove nullable from First and LastName
+        return data.Where(x =>
+            x.Name.ToLower().Contains(searchValue.ToLower()) ||
+            x.Id.ToString().ToLower().Contains(searchValue.ToLower())).ToList();
+    }
+
+    private IList<RoomModel> SortDataByColumn(IList<RoomModel> data, string sortColumn, string sortColumnDirection)
+    {
+        return sortColumn switch
+        {
+            "Id" => SortId(data, sortColumnDirection),
+            "Name" => SortName(data, sortColumnDirection),
+            "Capacity" => SortCapacity(data, sortColumnDirection),
+            _ => data
+        };
+    }
+
+    private IList<RoomModel> SortId(IList<RoomModel> data, string sortColumnDirection)
+    {
+        return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
+            ? data.OrderBy(u => u.Id).ToList()
+            : data.OrderByDescending(u => u.Id).ToList();
+    }
+
+    private IList<RoomModel> SortName(IList<RoomModel> data, string sortColumnDirection)
+    {
+        return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
+            ? data.OrderBy(u => u.Name).ToList()
+            : data.OrderByDescending(u => u.Name).ToList();
+    }
+
+    private IList<RoomModel> SortCapacity(IList<RoomModel> data, string sortColumnDirection)
+    {
+        return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
+            ? data.OrderBy(u => u.Capacity).ToList()
+            : data.OrderByDescending(u => u.Capacity).ToList();
+    }
+    
+    private IList<RoomModel> GetRoomModelList()
+    {
+        var dbData = _roomService.GetAll();
+        return _mapper.Map<IList<RoomModel>>(dbData);
+    }
+    
+    [HttpGet("management/createroom")]
+    public IActionResult CreateRoom()
+    {
+        var facilities = _facilityService.GetAll();
+        var roomModel = new RoomModel()
+        {
+            Facilities = _mapper.Map<IList<FacilityModel>>(facilities)
+        };
+        
+        return View(roomModel);
+    }
+    [HttpGet("management/editroom/{id:int}")]
+    public async Task<IActionResult> EditRoom(int id)
+    {
+        var room = await _roomService.GetById(id);
+
+        if (room == null)
+        {
+            return View("RoomsList");
+        }
+        var model = _mapper.Map<RoomModel>(room);
+
+        TempData["EditMessage"] = "Record edited very successfully";
+        return View(model);
+    }
+    
+    [HttpPost]
+    public async Task<RedirectToActionResult> UpdateRoom(RoomModel roomModel)
+    {
+        var dbRoom = await _roomService.GetById(roomModel.Id);
+        
+        _mapper.Map<RoomModel, Room>(roomModel, dbRoom);
+        
+        await _roomService.Update(dbRoom);
+        return RedirectToAction("RoomsList");
+    }
+
+    public async Task<RedirectToActionResult> DeleteRoom(int id)
+    {
+        var room = await _roomService.GetById(id);
+        if (room == null)
+        {
+            return RedirectToAction("RoomsList");
+        }
+
+        await _roomService.Delete(room);
+        TempData["DeletedMessage"] = "Record deleted very successfully";
+        return RedirectToAction("RoomsList");
+    }
+    
+    #endregion
+
 }

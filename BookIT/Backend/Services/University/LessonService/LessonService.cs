@@ -22,9 +22,9 @@ public class LessonService : ILessonService
         return _lessonRepository.GetById(id);
     }
 
-    public Task<Lesson?> GetByLessonName(string lessonName)
+    public Task<Lesson?> GetByName(string lessonName)
     {
-        return _lessonRepository.GetByLessonName(lessonName);
+        return _lessonRepository.GetByName(lessonName);
     }
 
     public Task Save(Lesson lesson)

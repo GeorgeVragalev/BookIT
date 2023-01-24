@@ -22,6 +22,11 @@ public class GroupService : IGroupService
         return _groupRepository.GetById(id);
     }
 
+    public Task<Group?> GetByName(string group)
+    {
+        return _groupRepository.GetByName(group);
+    }
+
     public Task Save(Group group)
     {
         return _groupRepository.Save(group);

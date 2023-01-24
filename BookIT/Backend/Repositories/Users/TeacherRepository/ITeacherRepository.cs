@@ -5,5 +5,5 @@ namespace Backend.Repositories.Users.TeacherRepository;
 
 public interface ITeacherRepository : IGenericRepository<Teacher>
 {
-    
+    public Task<Teacher?> GetByEmail(string email);
 }

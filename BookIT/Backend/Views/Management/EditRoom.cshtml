@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Backend.Models.RoomModel
+
+@{
+    ViewBag.Title = "Edit room";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm("UpdateRoom", "Management", Model))
+{
+    <h2>Edit room with id: @Model.Id</h2>
+    <hr/>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating">
+        <input asp-for="@Model.Name" class="form-control" autocomplete="email" aria-required="true"/>
+        <label asp-for="@Model.Name"></label>
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    </div>
+    <div class="form-floating">
+        <input asp-for="@Model.Capacity" class="form-control" autocomplete="roomname" aria-required="true"/>
+        <label asp-for="@Model.Capacity"></label>
+        <span asp-validation-for="@Model.Capacity" class="text-danger"></span>
+    </div>
+    <div class="form-floating">
+        @if (Model != null && Model?.Facilities != null)
+        {
+            foreach (var facility in Model.Facilities)
+            {
+                // Generate the sites
+                @Html.CheckBoxFor(m => facility.IsChecked != null && facility.IsChecked.Value)
+                // @Model.sites[i].SiteName
+                @Html.LabelFor(m => facility.IsChecked, facility.FacilityType)
+                @Html.HiddenFor(m => facility.Id)
+                @Html.HiddenFor(m => facility.FacilityType)
+            }
+        }
+    </div>
+    <div class="form-floating">
+        Facilities: @Html.DropDownListFor(r=>r.Facilities, Model.Facilities?.Select(x => new SelectListItem { Text = x.ToString(), Value = x.Id.ToString() }));
+    </div>
+    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Update room</button>
+}

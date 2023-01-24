@@ -61,33 +61,35 @@
   color: #f2208a;
 }
 #calendar .fc-month-button {
-  border-radius: 50px 0 0 50px;
+  padding: 0 1.2em;
   font-size: 16px;
-  font-weight: bolder;
-  border: 3px solid #0E0E26;
-  color: #0E0E26;
-  margin-right: 0.6rem;
-  background-color: #fefefe;
+  font-weight: lighter;
+  margin-right: 0.8rem;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  border-radius: 50px 0 0 50px;
+}
+#calendar .fc-month-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
 }
 #calendar .fc-state-active {
-  background-color: #eaeaf6 !important;
+  opacity: 0.9;
 }
 #calendar .fc-agendaWeek-button {
-  font-size: 16px;
-  font-weight: bolder;
-  border: 3px solid #0E0E26;
-  color: #0E0E26;
-  margin-right: 0.6rem;
-  background-color: #fefefe;
-}
-#calendar .fc-listWeek-button {
-  font-size: 16px;
-  border: 3px solid #0E0E26;
-  color: #0E0E26;
-  font-weight: bolder;
-  background-color: #fefefe;
-  border-radius: 0 50px 50px 0;
   padding: 0 1.2em;
+  font-size: 16px;
+  font-weight: lighter;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  margin-right: 0.8rem;
+  border-radius: 0 50px 50px 0;
+}
+#calendar .fc-agendaWeek-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
 }
 #calendar .fc-agenda-view .fc-day-grid .fc-row {
   display: none;
@@ -100,6 +102,61 @@
 }
 #calendar .fc-list-heading .fc-widget-heade {
   background: transparent;
+}
+
+#calendar--list .fc-listWeek-button {
+  display: none;
+}
+#calendar--list .fc-scroller {
+  height: unset !important;
+}
+#calendar--list .fc-list-heading td {
+  background-color: #eaeaf6 !important;
+  height: 3.5rem !important;
+}
+#calendar--list .fc-today-button {
+  display: none;
+}
+#calendar--list .fc-prev-button {
+  font-size: 16px;
+  margin-right: 0.8rem;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  border-radius: 50px 0 0 50px;
+}
+#calendar--list .fc-prev-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
+}
+#calendar--list .fc-next-button {
+  font-size: 16px;
+  border: none;
+  color: #fefefe;
+  background: #0E0E26;
+  margin-right: 0.8rem;
+  border-radius: 0 50px 50px 0;
+}
+#calendar--list .fc-next-button:hover {
+  opacity: 0.9;
+  color: #f2208a;
+}
+#calendar--list .fc-center h2 {
+  display: none;
+}
+#calendar--list .fc-left {
+  width: 30vw;
+  display: flex;
+  justify-content: flex-end;
+}
+#calendar--list .fc-view-container {
+  height: 92%;
+}
+#calendar--list .fc-view-container .fc-view {
+  height: 100%;
+}
+#calendar--list .fc-view-container .fc-list-empty {
+  background: #eaeaf6 !important;
 }
 
 /* Events */
@@ -215,28 +272,29 @@
   text-align: center;
   margin-bottom: 3rem;
 }
-.auth__form .auth-container__form {
+.auth__form .auth-container__redirect {
+  display: flex;
+  justify-content: space-between;
+  margin: 3rem 0 1rem;
+}
+
+.auth-container__form {
   margin-top: 1rem;
   padding: 0 7rem;
 }
-.auth__form .auth-container__form .form-label {
+.auth-container__form .form-label {
   font-size: 12px;
   font-weight: lighter;
   color: #d9d9d9;
   margin-bottom: 0.2rem;
 }
-.auth__form .auth-container__form-item {
+.auth-container__form-item {
   background-color: #eaeaf6;
   line-height: 5rem;
   height: 4rem;
 }
-.auth__form .auth-container__form--register {
+.auth-container__form--register {
   margin-top: 1.2rem;
-}
-.auth__form .auth-container__redirect {
-  display: flex;
-  justify-content: space-between;
-  margin: 3rem 0 1rem;
 }
 
 /*# sourceMappingURL=site.css.map */

@@ -5,5 +5,5 @@ namespace Backend.Repositories.University.GroupRepository;
 
 public interface IGroupRepository : IGenericRepository<Group>
 {
-    
+    public Task<Group?> GetByName(string name);
 }

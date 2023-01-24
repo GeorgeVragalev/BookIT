@@ -73,11 +73,11 @@ public class UserImportStrategy : IStrategy
     private void SetUserProperties(User user)
     {
         var email = user.Email;
-        user.UserName = email.Substring(0, email.IndexOf("@"));
-        user.FirstName = email.Substring(0, email.IndexOf("."));
-        user.LastName = email.Substring(email.IndexOf("."), email.IndexOf("@"));
+        user.UserName = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal));
+        user.FirstName = email.Substring(0, email.IndexOf(".", StringComparison.Ordinal));
+        user.LastName = email.Substring(email.IndexOf(".", StringComparison.Ordinal), email.IndexOf("@", StringComparison.Ordinal));
         user.PasswordHash = new Password(16).Next();
-        user.NormalizedUserName = email.Substring(0, email.IndexOf("@")).ToUpper();
+        user.NormalizedUserName = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal)).ToUpper();
         user.SecurityStamp = Guid.NewGuid().ToString();
         user.EmailConfirmed = true;
         user.PhoneNumberConfirmed = true;

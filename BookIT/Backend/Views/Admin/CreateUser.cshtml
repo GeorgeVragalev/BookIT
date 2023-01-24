@@ -7,21 +7,50 @@
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
         <form method="post" asp-antiforgery="true">
-            <h2>Create a new account.</h2>
-            <hr/>
+            <h2>Create a new user</h2>
+            <div class="horizontal-line"></div>
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-floating">
+            <div class="form-floating auth-container__form--usual" style="margin-top: 5rem">
+                <label asp-for="Email" ></label>
                 <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true"/>
-                <label asp-for="Email"></label>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-floating">
-                Role: @Html.DropDownListFor(r=>r.Role, Enum.GetValues(typeof(RoleEnum)).Cast<RoleEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }));
+            <div class="form-floating auth-container__form--usual" style="margin-top: 2rem">
+                Role: @Html.DropDownListFor(r => r.Role, Enum.GetValues(typeof(RoleEnum)).Cast<RoleEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }));
             </div>
-
-            <button id="registerSubmit" style="width: auto" type="submit" class="w-100 btn btn-lg btn-primary">Create user</button>
+<div class="text-center">
+<button id="registerSubmit"  type="submit" class="button--save" style="background-color: #f2208a">Create user</button>
+</div>
         </form>
     </div>
 </div>
+
+<style>
+    
+.horizontal-line{ 
+    float: left;
+     border-bottom: 3px solid #f2208a;
+     width: 60vw;
+}
+
+select {
+background-color: #fefefe;
+width: 100%;
+border: 1px solid #ccc;
+border-radius: 4px;
+padding: 1rem 0.75rem;
+height: calc(3.5rem + 2px);
+}
+
+option {
+height: calc(3.5rem + 2px);
+}
+
+option:focus-within {
+background-color: #f2208a;
+color: white;
+
+}
+</style>

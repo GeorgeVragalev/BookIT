@@ -36,4 +36,9 @@ public class GroupRepository : IGroupRepository
     {
         return _repository.Delete(group);
     }
+
+    public Task<Group?> GetByName(string name)
+    {
+        return Task.FromResult(_repository.GetAll().FirstOrDefault(g => g.Name ==name));
+    }
 }

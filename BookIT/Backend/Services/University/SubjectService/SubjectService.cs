@@ -1,40 +1,44 @@
 ﻿using Backend.Entities.UniversityEntities;
-using Backend.Repositories.University.DepartmentRepository;
-using Backend.Services.University.DepartmentService;
+using Backend.Repositories.University.SubjectRepository;
 
 namespace Backend.Services.University.SubjectService;
 
-public class DepartmentService : IDepartmentService
+public class SubjectService : ISubjectService
 {
-    private readonly IDepartmentRepository _departmentRepository;
+    private readonly ISubjectRepository _subjectRepository;
 
-    public DepartmentService(IDepartmentRepository departmentRepository)
+    public SubjectService(ISubjectRepository subjectRepository)
     {
-        _departmentRepository = departmentRepository;
+        _subjectRepository = subjectRepository;
     }
 
-    public IList<Department> GetAll()
+    public IList<Subject> GetAll()
     {
-        return _departmentRepository.GetAll().ToList();
+        return _subjectRepository.GetAll().ToList();
     }
 
-    public Task<Department?> GetById(int id)
+    public Task<Subject?> GetById(int id)
     {
-        return _departmentRepository.GetById(id);
+        return _subjectRepository.GetById(id);
     }
 
-    public Task Save(Department department)
+    public Task<Subject?> GetByName(string subject)
     {
-        return _departmentRepository.Save(department);
+        return _subjectRepository.GetByName(subject);
     }
 
-    public Task Update(Department department)
+    public Task Save(Subject subject)
     {
-        return _departmentRepository.Update(department);
+        return _subjectRepository.Save(subject);
     }
 
-    public Task Delete(Department department)
+    public Task Update(Subject subject)
     {
-        return _departmentRepository.Delete(department);
+        return _subjectRepository.Update(subject);
+    }
+
+    public Task Delete(Subject subject)
+    {
+        return _subjectRepository.Delete(subject);
     }
 }

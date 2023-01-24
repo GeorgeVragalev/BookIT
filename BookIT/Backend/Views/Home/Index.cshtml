@@ -1,12 +1,73 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Backend.Entities.Users
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
         <div class="calendar-container">
-        <div id="calendar"> </div>
+            <div id="calendar"> </div>
+            <div id="calendar--list"> </div>
         </div>
+    }  
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <div class="no-logged-in">
+            <div class="vertical-line"></div>
+            <div class="text-heading">
+                <h1 style="font-size: 50px">Welcome to BookIT</h1>
+                <p style="font-size: 18px">Happy to see you here, we will keep you updated  with timetable change </p>
+                <i class="bi bi-emoji-wink-fill" style="font-size:64px; color: #f2208a;"></i>
+
+                <div>
+                    <button class="button-17" asp-area="Identity" asp-page="/Account/Login" style="margin-right:1rem; padding: 0.5em 2.5em;">Login</button>
+                    <button class="button-17" asp-area="Identity" asp-page="/Account/Register" style="margin-left:3rem">Register</button>
+                </div>
+            </div>
+            <div class="img">
+                <img src="~/logo--short.png" />
+            </div>
+        </div>
+            <div class="horizontal-line" style="margin-top: 4rem;"></div>
+    }
 </div>
+<style>
+    .no-logged-in {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 7rem;
+       padding-right: 7rem;
+    }
+    .text-heading {
+    flex: 2;
+    }
+    
+    .img {
+    flex: 1;
+    }
+    
+    .img img {
+        width: 70% !important;
+        float: left;
+    }
+    
+    .vertical-line {
+     border-left: 3px solid #f2208a;
+      height: 500px;
+    }
+    
+    .horizontal-line{ 
+    float: right;
+     border-bottom: 3px solid #f2208a;
+     width: 60%;
+    }
+</style>
 
 @section Scripts
 {
@@ -16,13 +77,47 @@
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,listWeek'
+                right: 'month,agendaWeek'
             },
+            contentHeight: 580,
             firstDay: 1,
             slotMinutes: 30,
             events: 'https://localhost:44311/FindAll'
         });
     });
+    
+        $(document).ready(function () {
+            $('#calendar--list').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'listWeek'
+                },
+                firstDay: 1,
+                contentHeight: 580,
+                defaultView: 'listWeek',
+                slotMinutes: 30,
+                events: 'https://localhost:44311/FindAll'
+            });
+        });
+        
+        window.onload = function() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetCurrentUser", "Home")',
+                contentType: "application/json",
+                dataType: "json",
+                success: function(result) {
+                    successFunc(result);
+                    },
+                error: errorFunc
+            });
+            
+            function successFunc(data) {     
+                alert(data.groupName + data.subject + data.agenda + data.teacher + data.room)}
+            }
+            
+            function errorFunc() {}
 </script>
 }
 

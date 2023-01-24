@@ -5,5 +5,5 @@ namespace Backend.Repositories.Rooms.RoomRepository;
 
 public interface IRoomRepository : IGenericRepository<Room>
 {
-    public Task<Room?> GetByRoomName(string roomName);
+    public Task<Room?> GetByName(string name);
 }

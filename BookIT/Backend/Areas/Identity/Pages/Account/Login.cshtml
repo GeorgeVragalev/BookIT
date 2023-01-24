@@ -7,12 +7,19 @@
 
 
 <div class="auth">
-    <img src="~/logo.png" width="20%"  style="margin-top: 20rem; height: fit-content;"/>
+    <div style="display: flex; flex-direction: column; width: 20%;">
+        <img src="~/logo.png"  style="margin-top: 20rem; height: fit-content; margin-bottom: 4rem;"/>
+        <h2 style="color:white; text-align: center; ">Part of UTM?</h2>
+        <p style="color:white; text-align: center;"> Press here to activate your corporate account </p>
+        <form id="special-access" class="text-center" method="post">
+            <button id="special-button" class="button-17" style="color: #0b5ed7; text-align: center; margin-top: 2rem;" asp-page="./ForgotPassword">Activate account</button>
+        </form>
+    </div>
     <div class="auth__form">
         <form id="account" method="post" class="auth-container">
             <h1 class="auth-container__welcome-msg">Welcome!</h1>
             <h2 class="auth-container__welcome-msg--tiny">Login and let's get it started</h2>
-            
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="auth-container__form">
                 <label asp-for="Input.Email" class="form-label"></label>
@@ -37,19 +44,19 @@
             </div>
             <div class="auth-form--footer">
                 <p>
-                    <a id="forgot-password" type="button" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" type="button" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                   <p>
-                    <a id="resend-confirmation" type="button" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    <a id="forgot-password" type="button"  asp-page="./ForgotPassword">Forgot your password?</a>
                 </p>
-                </div>
-                @*Do not remote or style this*@
-                <input id="input-token" hidden="hidden" asp-for="Input.Token"/>
-            </form>
-        
+                <p>
+                    <a asp-page="./Register" type="button" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                </p>
+                @* <p> *@
+                @*     <a id="resend-confirmation" type="button" asp-page="./ResendEmailConfirmation">Resend email confirmation</a> *@
+                @* </p> *@
+            </div>
+            @*Do not remote or style this*@
+            <input id="input-token" hidden="hidden" asp-for="Input.Token"/>
+        </form>
+
     </div>
     @* <div class="col-md-6" align="center"> *@
     @*         <h2>Utm Student ?</h2> *@
@@ -61,6 +68,15 @@
     @*         </section> *@
     @*     </div> *@
 </div>
+<style>
+    #special-button { 
+    transition: transform 250ms;
+  }
+  
+  #special-button:hover {
+    transform: translateY(10px);
+  }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>

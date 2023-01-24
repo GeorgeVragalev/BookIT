@@ -72,4 +72,19 @@
             }
         </div>
     </div>
+    
+    
+    <div class="card">
+        <h3>Upload Lessons</h3>
+        <div class="drop_box">
+            <p>Files Supported: .xls,.xlsx,.csv</p>
+            @using(Html.BeginForm("Lessons","Import", FormMethod.Post, new { enctype="multipart/form-data", @class="form"}))
+            {
+                @Html.TextBox("file", "", new { type = "file" })
+                <br/>
+                <input type="submit" class="btn" value="Submit" accept=".xls,.xlsx,.csv"/>
+                @ViewBag.Message
+            }
+        </div>
+    </div>
 </div>

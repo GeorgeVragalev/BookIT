@@ -22,7 +22,7 @@ public class LessonRepository : ILessonRepository
         return _repository.GetById(id);
     }
 
-    public Task<Lesson?> GetByLessonName(string lessonName)
+    public Task<Lesson?> GetByName(string lessonName)
     {
         return Task.FromResult(_repository.GetAll().FirstOrDefault(lesson => lesson.Name ==lessonName));
     }

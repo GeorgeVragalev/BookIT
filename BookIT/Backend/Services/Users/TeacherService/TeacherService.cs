@@ -22,6 +22,11 @@ public class TeacherService : ITeacherService
         return _teacherRepository.GetById(id);
     }
 
+    public Task<Teacher?> GetByEmail(string email)
+    {
+        return _teacherRepository.GetByEmail(email);
+    }
+
     public Task Save(Teacher teacher)
     {
         return _teacherRepository.Save(teacher);

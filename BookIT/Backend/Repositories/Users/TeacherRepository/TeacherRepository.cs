@@ -36,4 +36,9 @@ public class TeacherRepository : ITeacherRepository
     {
         return _repository.Delete(teacher);
     }
+
+    public Task<Teacher?> GetByEmail(string email)
+    {
+        return Task.FromResult(_repository.GetAll().FirstOrDefault(t => t.User != null && t.User.Email == email));
+    }
 }

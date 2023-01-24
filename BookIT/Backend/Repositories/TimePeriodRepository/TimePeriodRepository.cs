@@ -22,18 +22,18 @@ public class TimePeriodRepository : ITimePeriodRepository
         return _repository.GetById(id);
     }
 
-    public Task Save(TimePeriod room)
+    public Task Save(TimePeriod timePeriod)
     {
-        return _repository.Save(room);
+        return _repository.Save(timePeriod);
     }
 
-    public Task Update(TimePeriod room)
+    public Task Update(TimePeriod timePeriod)
     {
-        return _repository.Update(room);
+        return _repository.Update(timePeriod);
     }
 
-    public Task Delete(TimePeriod room)
+    public Task Delete(TimePeriod timePeriod)
     {
-        return _repository.Delete(room);
+        return _repository.Delete(timePeriod);
     }
 }

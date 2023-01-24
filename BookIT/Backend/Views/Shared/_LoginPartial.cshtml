@@ -7,13 +7,32 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-        </li>
+        @* <li class="nav-item"> *@
+        @*     <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a> *@
+        @* </li> *@
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <span style="color: white">Logout</span> <button type="submit" class="navigation"><i class="bi bi-box-arrow-right"></i>  </button>
             </form>
         </li>
     }
 </ul>
+<style>
+    .navigation {
+    border: 2px solid #f2208a;
+    color: #f2208a;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 20px;
+    padding: 0.5rem 0.9rem;
+    margin-left: 1rem;
+    }
+    
+    .navigation:hover {
+        color: #fefefe;
+            background: #f2208a;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+
+    }
+</style>
