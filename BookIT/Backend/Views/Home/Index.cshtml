@@ -11,7 +11,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <div class="calendar-container">
-            <div id="calendar"> </div>
+            <div id="calendar" onload="checkCurrentActivity()"> </div>
             <div id="calendar--list"> </div>
         </div>
     }  
@@ -101,7 +101,7 @@
             });
         });
         
-        window.onload = function() {
+        function checkCurrentActivity() {
             $.ajax({
                 type: "GET",
                 url: '@Url.Action("GetCurrentUser", "Home")',
@@ -112,9 +112,19 @@
                     },
                 error: errorFunc
             });
+            }
             
-            function successFunc(data) {     
-                alert(data.groupName + data.subject + data.agenda + data.teacher + data.room)}
+            function successFunc() {    
+            // dont forget to pass data as param
+                swal.fire({
+                  position: 'top-end',
+                  icon: 'info',
+                  title: 'You have an activity',
+                  text: 'PR in 101 room until 15:00',
+                    // text: data.groupName + data.subject + data.agenda + data.teacher + data.room,
+                  showConfirmButton: false,
+                  timer: 5500
+                })
             }
             
             function errorFunc() {}
