@@ -16,4 +16,6 @@ public class LessonImportModel
     public string? TeacherEmail { get; set; }
     public string? Group { get; set; }
     public string? Subject { get; set; }
+    public int NumberOfLessons{ get; set; }
+    public int WeeklySeparation{ get; set; }
 }

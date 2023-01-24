@@ -86,26 +86,30 @@ public class LessonImportStrategy : IStrategy
                     teacher = await GetTeacherByEmail(model.TeacherEmail);
                 }
 
-                var timePeriod = await GetTimePeriod(model.WeekDay, model.StartTime, model.EndTime);
-
-                var lesson = new Lesson()
+                for (var occurence = 0; occurence < model.NumberOfLessons; occurence++)
                 {
-                    Room = room,
-                    RoomId = room?.Id,
-                    Group = group,
-                    GroupId = group?.Id,
-                    Name = model.Name,
-                    Subject = subject,
-                    SubjectId = subject?.Id,
-                    Teacher = teacher,
-                    TeacherId = teacher?.Id,
-                    LessonType = model.LessonType,
-                    TimePeriod = timePeriod,
-                    TimePeriodId = timePeriod.Id,
-                    WeekType = model.WeekType
-                };
+                    var timePeriod = await GetTimePeriod(model.WeekDay, model.StartTime, model.EndTime, model.WeeklySeparation, occurence);
+                    
+                    var lesson = new Lesson()
+                    {
+                        Room = room,
+                        RoomId = room?.Id,
+                        Group = group,
+                        GroupId = group?.Id,
+                        Name = model.Name,
+                        Subject = subject,
+                        SubjectId = subject?.Id,
+                        Teacher = teacher,
+                        TeacherId = teacher?.Id,
+                        LessonType = model.LessonType,
+                        TimePeriod = timePeriod,
+                        TimePeriodId = timePeriod.Id,
+                        WeekType = model.WeekType
+                    };
+                    
+                    await _lessonService.Save(lesson);
+                }
 
-                await _lessonService.Save(lesson);
             }
 
             return true;
@@ -197,7 +201,7 @@ public class LessonImportStrategy : IStrategy
     {
         if (!string.IsNullOrEmpty(teacherEmail))
         {
-            Teacher? teacher = await _teacherService.GetByEmail(teacherEmail);
+            var teacher = await _teacherService.GetByEmail(teacherEmail);
 
             if (teacher != null)
             {
@@ -222,10 +226,10 @@ public class LessonImportStrategy : IStrategy
         return null;
     }
 
-    private async Task<TimePeriod> GetTimePeriod(WeekDayType weekDayType, string startTime, string endTime)
+    private async Task<TimePeriod> GetTimePeriod(WeekDayType weekDayType, string startTime, string endTime, int weeklySeparation, int occurence)
     {
-        var start = DateTime.ParseExact(startTime, "yyyy-MM-dd HH:mm tt", null);
-        var end = DateTime.ParseExact(endTime, "yyyy-MM-dd HH:mm tt", null);
+        var start = DateTime.ParseExact(startTime, "yyyy-MM-dd HH:mm tt", null).AddDays(7 * weeklySeparation * occurence);
+        var end = DateTime.ParseExact(endTime, "yyyy-MM-dd HH:mm tt", null).AddDays(7 * weeklySeparation * occurence);
         // string iString = "2005-05-05 22:12 PM";
         var timePeriod = new TimePeriod()
         {
