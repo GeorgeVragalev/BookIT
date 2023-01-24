@@ -100,6 +100,24 @@
                 events: 'https://localhost:44311/FindAll'
             });
         });
+        
+        window.onload = function() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetCurrentUser", "Home")',
+                contentType: "application/json",
+                dataType: "json",
+                success: function(result) {
+                    successFunc(result);
+                    },
+                error: errorFunc
+            });
+            
+            function successFunc(data) {     
+                alert(data.groupName + data.subject + data.agenda + data.teacher + data.room)}
+            }
+            
+            function errorFunc() {}
 </script>
 }
 

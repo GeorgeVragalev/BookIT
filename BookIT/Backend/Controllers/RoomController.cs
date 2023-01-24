@@ -7,6 +7,7 @@ using Backend.Models;
 using Backend.Models.Sorting;
 using Backend.Services.Rooms.RoomService;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers;
 
@@ -70,9 +71,18 @@ public class RoomController : Controller
         {
             "Name" => SortName(data, sortColumnDirection),
             "Capacity" => SortCapacity(data, sortColumnDirection),
+            "IsAvailable" => SortAvailability(data, sortColumnDirection),
             _ => data
         };
     }
+    
+    private IList<RoomModel> SortAvailability(IList<RoomModel> data, string sortColumnDirection)
+    {
+        return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
+            ? data.OrderBy(u => u.IsAvailable).ToList()
+            : data.OrderByDescending(u => u.IsAvailable).ToList();
+    }
+    
     private IList<RoomModel> SortName(IList<RoomModel> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
