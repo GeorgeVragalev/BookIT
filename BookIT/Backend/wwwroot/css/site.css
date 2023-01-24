@@ -160,3 +160,8 @@ body {
 .notification-section {
   margin: 2rem 0;
 }
+
+.grecaptcha-badge {
+  position: absolute;
+  z-index: 5000 !important;
+}
