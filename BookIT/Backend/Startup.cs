@@ -5,6 +5,7 @@ using Backend.Entities.Roles;
 using Backend.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using RouteBuilder = Backend.DependencyRegister.RouteBuilder;
 
 
@@ -34,9 +35,17 @@ public class Startup
             .AddDefaultUI();
 
         serviceCollection.AddControllers()
+            
+            
             .AddRazorRuntimeCompilation()
-            .AddJsonOptions(x =>
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            .AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                o.JsonSerializerOptions.MaxDepth = 3;
+            });
+
+        
+           
 
         serviceCollection.Configure<CookiePolicyOptions>(options =>
         {
