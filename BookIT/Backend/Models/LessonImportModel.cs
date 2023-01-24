@@ -8,7 +8,6 @@ public class LessonImportModel
     public string? Name { get; set; }
     public LessonType LessonType { get; set; }
     public WeekType WeekType { get; set; }
-    public WeekDayType WeekDay { get; set; }
 
     public string StartTime { get; set; }
     public string EndTime { get; set; }

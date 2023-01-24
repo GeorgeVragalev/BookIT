@@ -14,7 +14,7 @@ public class RoomModel : IBaseEntity
     {
         get
         {
-            if (Lessons != null && Lessons.Any(l=>l.TimePeriod.StartTime < DateTime.Now && l.TimePeriod.EndTime > DateTime.Now))
+            if (Lessons != null && Lessons.Any(l=>l.TimePeriod.StartTime < DateTime.Now &&  DateTime.Now < l.TimePeriod.EndTime))
             {
                 return false;
             }

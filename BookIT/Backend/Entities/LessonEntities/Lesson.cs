@@ -26,4 +26,15 @@ public class Lesson : IBaseEntity
 
     public int? SubjectId { get; set; }
     public virtual Subject? Subject { get; set; }
+
+    public string GetLessonLocation()
+    {
+        if (LessonType != LessonType.Class)
+        {
+            return LessonType.ToString();
+        }
+
+        
+        return Room?.Name ?? LessonType.ToString();
+    }
 }

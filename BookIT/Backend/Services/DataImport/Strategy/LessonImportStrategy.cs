@@ -88,7 +88,7 @@ public class LessonImportStrategy : IStrategy
 
                 for (var occurence = 0; occurence < model.NumberOfLessons; occurence++)
                 {
-                    var timePeriod = await GetTimePeriod(model.WeekDay, model.StartTime, model.EndTime, model.WeeklySeparation, occurence);
+                    var timePeriod = await GetTimePeriod(model.StartTime, model.EndTime, model.WeeklySeparation, occurence);
                     
                     var lesson = new Lesson()
                     {
@@ -226,7 +226,7 @@ public class LessonImportStrategy : IStrategy
         return null;
     }
 
-    private async Task<TimePeriod> GetTimePeriod(WeekDayType weekDayType, string startTime, string endTime, int weeklySeparation, int occurence)
+    private async Task<TimePeriod> GetTimePeriod(string startTime, string endTime, int weeklySeparation, int occurence)
     {
         var start = DateTime.ParseExact(startTime, "yyyy-MM-dd HH:mm tt", null).AddDays(7 * weeklySeparation * occurence);
         var end = DateTime.ParseExact(endTime, "yyyy-MM-dd HH:mm tt", null).AddDays(7 * weeklySeparation * occurence);
@@ -235,7 +235,7 @@ public class LessonImportStrategy : IStrategy
         {
             StartTime = start,
             EndTime = end,
-            WeekDay = weekDayType
+            WeekDay = (WeekDayType) start.DayOfWeek
         };
 
         await _timePeriodService.Save(timePeriod);
