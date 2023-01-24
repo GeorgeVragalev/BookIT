@@ -3,6 +3,11 @@
 @{
     Layout = "_Layout";
 }
+
+<style>
+   
+</style>
+
 @if (TempData["EditMessage"] != null)
 {
     <div class="alert alert-success">
@@ -19,7 +24,7 @@
     <button id="createUser" class="button-17">Create new user</button>
     <div class="container">
         <div class="table-responsive">
-            <table id="myUserTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+            <table id="UserTable" class=" uk-table-hover uk-table-striped" style="width:100%">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -34,10 +39,20 @@
     </div>
 </div>
 
+<div id="delete-modal" class="modal">
+  <div class="modal-content">
+    Are you sure you want to delete?
+  </div>
+  <div class="modal-buttons">
+    <button id="cancel-button" class="btn btn-dark">Cancel</button>
+    <button id="confirm-button" class="btn btn-dark">Confirm</button>
+  </div>
+</div>
+
 <script>
 $(document).ready(
     function() {
-        var table = $('#myUserTable').DataTable({
+        var table = $('#UserTable').DataTable({
             ajax: {
                 url: "LoadUserList",
                 type: "POST",
@@ -45,32 +60,44 @@ $(document).ready(
             processing: true,
             serverSide: true,
             filter: true,
-            columns: [{
-                    data: "id",
-                    name: "Id"
-                },
-                {
-                    data: "email",
-                    name: "Email"
-                },
-                {
-                    data: "firstName",
-                    name: "FirstName"
-                },
-                {
-                    data: "lastName",
-                    name: "LastName"
-                },
-                {
-                    data: "editUrl",
-                    name: "Edit"
-                },
-            ],
+                columns: [{
+                        data: "id",
+                        render: function(data, type, UserTable) {
+                            return UserTable.id;
+                        }
+                    },
+                    {
+                        data: "email",
+                        render: function(data, type, UserTable) {
+                            return UserTable.email;
+                        }
+                    },
+                    {
+                        data: "firstName",
+                        render: function(data, type, UserTable) {
+                            return UserTable.firstName;
+                        }
+                    },
+                    {
+                        data: "lastName",
+                        render: function(data, type, UserTable) {
+                            return UserTable.lastName;
+                        }
+                    },
+                    {
+                         data: "Edit",
+                         render: function(data, type, UserTable) {
+                             return "<button id = edit-button" + UserTable.id + " class='button-17 edit-item' data-row-id=" + UserTable.id + ">Edit</button>"
+                            + "<button id = delete-button" + UserTable.id + " class='button-17 delete-item' style='color: red; margin-left: 25px' data-row-id=" + UserTable.id + ">Delete</button>";
+                             
+                         },
+                    },
+                ],
             columnDefs: [{
                     "targets": -1,
                     "data": null,
-                    "defaultContent": "<button id = Edit class=button-17>Edit</button> <button id = Delete class = button-17 style='color: red''>Delete</button>"
                 },
+                {"className": "dt-center", "targets": "_all"},
                 {
                     "searchable": false,
                     "targets": [4]
@@ -81,19 +108,36 @@ $(document).ready(
         $('#createUser').click(function() {
             window.location.href = '@Url.Action("CreateUser")';
         });
-        $('#myUserTable tbody').on('click', '#Edit', function() {
+        $('#UserTable tbody').on('click', '.edit-item', function() {
             var data = table.row($(this).parents('tr')).data();
             window.location.href = '@Url.Action("EditUser")' + "/" + data.id;
         });
-        $('#myUserTable tbody').on('click', '#Delete', function() {
+        $('#UserTable tbody').on('click', '.delete-item', function() {
+            debugger;
             var data = table.row($(this).parents('tr')).data();
-            window.location.href = '@Url.Action("DeleteUser")' + "/" + data.id;
+            const deleteButton = document.getElementById("delete-button" + data.id);
+                    const deleteModal = document.getElementById("delete-modal");
+                    const cancelButton = document.getElementById("cancel-button");
+                    const confirmButton = document.getElementById("confirm-button");
+                    
+                    deleteButton.addEventListener("click", function() {
+                      deleteModal.classList.add("show");
+                    });
+                    
+                    cancelButton.addEventListener("click", function() {
+                      deleteModal.classList.remove("show");
+                    });
+                    
+                    confirmButton.addEventListener("click", function() {
+                         window.location.href = '@Url.Action("DeleteUser")' + "/" + data.id;
+                      deleteModal.classList.remove("show");
+                    });
         });
-
-
-
-    })
+         
+    }
+    )
     </script>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
