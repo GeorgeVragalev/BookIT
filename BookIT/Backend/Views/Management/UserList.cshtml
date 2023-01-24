@@ -4,10 +4,6 @@
     Layout = "_Layout";
 }
 
-<style>
-   
-</style>
-
 @if (TempData["EditMessage"] != null)
 {
     <div class="alert alert-success">
@@ -21,17 +17,16 @@
     </div>
 }
 <div>
-    <button id="createUser" class="button-17">Create new user</button>
+    <button id="createUser" class="button-17" style="background-color: #f2208a; color: #f3f3f3; margin-left: 260px">Create new user</button>
     <div class="container">
         <div class="table-responsive">
-            <table id="UserTable" class=" uk-table-hover uk-table-striped" style="width:100%">
+            <table id="UserTable" class="uk-table-hover uk-table-striped" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Email</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Actions<th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
             </table>
@@ -60,25 +55,23 @@ $(document).ready(
             processing: true,
             serverSide: true,
             filter: true,
-                columns: [{
-                        data: "id",
-                        render: function(data, type, UserTable) {
-                            return UserTable.id;
-                        }
-                    },
+                columns: [
                     {
+                        name: "Email",
                         data: "email",
                         render: function(data, type, UserTable) {
                             return UserTable.email;
                         }
                     },
                     {
+                        name: "FirstName",
                         data: "firstName",
                         render: function(data, type, UserTable) {
                             return UserTable.firstName;
                         }
                     },
                     {
+                        name: "LastName",
                         data: "lastName",
                         render: function(data, type, UserTable) {
                             return UserTable.lastName;
@@ -96,12 +89,10 @@ $(document).ready(
             columnDefs: [{
                     "targets": -1,
                     "data": null,
+                    "defaultContent": "<i>Not set</i>"
+                    
                 },
                 {"className": "dt-center", "targets": "_all"},
-                {
-                    "searchable": false,
-                    "targets": [4]
-                }
             ]
         });
 

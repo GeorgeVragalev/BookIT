@@ -1,0 +1,77 @@
+﻿@using Backend.Entities.Roles
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Backend.Entities.LessonEntities
+@model Backend.Models.LessonModel
+
+
+@{
+    ViewBag.Title = "Edit users";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm("CreateUser", "Management"))
+{
+    <h2>Create a new user</h2>
+    <hr/>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating">
+        <input asp-for="@Model.Name" class="form-control" autocomplete="email" aria-required="true"/>
+        <label asp-for="@Model.Name"></label>
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    </div>
+    <div class="form-floating">
+        LessonType: @Html.DropDownListFor(r => r.LessonType, Enum.GetValues(typeof(RoleEnum)).Cast<LessonType>().Select(x => new SelectListItem {Text = x.ToString(), Value = ((int) x).ToString()}))
+    </div>
+    <div class="form-floating">
+        WeekType: @Html.DropDownListFor(r => r.WeekType, Enum.GetValues(typeof(RoleEnum)).Cast<WeekType>().Select(x => new SelectListItem {Text = x.ToString(), Value = ((int) x).ToString()}))
+    </div>
+    <div class="form-floating">
+        <input type="text" id="txtSelectedDate" name="SelectedDate" readonly="readonly"/>
+        <label asp-for="@Model.TimePeriod.StartTime"></label>
+        <span asp-validation-for="@Model.TimePeriod.StartTime" class="text-danger"></span>
+    </div>
+    <div class="form-floating">
+        <input type="text" id="txtSelectedDate" name="SelectedDate" readonly="readonly"/>
+        <label asp-for="@Model.TimePeriod.EndTime"></label>
+        <span asp-validation-for="@Model.TimePeriod.EndTime" class="text-danger"></span>
+    </div>
+    @if (Model.Room != null)
+    {
+        <div class="form-floating">
+            <input asp-for="@Model.Room.Name" class="form-control" aria-required="true"/>
+            <label asp-for="@Model.Room.Name"></label>
+            <span asp-validation-for="@Model.TimePeriod.StartTime" class="text-danger"></span>
+        </div>
+    }
+    @if (Model.Teacher != null && Model.Teacher.User != null)
+    {
+        <div class="form-floating">
+            <input asp-for="@Model.Teacher.User.Email" class="form-control" aria-required="true"/>
+            <label asp-for="@Model.Teacher.User.Email"></label>
+            <span asp-validation-for="@Model.Teacher.User.Email" class="text-danger"></span>
+        </div>
+    }
+    <div class="form-floating">
+        <input asp-for="@Model.Group" class="form-control" aria-required="true"/>
+        <label asp-for="@Model.Group"></label>
+        <span asp-validation-for="@Model.Group" class="text-danger"></span>
+    </div>
+    <div class="form-floating">
+        <input asp-for="@Model.Group" class="form-control" aria-required="true"/>
+        <label asp-for="@Model.Group"></label>
+        <span asp-validation-for="@Model.Group" class="text-danger"></span>
+    </div>
+    
+    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Create user</button>
+}
+
+<script type="text/javascript">
+            $(function () {
+                $('#txtSelectedDate').datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    format: "dd/mm/yyyy",
+                    language: "tr"
+                });
+            });
+        </script>
