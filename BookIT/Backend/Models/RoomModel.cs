@@ -2,7 +2,7 @@
 
 namespace Backend.Models;
 
-public class RoomModel : IBaseEntity
+public class RoomModel : BaseEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -14,7 +14,7 @@ public class RoomModel : IBaseEntity
     {
         get
         {
-            if (Lessons != null && Lessons.Any(l=>l.TimePeriod.StartTime < DateTime.Now &&  DateTime.Now < l.TimePeriod.EndTime))
+            if (Lessons != null /*&& Lessons.Any(l=>l.TimePeriod.StartTime < DateTime.Now &&  DateTime.Now < l.TimePeriod.EndTime)*/)
             {
                 return false;
             }
@@ -24,8 +24,8 @@ public class RoomModel : IBaseEntity
         set => _isAvailable = value;
     }
 
-    public IList<FacilityModel>? Facilities { get; set; }
-    public virtual IList<LessonModel>? Lessons { get; set; }
+    public virtual IList<FacilityModel>? Facilities { get; set; }
+    public IList<LessonModel>? Lessons { get; set; }
 
     public string? FacilityString { get; set; }
 }

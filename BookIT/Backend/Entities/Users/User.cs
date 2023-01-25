@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Entities.Users;
 
-public class User : IdentityUser<int>, IBaseEntity
+public class User : IdentityUser<int>, BaseEntity
 {
     //TODO: Remove nullable
     [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", 

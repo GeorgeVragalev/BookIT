@@ -16,7 +16,7 @@ namespace Backend.Services.DummySeedService;
 
 public class DummySeedService : IDummySeedService
 {
-    private readonly IGroupService _groupService;
+    /*private readonly IGroupService _groupService;
     private readonly IDepartmentService _departmentService;
     private readonly ISubjectService _subjectService;
     private readonly ITeacherService _teacherService;
@@ -212,5 +212,5 @@ public class DummySeedService : IDummySeedService
 
             await _userService.Update(user);
         }
-    }
+    }*/
 }

@@ -1,11 +1,12 @@
 ﻿using Backend.Data;
+using Backend.Entities.Rooms;
 using Backend.Entities.Shared;
 using Backend.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories.GenericRepository;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class, IBaseEntity
+public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseEntity
 {
     private readonly ApplicationDbContext _context;
     private readonly DbSet<T> _dbSet;

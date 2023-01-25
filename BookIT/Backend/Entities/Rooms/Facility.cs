@@ -2,7 +2,7 @@
 
 namespace Backend.Entities.Rooms;
 
-public class Facility : IBaseEntity
+public class Facility : BaseEntity
 {
     public int Id { get; set; }
 

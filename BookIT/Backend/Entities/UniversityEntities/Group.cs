@@ -4,7 +4,7 @@ using Backend.Entities.Users;
 
 namespace Backend.Entities.UniversityEntities;
 
-public class Group : IBaseEntity
+public class Group : BaseEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }

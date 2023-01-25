@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Users;
+﻿using System.Data.Entity;
+using Backend.Entities.Users;
 using Backend.Repositories.GenericRepository;
 using Microsoft.AspNetCore.Identity;
 
@@ -12,12 +13,19 @@ public class UserRepository : IUserRepository
     public UserRepository(IGenericRepository<User> repository, UserManager<User> userManager, IUserStore<User> userStore)
     {
         _repository = repository;
+        _repository.Table
+            .Include(c => c.Student)
+            .Include(c => c.Teacher);
+        
         _userManager = userManager;
         _userStore = userStore;
     }
 
     public IQueryable<User> GetAll()
     {
+        var users = _repository.GetAll()
+            .Include(c => c.Student)
+            .Include(c => c.Teacher);
         return _userManager.Users;
     }
 

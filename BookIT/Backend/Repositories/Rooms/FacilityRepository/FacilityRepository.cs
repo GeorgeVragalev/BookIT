@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Rooms;
+﻿using System.Data.Entity;
+using Backend.Entities.Rooms;
 using Backend.Repositories.GenericRepository;
 
 namespace Backend.Repositories.Rooms.FacilityRepository;
@@ -10,6 +11,8 @@ public class FacilityRepository : IFacilityRepository
     public FacilityRepository(IGenericRepository<Facility> repository)
     {
         _repository = repository;
+        repository.Table
+            .Include(c => c.Room);
     }
 
     public IQueryable<Facility> GetAll()

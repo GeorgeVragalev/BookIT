@@ -2,7 +2,7 @@
 
 namespace Backend.Models;
 
-public class StudentModel : IBaseEntity
+public class StudentModel : BaseEntity
 {
     public int Id { get; set; }
     public string? AboutMe { get; set; }

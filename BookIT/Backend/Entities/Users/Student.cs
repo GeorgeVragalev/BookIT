@@ -3,7 +3,7 @@ using Backend.Entities.UniversityEntities;
 
 namespace Backend.Entities.Users;
 
-public class Student : IBaseEntity
+public class Student : BaseEntity
 {
     public int Id { get; set; }
     public string? AboutMe { get; set; }

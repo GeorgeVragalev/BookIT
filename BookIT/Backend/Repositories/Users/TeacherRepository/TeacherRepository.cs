@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Users;
+﻿using System.Data.Entity;
+using Backend.Entities.Users;
 using Backend.Repositories.GenericRepository;
 
 namespace Backend.Repositories.Users.TeacherRepository;
@@ -10,6 +11,11 @@ public class TeacherRepository : ITeacherRepository
     public TeacherRepository(IGenericRepository<Teacher> repository)
     {
         _repository = repository;
+        _repository.Table
+            .Include(c => c.Department)
+            .Include(c => c.Lessons)
+            .Include(c => c.Subjects)
+            .Include(c => c.User);
     }
 
     public IQueryable<Teacher> GetAll()

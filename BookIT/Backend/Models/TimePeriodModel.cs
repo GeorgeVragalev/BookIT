@@ -4,12 +4,12 @@ using Backend.Entities.UniversityEntities;
 
 namespace Backend.Models;
 
-public class TimePeriodModel: IBaseEntity
+public class TimePeriodModel: BaseEntity
 {
     public int Id { get; set; }
     public WeekDayType WeekDay { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
 
-    public virtual IList<LessonModel>? Lessons { get; set; }
+    public IList<LessonModel>? Lessons { get; set; }
 }

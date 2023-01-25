@@ -14,6 +14,7 @@ public class LessonConfiguration
         builder.Property(s => s.GroupId).IsRequired(false);
         builder.Property(s => s.SubjectId).IsRequired(false);
         builder.Property(s => s.RoomId).IsRequired(false);
+        
 
         builder
             .HasOne(r => r.Room)

@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Backend.Configurations;
 
-public class SubjectConfiguration : IEntityTypeConfiguration<Subject>
+public class TimePeriodConfiguration : IEntityTypeConfiguration<TimePeriod>
 {
-    public void Configure(EntityTypeBuilder<Subject> builder)
+    public void Configure(EntityTypeBuilder<TimePeriod> builder)
     {
         builder.HasKey(r => r.Id);
-        
+
         builder
             .HasMany(r => r.Lessons)
-            .WithOne(a => a.Subject)
-            .HasForeignKey(r=>r.SubjectId);
+            .WithOne(a => a.TimePeriod)
+            .HasForeignKey(r=>r.TimePeriodId);
     }
 }

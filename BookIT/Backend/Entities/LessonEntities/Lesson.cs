@@ -5,7 +5,7 @@ using Backend.Entities.Users;
 
 namespace Backend.Entities.LessonEntities;
 
-public class Lesson : IBaseEntity
+public class Lesson : BaseEntity
 {
     public int Id { get; set; }
     public string? Name { get; set; }

@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Users;
+﻿using System.Data.Entity;
+using Backend.Entities.Users;
 using Backend.Repositories.GenericRepository;
 
 namespace Backend.Repositories.Users.StudentRepository;
@@ -10,6 +11,9 @@ public class StudentRepository : IStudentRepository
     public StudentRepository(IGenericRepository<Student> repository)
     {
         _repository = repository;
+        _repository.Table
+            .Include(c => c.Group)
+            .Include(c => c.User);
     }
 
     public IQueryable<Student> GetAll()

@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Rooms;
+﻿using System.Data.Entity;
+using Backend.Entities.Rooms;
 using Backend.Repositories.GenericRepository;
 
 namespace Backend.Repositories.Rooms.RoomRepository;
@@ -10,11 +11,14 @@ public class RoomRepository : IRoomRepository
     public RoomRepository(IGenericRepository<Room> repository)
     {
         _repository = repository;
+        _repository.Table
+            .Include(c => c.Lessons)
+            .Include(c => c.Facilities);
     }
 
     public IQueryable<Room> GetAll()
     {
-        return _repository.GetAll();
+        return _repository.GetAll().Include(c=>c.Lessons);
     }
 
     public Task<Room?> GetById(int id)

@@ -27,6 +27,7 @@ public class Startup
 
         serviceCollection.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
+        
         serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
 
         serviceCollection.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -35,17 +36,11 @@ public class Startup
             .AddDefaultUI();
 
         serviceCollection.AddControllers()
-            
-            
             .AddRazorRuntimeCompilation()
             .AddJsonOptions(o =>
             {
                 o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-                o.JsonSerializerOptions.MaxDepth = 3;
             });
-
-        
-           
 
         serviceCollection.Configure<CookiePolicyOptions>(options =>
         {

@@ -2,7 +2,7 @@
 
 namespace Backend.Models;
 
-public class TeacherModel : IBaseEntity
+public class TeacherModel : BaseEntity
 {
     public int Id { get; set; }
     public string? AboutMe { get; set; }
@@ -11,5 +11,5 @@ public class TeacherModel : IBaseEntity
     public virtual DepartmentModel? Department { get; set; }
     public virtual UserModel? User { get; set; }
     public virtual List<SubjectModel>? Subjects { get; set; }
-    public virtual IList<LessonModel>? Lessons { get; set; }
+    public IList<LessonModel>? Lessons { get; set; }
 }

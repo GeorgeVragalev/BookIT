@@ -1,6 +1,6 @@
 ﻿namespace Backend.Entities.Shared;
 
-public interface IBaseEntity
+public interface BaseEntity
 {
     public int Id { get; set; }
 }

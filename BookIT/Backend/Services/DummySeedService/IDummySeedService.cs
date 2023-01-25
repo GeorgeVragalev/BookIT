@@ -2,5 +2,5 @@
 
 public interface IDummySeedService
 {
-    public Task SeedDb();
+    // public Task SeedDb();
 }

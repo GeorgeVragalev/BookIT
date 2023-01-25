@@ -15,10 +15,10 @@ public class DummyValuesDbSeed: BackgroundService
     {
         try
         {
-            await Task.Delay(5000, stoppingToken);
-            using var scope = _serviceScopeFactory.CreateScope();
-            var clientService = scope.ServiceProvider.GetRequiredService<IDummySeedService>();
-            await clientService.SeedDb();
+            // await Task.Delay(5000, stoppingToken);
+            // using var scope = _serviceScopeFactory.CreateScope();
+            // var clientService = scope.ServiceProvider.GetRequiredService<IDummySeedService>();
+            // await clientService.SeedDb();
         }
         catch (Exception)
         {

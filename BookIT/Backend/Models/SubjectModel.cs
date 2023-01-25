@@ -3,7 +3,7 @@ using Backend.Entities.Users;
 
 namespace Backend.Models;
 
-public class SubjectModel : IBaseEntity
+public class SubjectModel : BaseEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -12,5 +12,5 @@ public class SubjectModel : IBaseEntity
     public int? Hours { get; set; }
     
     public virtual List<TeacherModel>? Teachers { get; set; }
-    public virtual IList<LessonModel>? Lessons { get; set; }
+    public IList<LessonModel>? Lessons { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using Backend.Entities.LessonEntities;
 using Backend.Repositories.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories.LessonRepository;
 
@@ -10,6 +11,12 @@ public class LessonRepository : ILessonRepository
     public LessonRepository(IGenericRepository<Lesson> repository)
     {
         _repository = repository;
+        repository.Table
+            .Include(d => d.Group)
+            .Include(c => c.Subject)
+            .Include(c => c.Room)
+            .Include(c => c.Teacher)
+            .Include(c => c.TimePeriod);
     }
 
     public IQueryable<Lesson> GetAll()

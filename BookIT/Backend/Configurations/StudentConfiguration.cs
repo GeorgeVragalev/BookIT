@@ -17,5 +17,10 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
             .HasOne(s => s.Group)
             .WithMany(g => g.Students)
             .HasForeignKey(s => s.GroupId);
+        
+        builder
+            .HasOne(t => t.User)
+            .WithOne(s => s.Student)
+            .HasForeignKey<Student>(s=>s.UserId);
     }
 }

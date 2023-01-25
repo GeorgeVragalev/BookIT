@@ -1,5 +1,6 @@
 ﻿using Backend.Entities.UniversityEntities;
 using Backend.Repositories.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories.TimePeriodRepository;
 
@@ -10,6 +11,8 @@ public class TimePeriodRepository : ITimePeriodRepository
     public TimePeriodRepository(IGenericRepository<TimePeriod> repository)
     {
         _repository = repository;
+        _repository.Table
+            .Include(d => d.Lessons);
     }
 
     public IQueryable<TimePeriod> GetAll()

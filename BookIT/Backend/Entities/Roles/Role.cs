@@ -3,6 +3,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Entities.Roles;
 
-public class Role : IdentityRole<int>, IBaseEntity
+public class Role : IdentityRole<int>, BaseEntity
 {
 }

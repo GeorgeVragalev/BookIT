@@ -3,7 +3,7 @@ using Backend.Entities.Shared;
 
 namespace Backend.Entities.UniversityEntities;
 
-public class TimePeriod : IBaseEntity
+public class TimePeriod : BaseEntity
 {
     public int Id { get; set; }
     public WeekDayType WeekDay { get; set; }

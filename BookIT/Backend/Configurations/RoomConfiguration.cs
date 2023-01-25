@@ -9,5 +9,15 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
     public void Configure(EntityTypeBuilder<Room> builder)
     {
         builder.HasKey(r => r.Id);
+        
+        builder
+            .HasMany(r => r.Facilities)
+            .WithOne(a => a.Room)
+            .HasForeignKey(r=>r.RoomId);
+        
+        builder
+            .HasMany(r => r.Lessons)
+            .WithOne(a => a.Room)
+            .HasForeignKey(r=>r.RoomId);
     }
 }

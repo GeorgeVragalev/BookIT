@@ -21,15 +21,18 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<TimePeriod> TimePeriods { get; set; }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-    
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    {
+
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {   
+    {
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
-        
+
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         optionsBuilder
             .UseLazyLoadingProxies()
@@ -37,11 +40,11 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
 
         base.OnConfiguring(optionsBuilder);
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(FacilityConfiguration).Assembly);
-        
+
         base.OnModelCreating(modelBuilder);
     }
 }

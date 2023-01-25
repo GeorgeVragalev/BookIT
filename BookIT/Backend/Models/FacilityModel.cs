@@ -3,7 +3,7 @@ using Backend.Entities.Shared;
 
 namespace Backend.Models;
 
-public class FacilityModel : IBaseEntity
+public class FacilityModel : BaseEntity
 {
     public int Id { get; set; }
     public int Quantity { get; set; }
