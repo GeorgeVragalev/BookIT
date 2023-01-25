@@ -5,21 +5,20 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-@if (Model.SuccessRequest)
-{
-    <h4>We have sent you and email for confirming your email. Please check your inbox, as well as span.</h4>
-}
-else
-{
-    <h2>Enter your email.</h2>
-}
+
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @if (TempData["EmailVerification"] != null)
+        {
+            <div class="alert alert-success">
+                <strong>Success!</strong> @TempData["EmailVerification"]
+            </div>
+        }
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" aria-required="true" />
+                <input asp-for="Input.Email" class="form-control" aria-required="true"/>
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>

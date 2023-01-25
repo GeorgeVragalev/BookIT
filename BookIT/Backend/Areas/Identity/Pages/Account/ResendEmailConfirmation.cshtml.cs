@@ -86,7 +86,8 @@ namespace Backend.Areas.Identity.Pages.Account
 
             _emailService.SendEmail(new Message(user.Email, EmailType.ConfirmEmail.ToString(),
                 EmailConfirmationMessageHelper.GetEmailMessage(EmailType.ConfirmEmail, callbackUrl)));
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            TempData["EmailVerification"] =
+                "If the email provided is in our database, you will receive an confirmation email. Please check your inbox, as well as spam.";
             SuccessRequest = true;
             return Page();
         }

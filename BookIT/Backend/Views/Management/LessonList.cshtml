@@ -1,0 +1,177 @@
+﻿@model IList<Backend.Models.LessonModel>
+
+@{
+    Layout = "_Layout";
+}
+
+@if (TempData["EditMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @TempData["EditMessage"]
+    </div>
+}
+@if (TempData["DeletedMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @TempData["DeletedMessage"]
+    </div>
+}
+<div>
+    <button id="createLesson" class="button-17" style='background-color: #f2208a; color: #f3f3f3; margin-left: 260px; margin-top: auto'>Create new lesson</button>
+    <div class="container">
+        <div class="table-responsive">
+            <table id="LessonTable" class=" uk-table-hover uk-table-striped" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Group</th>
+                    <th>Teacher</th>
+                    <th>Subject</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="delete-modal" class="modal">
+  <div class="modal-content">
+    Are you sure you want to delete?
+  </div>
+  <div class="modal-buttons">
+    <button id="cancel-button" class="btn btn-dark">Cancel</button>
+    <button id="confirm-button" class="btn btn-dark">Confirm</button>
+  </div>
+</div>
+
+<script>
+$(document).ready(
+  $(document).ready(
+      function() {
+          var table = $('#LessonTable').DataTable({
+              ajax: {
+                  url: "LoadLessonList",
+                  type: "POST",
+              },
+              processing: true,
+              serverSide: true,
+              filter: true,
+              columns: [{
+                      name: "Name",
+                      data: "name",
+                      render: function(data, type, LessonTable) {
+                          return LessonTable.name;
+                      }
+                  },
+                  {
+                      name: "Group",
+                      data: "group",
+                      render: function(data, type, LessonTable) {
+                          if (LessonTable.group !== null) {
+                              return LessonTable.group.name;
+                          } else {
+                              return "No group";
+                          }
+                      }
+                  },
+                  {
+                      name: "Teacher",
+                      data: "teacher",
+                      render: function(data, type, LessonTable) {
+                          if (LessonTable.teacher !== null) {
+                              return LessonTable.teacher.name;
+                          } else {
+                              return "Mihai Gaidau";
+                          }
+                      }
+                  },
+                  {
+                      name: "Subject",
+                      data: "subject",
+                      render: function(data, type, LessonTable) {
+                          if (LessonTable.subject !== null) {
+                              return LessonTable.subject.name;
+  
+                          } else {
+                              return "No subject";
+                          }
+                      }
+                  },
+                  {
+                      name: "Start",
+                      data: "start",
+                      render: function(data, type, LessonTable) {
+                          return LessonTable.timePeriod.startTime;
+                      }
+                  },
+                  {
+                      name: "End",
+                      data: "end",
+                      render: function(data, type, LessonTable) {
+                          return LessonTable.timePeriod.endTime;
+                      }
+                  },
+                  {
+                      data: "Edit",
+                      render: function(data, type, LessonTable) {
+                          return "<button id = edit-button" + LessonTable.id + " class='button-17 edit-item' style='margin-right: -15px' data-row-id=" + LessonTable.id + ">Edit</button>" +
+                              "<button id = delete-button" + LessonTable.id + " class='button-17 delete-item' style='color: red; margin-left: 25px' data-row-id=" + LessonTable.id + ">Delete</button>";
+  
+                      },
+                  },
+              ],
+              columnDefs: [{
+                      "targets": -1,
+                      "data": "teacher",
+                      "defaultContent": "<i>Not set</i>"
+                  },
+                  {
+                      "className": "dt-center",
+                      "targets": "_all"
+                  },
+                  {
+                      "searchable": false,
+                  }
+              ]
+          });
+  
+          $('#createLesson').click(function() {
+              window.location.href = '@Url.Action("CreateLesson")';
+          });
+          $('#LessonTable tbody').on('click', '.edit-item', function() {
+              var data = table.row($(this).parents('tr')).data();
+              window.location.href = '@Url.Action("EditLesson")' + "/" + data.id;
+          });
+          $('#LessonTable tbody').on('click', '.delete-item', function() {
+              debugger;
+              var data = table.row($(this).parents('tr')).data();
+              const deleteButton = document.getElementById("delete-button" + data.id);
+              const deleteModal = document.getElementById("delete-modal");
+              const cancelButton = document.getElementById("cancel-button");
+              const confirmButton = document.getElementById("confirm-button");
+  
+              deleteButton.addEventListener("click", function() {
+                  deleteModal.classList.add("show");
+              });
+  
+              cancelButton.addEventListener("click", function() {
+                  deleteModal.classList.remove("show");
+              });
+  
+              confirmButton.addEventListener("click", function() {
+                  window.location.href = '@Url.Action("DeleteLesson")' + "/" + data.id;
+                  deleteModal.classList.remove("show");
+              });
+          });
+  
+      }
+  ));
+    </script>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
