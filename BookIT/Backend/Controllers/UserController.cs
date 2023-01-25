@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using AutoMapper;
 using Backend.Entities.Users;
 using Backend.Helpers;
 using Backend.Models;
@@ -30,7 +32,7 @@ public class UserController : Controller
     }
 
     [HttpPost]
-    public Task<JsonResult> GetUsersList()
+    public async Task<JsonResult> GetUsersList()
     {
         var draw = Request.Form["draw"].FirstOrDefault();
         var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"]
@@ -62,7 +64,7 @@ public class UserController : Controller
         {
             draw = draw, recordsTotal = totalRecord, recordsFiltered = filterRecord, data = empList
         };
-        return Task.FromResult(new JsonResult(returnObj));
+        return Json(returnObj);
     }
 
     private IList<UserModel> SearchByValue(IList<UserModel> data, string searchValue)

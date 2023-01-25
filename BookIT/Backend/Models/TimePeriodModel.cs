@@ -1,4 +1,5 @@
-﻿using Backend.Entities.LessonEntities;
+﻿using System.Text.Json.Serialization;
+using Backend.Entities.LessonEntities;
 using Backend.Entities.Shared;
 using Backend.Entities.UniversityEntities;
 
@@ -11,5 +12,6 @@ public class TimePeriodModel: IBaseEntity
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
 
+    [JsonIgnore]
     public virtual IList<LessonModel>? Lessons { get; set; }
 }

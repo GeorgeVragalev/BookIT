@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Shared;
+﻿using System.Text.Json.Serialization;
+using Backend.Entities.Shared;
 
 namespace Backend.Models;
 

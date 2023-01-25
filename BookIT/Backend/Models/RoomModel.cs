@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Shared;
+﻿using System.Text.Json.Serialization;
+using Backend.Entities.Shared;
 
 namespace Backend.Models;
 
@@ -25,6 +26,7 @@ public class RoomModel : IBaseEntity
     }
 
     public IList<FacilityModel>? Facilities { get; set; }
+    [JsonIgnore]
     public virtual IList<LessonModel>? Lessons { get; set; }
 
     public string? FacilityString { get; set; }

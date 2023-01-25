@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Backend.Entities.Roles;
 using Backend.Entities.Shared;
 
@@ -15,6 +16,8 @@ public class UserModel: IBaseEntity
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public RoleEnum Role { get; set; }
+    [JsonIgnore]
     public StudentModel? Student{ get; set; }
+    [JsonIgnore]
     public TeacherModel? Teacher{ get; set; }
 }

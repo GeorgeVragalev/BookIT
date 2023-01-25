@@ -1,4 +1,5 @@
-﻿using Backend.Entities.Shared;
+﻿using System.Text.Json.Serialization;
+using Backend.Entities.Shared;
 using Backend.Entities.Users;
 
 namespace Backend.Models;
@@ -12,5 +13,6 @@ public class SubjectModel : IBaseEntity
     public int? Hours { get; set; }
     
     public virtual List<TeacherModel>? Teachers { get; set; }
+    [JsonIgnore]
     public virtual IList<LessonModel>? Lessons { get; set; }
 }

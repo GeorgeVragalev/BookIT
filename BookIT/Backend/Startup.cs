@@ -1,9 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Backend.Data;
 using Backend.DependencyRegister;
 using Backend.Entities.Roles;
 using Backend.Entities.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using RouteBuilder = Backend.DependencyRegister.RouteBuilder;
@@ -34,18 +36,9 @@ public class Startup
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
-        serviceCollection.AddControllers()
-            
-            
-            .AddRazorRuntimeCompilation()
-            .AddJsonOptions(o =>
-            {
-                o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-                o.JsonSerializerOptions.MaxDepth = 3;
-            });
+        serviceCollection.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-        
-           
 
         serviceCollection.Configure<CookiePolicyOptions>(options =>
         {
@@ -54,10 +47,7 @@ public class Startup
         });
 
         serviceCollection.AddRazorPages();
-        
-        serviceCollection.AddControllersWithViews()
-            .AddRazorRuntimeCompilation();
-        
+
         serviceCollection.AddAuthorization(options =>
         {
             options.AddPolicy("SuperAdmin",
