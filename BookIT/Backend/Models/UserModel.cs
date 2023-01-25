@@ -10,7 +10,7 @@ public class UserModel: IBaseEntity
     public int Id { get; set; }
     
     [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", 
-        ErrorMessage = "Characters are not allowed.")]
+        ErrorMessage = "Please enter a valid email format")]
     public string Email { get; set; }
     
     public string? FirstName { get; set; }

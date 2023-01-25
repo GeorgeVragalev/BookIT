@@ -215,6 +215,11 @@ public class ManagementController : Controller
         var pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
         var skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
         var data = GetLessonModelList();
+        
+        foreach (var model in data)
+        {
+            if (model?.Teacher?.User != null) model.Teacher.User.FirstName = "No teacher assigned";
+        }
 
         //get total count of data in table
         var totalRecord = data.Count;
@@ -410,20 +415,20 @@ public class ManagementController : Controller
     {
         return sortColumn switch
         {
-            "Id" => SortId(data, sortColumnDirection),
             "Name" => SortName(data, sortColumnDirection),
             "Capacity" => SortCapacity(data, sortColumnDirection),
+            "IsAvailable" => SortAvailability(data, sortColumnDirection),
             _ => data
         };
     }
-
-    private IList<RoomModel> SortId(IList<RoomModel> data, string sortColumnDirection)
+    
+    private IList<RoomModel> SortAvailability(IList<RoomModel> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
-            ? data.OrderBy(u => u.Id).ToList()
-            : data.OrderByDescending(u => u.Id).ToList();
+            ? data.OrderBy(u => u.IsAvailable).ToList()
+            : data.OrderByDescending(u => u.IsAvailable).ToList();
     }
-
+    
     private IList<RoomModel> SortName(IList<RoomModel> data, string sortColumnDirection)
     {
         return sortColumnDirection.ToLower() == SortingDirection.asc.ToString()
@@ -468,6 +473,15 @@ public class ManagementController : Controller
 
         TempData["EditMessage"] = "Record edited very successfully";
         return View(model);
+    }
+    
+    [HttpPost]
+    public async Task<RedirectToActionResult> CreateRoom(RoomModel roomModel)
+    {
+        var dbRoom = _mapper.Map<Room>(roomModel);
+        
+        await _roomService.Save(dbRoom);
+        return RedirectToAction("RoomsList");
     }
     
     [HttpPost]

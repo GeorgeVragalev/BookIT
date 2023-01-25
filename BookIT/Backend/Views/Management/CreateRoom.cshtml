@@ -3,11 +3,11 @@
 
 
 @{
-    ViewBag.Title = "Edit room";
+    ViewBag.Title = "Create room";
     Layout = "_Layout";
 }
 
-@using (Html.BeginForm("UpdateRoom", "Management"))
+@using (Html.BeginForm("CreateRoom", "Management", Model))
 {
     <div class="row">
         <div class="col-md-4">

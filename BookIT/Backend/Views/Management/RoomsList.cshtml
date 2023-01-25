@@ -16,15 +16,15 @@
     </div>
 }
 <div>
-    <button id="createRoom" class="button-17">Create new room</button>
+    <button id="createRoom" class="button-17" style="background-color: #f2208a; color: #f3f3f3; margin-left: 260px">Create new room</button>
     <div class="container">
         <div class="table-responsive">
-            <table id="myRoomTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+            <table id="RoomTable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Name</th>
                     <th>Capacity</th>
+                    <th>IsAvailable</th>
                     <th>Actions<th>
                 </tr>
                 </thead>
@@ -36,7 +36,7 @@
 <script>
 $(document).ready(
     function() {
-        var table = $('#myRoomTable').DataTable({
+        var table = $('#RoomTable').DataTable({
             ajax: {
                 url: "LoadRoomsList",
                 type: "POST",
@@ -44,50 +44,79 @@ $(document).ready(
             processing: true,
             serverSide: true,
             filter: true,
-            columns: [{
-                    data: "id",
-                    name: "Id"
-                },
+            columns: [
                 {
                     data: "name",
-                    name: "Name"
+                    name: "Name",
+                    render: function(data, type, RoomTable) {
+                                                return RoomTable.name;
+                                                }
                 },
                 {
                     data: "capacity",
-                    name: "Capacity"
+                    name: "Capacity",
+                    render: function(data, type, RoomTable) {
+                                                return RoomTable.capacity;
+                                            }
                 },
                 {
-                    data: "editUrl",
-                    name: "Edit"
+                    data: "isAvailable",
+                    name: "IsAvailable",
+                    render: function(data, type, RoomTable) {
+                                                return RoomTable.isAvailable;
+                                            }
                 },
+                {
+                 data: "Edit",
+                 render: function(data, type, RoomTable) {
+                     return "<button id = edit-button" + RoomTable.id + " class='button-17 edit-item' data-row-id=" + RoomTable.id + ">Edit</button>"
+                    + "<button id = delete-button" + RoomTable.id + " class='button-17 delete-item' style='color: red; margin-left: 25px' data-row-id=" + RoomTable.id + ">Delete</button>";
+                     
+                 },
+            },
             ],
             columnDefs: [{
                     "targets": -1,
                     "data": null,
                     "defaultContent": "<button id = Edit class='btn-edit'><i class='bi bi-pencil-square'></i></button> <button id = Delete class ='btn-delete''><i class='bi bi-trash'></i></button>"
                 },
-                {
-                    "searchable": false,
-                    "targets": [4]
-                }
+                                {"className": "dt-center", "targets": "_all"},
+
             ]
         });
 
 
-        $('#createRoom').click(function() {
-            window.location.href = '@Url.Action("CreateRoom")';
-        });
-        $('#myRoomTable tbody').on('click', '#Edit', function() {
-            var data = table.row($(this).parents('tr')).data();
-            window.location.href = '@Url.Action("EditRoom")' + "/" + data.id;
-        });
-        $('#myRoomTable tbody').on('click', '#Delete', function() {
-            var data = table.row($(this).parents('tr')).data();
-            window.location.href = '@Url.Action("DeleteRoom")' + "/" + data.id;
-        });
-
+         $('#createRoom').click(function() {
+                    window.location.href = '@Url.Action("CreateRoom")';
+                });
+                $('#RoomTable tbody').on('click', '.edit-item', function() {
+                    var data = table.row($(this).parents('tr')).data();
+                    window.location.href = '@Url.Action("EditRoom")' + "/" + data.id;
+                });
+                $('#RoomTable tbody').on('click', '.delete-item', function() {
+                    debugger;
+                    var data = table.row($(this).parents('tr')).data();
+                    const deleteButton = document.getElementById("delete-button" + data.id);
+                            const deleteModal = document.getElementById("delete-modal");
+                            const cancelButton = document.getElementById("cancel-button");
+                            const confirmButton = document.getElementById("confirm-button");
+                            
+                            deleteButton.addEventListener("click", function() {
+                              deleteModal.classList.add("show");
+                            });
+                            
+                            cancelButton.addEventListener("click", function() {
+                              deleteModal.classList.remove("show");
+                            });
+                            
+                            confirmButton.addEventListener("click", function() {
+                                 window.location.href = '@Url.Action("DeleteRoom")' + "/" + data.id;
+                              deleteModal.classList.remove("show");
+                            });
+                });
     })
     </script>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
